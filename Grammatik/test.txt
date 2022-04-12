@@ -1,0 +1,37 @@
+def add(s1, s2) begin:
+    var sum := s1;
+
+    while(s2) begin:
+        succ(sum);
+    end
+
+    return sum;
+end
+
+def sub(s1, s2) begin:
+    var retVal := s1;
+
+    while(s2) begin:
+        pred(retVal);
+    end
+
+    return retVal;
+end
+
+read(r0);
+var result := 0;
+
+while(r0) begin:
+    var sum := add(3, r0);
+    var diff := sum(42, sum);
+
+    loop(diff) begin:
+        result := add(3, diff);
+        succ(result);
+        write(result);
+    end
+end
+
+write(result);
+
+
