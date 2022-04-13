@@ -1,0 +1,19 @@
+.vscode
+
+compiler/target/
+compiler/pom.xml.tag
+compiler/pom.xml.releaseBackup
+compiler/pom.xml.versionsBackup
+compiler/pom.xml.next
+compiler/release.properties
+compiler/dependency-reduced-pom.xml
+compiler/buildNumber.properties
+compiler/.mvn/timing.properties
+# https://github.com/takari/maven-wrapper#usage-without-binary-jar
+compiler/.mvn/wrapper/maven-wrapper.jar
+
+# Eclipse m2e generated files
+# Eclipse Core
+compiler/.project
+# JDT-specific (Eclipse Java Development Tools)
+compiler/.classpath
