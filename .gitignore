@@ -1,4 +1,11 @@
 .vscode
+*.class
+
+Grammatik/*.java
+Grammatik/*.class
+Grammatik/.antlr
+Grammatik/*.interp
+Grammatik/*
 
 compiler/target/
 compiler/pom.xml.tag

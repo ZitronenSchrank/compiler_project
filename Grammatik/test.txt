@@ -3,6 +3,7 @@ def add(s1, s2) begin:
 
     while(s2) begin:
         succ(sum);
+        pred(s2);
     end
 
     return sum;
@@ -13,12 +14,13 @@ def sub(s1, s2) begin:
 
     while(s2) begin:
         pred(retVal);
+        pred(s2);
     end
 
     return retVal;
 end
 
-read(r0);
+var r0 := 0;
 var result := 0;
 
 while(r0) begin:
@@ -28,7 +30,6 @@ while(r0) begin:
     loop(diff) begin:
         result := add(3, diff);
         succ(result);
-        write(result);
     end
 end
 

@@ -2,11 +2,10 @@ grammar While;
 
 prog            : (defFunction)* (statement)+ EOF;
 
-// Read/Write mit beliebig vielen Parametern
-read            : READ '(' callParameters ')' SEMICOLON
+read            : READ '(' ')'
                 ;
 
-write           : WRITE '(' callParameters ')' SEMICOLON
+write           : WRITE '(' ID (',' ID)* ')' SEMICOLON
                 ;
 
 succ            : SUCC '(' ID ')' SEMICOLON
@@ -40,17 +39,17 @@ assign          : ID ASSIGN expr SEMICOLON
                 ;
 
 expr            : callFunction
+                | read
                 | ID
                 | NUM 
                 ;
 
-statement       : read
-                | write
-                | succ
+statement       : succ
                 | pred
                 | whl
                 | loop
                 | defVar
+                | write
                 | assign;
 
 retStatement    : 'return' ID SEMICOLON;
