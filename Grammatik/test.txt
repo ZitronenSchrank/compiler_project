@@ -1,3 +1,4 @@
+// Addiert zwei Zahlen
 def add(s1, s2) begin:
     var sum := s1;
 
@@ -9,10 +10,12 @@ def add(s1, s2) begin:
     return sum;
 end
 
+// Vorwärtsdekleration
 def mutliply(s1, s2);
 def sub(s1, s2);
 
-var r0 := 0;
+// Lese Etwas Von Der Konsole Ein
+var r0 := read();
 var result := 0;
 
 while(r0) begin:
@@ -27,6 +30,7 @@ end
 
 write(result);
 
+// Subtrahiert etwas
 sub(s1, s2) begin:
     var retVal := s1;
 
@@ -38,8 +42,17 @@ sub(s1, s2) begin:
     return retVal;
 end
 
+// Multipliziert etwas
 mutliply(s1, s2) begin:
-    return s1;
+    var retVal := s1;
+
+    pred(s2);
+    while(s2) begin:
+        retVal := add(s1, retVal);
+        pred(s2);
+    end
+
+    return retVal;
 end
 
 
