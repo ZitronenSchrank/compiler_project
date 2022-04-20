@@ -9,16 +9,8 @@ def add(s1, s2) begin:
     return sum;
 end
 
-def sub(s1, s2) begin:
-    var retVal := s1;
-
-    while(s2) begin:
-        pred(retVal);
-        pred(s2);
-    end
-
-    return retVal;
-end
+def mutliply(s1, s2);
+def sub(s1, s2);
 
 var r0 := 0;
 var result := 0;
@@ -34,5 +26,20 @@ while(r0) begin:
 end
 
 write(result);
+
+sub(s1, s2) begin:
+    var retVal := s1;
+
+    while(s2) begin:
+        pred(retVal);
+        pred(s2);
+    end
+
+    return retVal;
+end
+
+mutliply(s1, s2) begin:
+    return s1;
+end
 
 

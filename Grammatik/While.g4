@@ -1,6 +1,6 @@
 grammar While;
 
-prog            : (defFunction)* (statement)+ EOF;
+prog            : (defFunction | statement)* EOF;
 
 read            : READ '(' ')'
                 ;
@@ -18,6 +18,8 @@ callFunction    : ID '(' callParameters ')'
                 ;
 
 defFunction     : DEFINE ID '(' defParameters ')' BEGIN ':' (statement)* retStatement END
+                | DEFINE ID '(' defParameters ')' SEMICOLON
+                | ID '(' defParameters ')' BEGIN ':' (statement)* retStatement END
                 ;
 
 defVar          : VARIABLE assign
