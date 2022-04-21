@@ -1,0 +1,15 @@
+{
+    "[antlr]": {
+        "editor.formatOnSave": false,
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+    },
+    "antlr4.generation": {
+        "mode": "external",
+        "language": "Java",
+        "listeners": false,
+        "visitors": true,
+        "outputDir": "../compiler/src/main/java/de/hfu/grammar/",
+        "package": "de.hfu.grammar"
+    }
+}

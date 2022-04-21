@@ -13,8 +13,14 @@ import java.io.*;
 
 import static org.objectweb.asm.Opcodes.RETURN;
 
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.Tree;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
+
+import de.hfu.grammar.WhileLexer;
+import de.hfu.grammar.WhileParser;
 
 /**
  * Hello world!
@@ -23,6 +29,7 @@ import org.objectweb.asm.MethodVisitor;
 public class App {
 
     public App() {
+
         ClassWriter classWriter = new ClassWriter(0);
 
         classWriter.visit(
@@ -61,5 +68,14 @@ public class App {
 
     public static void main(String[] args) {
         new App();
+
+        try {
+            WhileLexer lexer = new WhileLexer(CharStreams.fromFileName(""));
+            WhileParser parser = new WhileParser(new CommonTokenStream(lexer));
+            // Tree tree = parser.
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

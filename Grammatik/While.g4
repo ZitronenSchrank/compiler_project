@@ -74,4 +74,4 @@ ID: [a-zA-Z][a-zA-Z0-9]*;
 NUM: '0' | [1-9][0-9]*;
 
 COMMENT: '//' ~[\r\n]* -> skip;
-WS : ([\t\n]|' ')+ -> skip;
+WS : ([\t\n\r]|' ')+ -> skip;
