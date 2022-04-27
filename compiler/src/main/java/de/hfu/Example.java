@@ -155,6 +155,20 @@ public class Example {
         return retVal;
     }
 
+    public static void write(Value... a) {
+        System.out.println(a[0].name);
+    }
+
+    class Value {
+        public String name;
+        public BigInteger value;
+
+        public Value(String name, BigInteger value) {
+            this.name = name;
+            this.value = value;
+        }
+    }
+
     // Jedes Statemant ausserhalb von Funktionen landet in der Main-Methode
     public static void main(String[] args) {
 
@@ -166,8 +180,11 @@ public class Example {
 
         // result := r0
         result = r0;
+        Example a = new Example();
 
-        // write(r0)
-        System.out.println("Result: " + result);
+        // write(result)
+        Value b = a.new Value("String", BigInteger.ZERO);
+        write(b);
     }
+
 }

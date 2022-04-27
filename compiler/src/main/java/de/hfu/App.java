@@ -15,6 +15,7 @@ import static org.objectweb.asm.Opcodes.RETURN;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.Vocabulary;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 
@@ -69,8 +70,15 @@ public class App {
         new App();
 
         try {
-            WhileLexer lexer = new WhileLexer(CharStreams.fromFileName(""));
+            System.out.println(args[0]);
+            // System.out.println(args[1]);
+            WhileLexer lexer = new WhileLexer(CharStreams.fromFileName(args[0]));
             WhileParser parser = new WhileParser(new CommonTokenStream(lexer));
+
+            Vocabulary voc = parser.getVocabulary();
+            for (int i = 0; i < voc.getMaxTokenType(); i++) {
+                System.out.println(voc.getLiteralName(i));
+            }
             // Tree tree = parser.
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,4 +1,4 @@
-// Generated from c:\Users\petro\Projekte\While\compiler_project\Grammatik\While.g4 by ANTLR 4.8
+// Generated from /home/zitrone/Documents/OwnProjects/WhileProjects/compiler_project/Grammatik/While.g4 by ANTLR 4.8
 package de.hfu.grammar;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
@@ -60,6 +60,13 @@ public class WhileBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitDefFunction(WhileParser.DefFunctionContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitDecFunction(WhileParser.DecFunctionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

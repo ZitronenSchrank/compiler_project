@@ -1,4 +1,4 @@
-// Generated from c:\Users\petro\Projekte\While\compiler_project\Grammatik\While.g4 by ANTLR 4.8
+// Generated from /home/zitrone/Documents/OwnProjects/WhileProjects/compiler_project/Grammatik/While.g4 by ANTLR 4.8
 package de.hfu.grammar;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -52,6 +52,12 @@ public interface WhileVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitDefFunction(WhileParser.DefFunctionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link WhileParser#decFunction}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDecFunction(WhileParser.DecFunctionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link WhileParser#defVar}.
 	 * @param ctx the parse tree

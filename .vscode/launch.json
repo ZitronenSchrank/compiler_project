@@ -2,6 +2,14 @@
     "version": "2.0.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "Launch App",
+            "request": "launch",
+            "mainClass": "de.hfu.App",
+            "projectName": "while",
+            "args": "./Grammatik/test.txt"
+        },
+        {
             "name": "Debug ANTLR4 grammar",
             "type": "antlr-debug",
             "request": "launch",
@@ -10,7 +18,7 @@
             "actionFile": "Grammatik/actionFile.js",
             "startRule": "prog",
             "printParseTree": true,
-            "visualParseTree": true,
+            "visualParseTree": true
         }
     ]
 }
