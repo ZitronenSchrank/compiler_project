@@ -13,14 +13,20 @@ import java.io.*;
 
 import static org.objectweb.asm.Opcodes.RETURN;
 
+import org.objectweb.asm.util.ASMifier;
+import org.objectweb.asm.util.TraceClassVisitor;
+
+import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Vocabulary;
+import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 
 import de.hfu.grammar.WhileLexer;
 import de.hfu.grammar.WhileParser;
+import de.hfu.model.Program;
 
 /**
  * Hello world!
@@ -60,6 +66,13 @@ public class App {
             out.flush();
             out.close();
 
+            InputStream input = new FileInputStream(new File("./Example.class"));
+
+            ClassReader classReader = new ClassReader(input);
+            TraceClassVisitor cv = new TraceClassVisitor(null, new ASMifier(), new PrintWriter(System.out));
+
+            classReader.accept(cv, 0);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -75,11 +88,15 @@ public class App {
             WhileLexer lexer = new WhileLexer(CharStreams.fromFileName(args[0]));
             WhileParser parser = new WhileParser(new CommonTokenStream(lexer));
 
-            Vocabulary voc = parser.getVocabulary();
-            for (int i = 0; i < voc.getMaxTokenType(); i++) {
-                System.out.println(voc.getLiteralName(i));
+            ParseTree ast = parser.prog();
+
+            if (parser.getNumberOfSyntaxErrors() != 0) {
+                System.exit(1);
             }
-            // Tree tree = parser.
+
+            ProgramVisitor progVisitor = new ProgramVisitor();
+            Program prog = progVisitor.visit(ast);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
