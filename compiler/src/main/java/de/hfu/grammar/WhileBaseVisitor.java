@@ -1,4 +1,4 @@
-// Generated from /home/zitrone/Documents/OwnProjects/WhileProjects/compiler_project/Grammatik/While.g4 by ANTLR 4.8
+// Generated from c:\Users\petro\Projekte\While\compiler_project\Grammatik\While.g4 by ANTLR 4.8
 package de.hfu.grammar;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
