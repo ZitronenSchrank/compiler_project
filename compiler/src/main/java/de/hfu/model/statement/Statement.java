@@ -1,4 +1,4 @@
-package de.hfu.model;
+package de.hfu.model.statement;
 
 public abstract class Statement {
 
