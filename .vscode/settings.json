@@ -7,8 +7,8 @@
     "antlr4.generation": {
         "mode": "external",
         "language": "Java",
-        "listeners": false,
-        "visitors": true,
+        "listeners": true,
+        "visitors": false,
         "outputDir": "../compiler/src/main/java/de/hfu/grammar/",
         "package": "de.hfu.grammar"
     }

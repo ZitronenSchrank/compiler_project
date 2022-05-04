@@ -94,9 +94,6 @@ public class App {
                 System.exit(1);
             }
 
-            ProgramVisitor progVisitor = new ProgramVisitor();
-            Program prog = progVisitor.visit(ast);
-
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -8,6 +8,7 @@ Grammatik/*.java
 Grammatik/*.class
 Grammatik/.antlr
 Grammatik/*.interp
+Grammatik/*.tokens
 
 compiler/target/
 compiler/pom.xml.tag

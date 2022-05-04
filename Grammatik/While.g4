@@ -15,7 +15,7 @@ pred            : PRED '(' ID ')' SEMICOLON
                 ;
 
 callFunction    : ID '(' callParameters ')'
-                ;
+                ; 
 
 defFunction     : DEFINE ID '(' defParameters ')' BEGIN ':' (statement)* retStatement END
                 | ID '(' defParameters ')' BEGIN ':' (statement)* retStatement END
