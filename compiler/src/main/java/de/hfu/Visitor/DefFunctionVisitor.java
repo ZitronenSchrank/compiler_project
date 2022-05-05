@@ -23,8 +23,8 @@ public class DefFunctionVisitor extends WhileBaseVisitor<Void> {
         if (ctx.DEFINE() == null) {
 
             if (dec == null) {
-                // TODO: Error: Define Or Forward Decleration Missing
-                System.err.println("Define Or Forward Decleration Missing");
+                // TODO: Error: 'Def' Or Forward Decleration Missing
+                System.err.println("'Def' Or Forward Decleration Missing, Line:" + ctx.ID().getSymbol().getLine());
             } else {
                 dec.setImplemented(true);
                 program.addDefFunction(nodeId, new DefFunction(nodeId));
