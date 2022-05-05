@@ -10,8 +10,7 @@ public class DecFunctionVisitor extends WhileBaseVisitor<DecFunction> {
 
     @Override
     public DecFunction visitDecFunction(DecFunctionContext ctx) {
-        System.out.println(ctx.ID());
-        System.out.println(ctx.defParameters());
+        System.out.println("Dec: " + ctx.ID());
         return super.visitDecFunction(ctx);
     }
 

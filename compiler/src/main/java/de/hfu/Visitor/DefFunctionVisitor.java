@@ -8,7 +8,7 @@ public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
 
     @Override
     public DefFunction visitDefFunction(DefFunctionContext ctx) {
-        System.out.println("DefFunction");
+        System.out.println("Def: " + ctx.ID());
         return super.visitDefFunction(ctx);
     }
 }
