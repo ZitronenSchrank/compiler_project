@@ -1,4 +1,4 @@
-package de.hfu.Visitor.statement;
+package de.hfu.visitor.statement;
 
 import de.hfu.grammar.WhileBaseVisitor;
 import de.hfu.grammar.WhileParser.StatementContext;

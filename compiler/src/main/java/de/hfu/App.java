@@ -24,10 +24,10 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 
-import de.hfu.Visitor.ProgramVisitor;
 import de.hfu.grammar.WhileLexer;
 import de.hfu.grammar.WhileParser;
 import de.hfu.model.Program;
+import de.hfu.visitor.ProgramVisitor;
 
 /**
  * Hello world!
