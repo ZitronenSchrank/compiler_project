@@ -1,4 +1,4 @@
-// Generated from /home/zitrone/Documents/OwnProjects/WhileProjects/compiler_project/Grammatik/While.g4 by ANTLR 4.8
+// Generated from c:\Users\petro\Projekte\While\compiler_project\Grammatik\While.g4 by ANTLR 4.8
 package de.hfu.grammar;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -125,12 +125,9 @@ public class WhileParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_prog; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).enterProg(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).exitProg(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WhileVisitor ) return ((WhileVisitor<? extends T>)visitor).visitProg(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -195,12 +192,9 @@ public class WhileParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_read; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).enterRead(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).exitRead(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WhileVisitor ) return ((WhileVisitor<? extends T>)visitor).visitRead(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -243,12 +237,9 @@ public class WhileParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_write; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).enterWrite(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).exitWrite(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WhileVisitor ) return ((WhileVisitor<? extends T>)visitor).visitWrite(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -303,12 +294,9 @@ public class WhileParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_succ; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).enterSucc(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).exitSucc(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WhileVisitor ) return ((WhileVisitor<? extends T>)visitor).visitSucc(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -350,12 +338,9 @@ public class WhileParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_pred; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).enterPred(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).exitPred(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WhileVisitor ) return ((WhileVisitor<? extends T>)visitor).visitPred(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -398,12 +383,9 @@ public class WhileParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_callFunction; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).enterCallFunction(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).exitCallFunction(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WhileVisitor ) return ((WhileVisitor<? extends T>)visitor).visitCallFunction(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -456,12 +438,9 @@ public class WhileParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_defFunction; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).enterDefFunction(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).exitDefFunction(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WhileVisitor ) return ((WhileVisitor<? extends T>)visitor).visitDefFunction(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -572,12 +551,9 @@ public class WhileParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_decFunction; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).enterDecFunction(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).exitDecFunction(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WhileVisitor ) return ((WhileVisitor<? extends T>)visitor).visitDecFunction(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -622,12 +598,9 @@ public class WhileParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_defVar; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).enterDefVar(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).exitDefVar(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WhileVisitor ) return ((WhileVisitor<? extends T>)visitor).visitDefVar(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -664,12 +637,9 @@ public class WhileParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_defParameters; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).enterDefParameters(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).exitDefParameters(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WhileVisitor ) return ((WhileVisitor<? extends T>)visitor).visitDefParameters(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -725,12 +695,9 @@ public class WhileParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_callParameters; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).enterCallParameters(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).exitCallParameters(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WhileVisitor ) return ((WhileVisitor<? extends T>)visitor).visitCallParameters(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -804,12 +771,9 @@ public class WhileParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_whl; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).enterWhl(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).exitWhl(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WhileVisitor ) return ((WhileVisitor<? extends T>)visitor).visitWhl(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -877,12 +841,9 @@ public class WhileParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_loop; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).enterLoop(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).exitLoop(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WhileVisitor ) return ((WhileVisitor<? extends T>)visitor).visitLoop(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -946,12 +907,9 @@ public class WhileParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_assign; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).enterAssign(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).exitAssign(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WhileVisitor ) return ((WhileVisitor<? extends T>)visitor).visitAssign(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -996,12 +954,9 @@ public class WhileParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_expr; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).enterExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).exitExpr(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WhileVisitor ) return ((WhileVisitor<? extends T>)visitor).visitExpr(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1080,12 +1035,9 @@ public class WhileParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_statement; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).enterStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).exitStatement(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WhileVisitor ) return ((WhileVisitor<? extends T>)visitor).visitStatement(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1169,12 +1121,9 @@ public class WhileParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_retStatement; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).enterRetStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof WhileListener ) ((WhileListener)listener).exitRetStatement(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof WhileVisitor ) return ((WhileVisitor<? extends T>)visitor).visitRetStatement(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
