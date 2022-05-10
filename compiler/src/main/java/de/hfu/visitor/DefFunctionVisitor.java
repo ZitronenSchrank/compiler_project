@@ -13,6 +13,7 @@ import de.hfu.grammar.WhileParser.StatementContext;
 import de.hfu.model.DefFunction;
 import de.hfu.model.Program;
 import de.hfu.model.statement.Statement;
+import de.hfu.util.AvailableVariables;
 import de.hfu.visitor.statement.StatementVisitor;
 
 public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
@@ -85,11 +86,11 @@ public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
             List<TerminalNode> functionParamesters) {
 
         List<Statement> statements = new ArrayList<>();
-        List<String> availableVariables = new ArrayList<>();
+        AvailableVariables availableVariables = new AvailableVariables();
 
         // Add Function Parameters as Variables inside the scope
         for (var parameter : functionParamesters) {
-            availableVariables.add(parameter.getText());
+            availableVariables.addAvailableVariable(parameter.getText());
         }
 
         // Pass Scope to Visitor

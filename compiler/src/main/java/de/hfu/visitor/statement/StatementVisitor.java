@@ -1,7 +1,5 @@
 package de.hfu.visitor.statement;
 
-import java.util.List;
-
 import de.hfu.grammar.WhileBaseVisitor;
 import de.hfu.grammar.WhileParser.AssignContext;
 import de.hfu.grammar.WhileParser.DefVarContext;
@@ -13,13 +11,14 @@ import de.hfu.grammar.WhileParser.WhlContext;
 import de.hfu.grammar.WhileParser.WriteContext;
 import de.hfu.model.Program;
 import de.hfu.model.statement.Statement;
+import de.hfu.util.AvailableVariables;
 
 public class StatementVisitor extends WhileBaseVisitor<Statement> {
 
-    List<String> availableVariables;
+    AvailableVariables availableVariables;
     Program program;
 
-    public StatementVisitor(List<String> availableVariables, Program program) {
+    public StatementVisitor(AvailableVariables availableVariables, Program program) {
         this.program = program;
         this.availableVariables = availableVariables;
     }

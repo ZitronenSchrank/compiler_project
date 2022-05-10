@@ -1,8 +1,5 @@
 package de.hfu.visitor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.hfu.error.SemanticError;
 import de.hfu.grammar.WhileBaseVisitor;
 import de.hfu.grammar.WhileParser.DecFunctionContext;
@@ -12,6 +9,7 @@ import de.hfu.grammar.WhileParser.StatementContext;
 import de.hfu.model.DefFunction;
 import de.hfu.model.Program;
 import de.hfu.model.statement.Statement;
+import de.hfu.util.AvailableVariables;
 import de.hfu.visitor.statement.StatementVisitor;
 
 public class ProgramVisitor extends WhileBaseVisitor<Program> {
@@ -26,7 +24,7 @@ public class ProgramVisitor extends WhileBaseVisitor<Program> {
     public Program visitProg(ProgContext ctx) {
         System.out.println("Programm");
 
-        List<String> availableVariables = new ArrayList<>();
+        AvailableVariables availableVariables = new AvailableVariables();
         DecFunctionVisitor decFunctionVisitor = new DecFunctionVisitor(program);
         DefFunctionVisitor defFunctionVisitor = new DefFunctionVisitor(program);
         StatementVisitor statementVisitor = new StatementVisitor(availableVariables, program);

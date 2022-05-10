@@ -1,18 +1,17 @@
 package de.hfu.visitor.statement;
 
-import java.util.List;
-
 import de.hfu.grammar.WhileBaseVisitor;
 import de.hfu.grammar.WhileParser.WhlContext;
 import de.hfu.model.Program;
 import de.hfu.model.statement.While;
+import de.hfu.util.AvailableVariables;
 
 public class WhlVisitor extends WhileBaseVisitor<While> {
 
-    List<String> availableVariables;
+    AvailableVariables availableVariables;
     Program program;
 
-    public WhlVisitor(List<String> availableVariables, Program program) {
+    public WhlVisitor(AvailableVariables availableVariables, Program program) {
         this.program = program;
         this.availableVariables = availableVariables;
     }

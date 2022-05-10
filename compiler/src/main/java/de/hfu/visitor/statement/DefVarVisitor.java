@@ -1,19 +1,18 @@
 package de.hfu.visitor.statement;
 
-import java.util.List;
-
 import de.hfu.grammar.WhileBaseVisitor;
 import de.hfu.grammar.WhileParser.DefVarContext;
 
 import de.hfu.model.Program;
 import de.hfu.model.statement.DefVar;
+import de.hfu.util.AvailableVariables;
 
 public class DefVarVisitor extends WhileBaseVisitor<DefVar> {
 
-    List<String> availableVariables;
+    AvailableVariables availableVariables;
     Program program;
 
-    public DefVarVisitor(List<String> availableVariables, Program program) {
+    public DefVarVisitor(AvailableVariables availableVariables, Program program) {
         this.program = program;
         this.availableVariables = availableVariables;
     }

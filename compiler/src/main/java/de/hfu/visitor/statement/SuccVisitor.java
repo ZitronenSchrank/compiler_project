@@ -1,18 +1,17 @@
 package de.hfu.visitor.statement;
 
-import java.util.List;
-
 import de.hfu.grammar.WhileBaseVisitor;
 import de.hfu.grammar.WhileParser.SuccContext;
 import de.hfu.model.Program;
 import de.hfu.model.statement.Succ;
+import de.hfu.util.AvailableVariables;
 
 public class SuccVisitor extends WhileBaseVisitor<Succ> {
 
-    List<String> availableVariables;
+    AvailableVariables availableVariables;
     Program program;
 
-    public SuccVisitor(List<String> availableVariables, Program program) {
+    public SuccVisitor(AvailableVariables availableVariables, Program program) {
         this.program = program;
         this.availableVariables = availableVariables;
     }
