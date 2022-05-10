@@ -1,6 +1,10 @@
 package de.hfu.visitor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
 import de.hfu.error.SemanticError;
 import de.hfu.grammar.WhileBaseVisitor;
@@ -19,32 +23,54 @@ public class DefFunctionVisitor extends WhileBaseVisitor<Void> {
     @Override
     public Void visitDefFunction(DefFunctionContext ctx) {
         Token nodeId = ctx.ID().getSymbol();
+        List<TerminalNode> functionParameters = ctx.defParameters().ID();
         DefFunction def = program.getDefFunctions().get(nodeId.getText());
 
-        // No Define Token?
+        // Is Forward Decleration Used?
         if (ctx.DEFINE() == null) {
-
+            // Yes
+            // Then the function must be already inside the map
             if (def == null) {
+                // It is not inside the map
                 program.addError(
-                        new SemanticError("'Def' Or Forward Decleration Missing", ctx.ID().getSymbol()));
+                        new SemanticError("Keyword 'Def' Or Forward Decleration Missing", ctx.ID().getSymbol()));
             } else {
-                if (def.isImplemented()) {
-                    program.addError(
-                            new SemanticError("Function Already Implemented", ctx.ID().getSymbol()));
+                // It is in the map
+                if (functionParameters.size() == def.getParameterCount()) {
+                    if (def.isImplemented()) {
+                        program.addError(
+                                new SemanticError("Function Is Already Implemented", ctx.ID().getSymbol()));
+                    } else {
+                        parseStatements(ctx);
+                        def.setImplemented(true);
+                    }
                 } else {
-                    def.setImplemented(true);
+                    program.addError(
+                            new SemanticError(
+                                    "Function Declaration And Function Definition Have An Unequal Number Of Parameters",
+                                    ctx.ID().getSymbol()));
                 }
             }
-
         } else {
+            // No
+            // Then the function must not be inside the map
             if (def != null) {
+                // It is inside the map
                 program.addError(
                         new SemanticError("Function Already Defined", ctx.ID().getSymbol()));
             } else {
-                program.addDefFunction(nodeId.getText(), new DefFunction(nodeId, true));
+                ArrayList<String> parameters = new ArrayList<>();
+                for (var parameter : functionParameters) {
+                    parameters.add(parameter.getText());
+                }
+                parseStatements(ctx);
+                program.addDefFunction(nodeId.getText(), new DefFunction(nodeId, parameters, true));
             }
         }
-
         return null;
+    }
+
+    private void parseStatements(DefFunctionContext ctx) {
+
     }
 }
