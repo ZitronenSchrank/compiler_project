@@ -26,6 +26,8 @@ public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
     @Override
     public DefFunction visitDefFunction(DefFunctionContext ctx) {
         Token nodeId = ctx.ID().getSymbol();
+
+        String returnVariable = ctx.retStatement().ID().getText();
         List<TerminalNode> functionParameters = ctx.defParameters().ID();
         List<StatementContext> functionStatements = ctx.statement();
 
@@ -48,6 +50,7 @@ public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
                     } else {
                         List<Statement> statements = parseStatements(functionStatements, functionParameters);
                         def.setStatementList(statements);
+                        def.setReturnVariable(returnVariable);
                         // DefFunction is already inside the collection, do not add it again
                         return null;
                     }
@@ -72,7 +75,7 @@ public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
                 }
                 List<Statement> statements = parseStatements(functionStatements, functionParameters);
 
-                return new DefFunction(nodeId, parameters, statements);
+                return new DefFunction(nodeId, parameters, statements, returnVariable);
             }
         }
         return null;
@@ -84,10 +87,12 @@ public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
         List<Statement> statements = new ArrayList<>();
         List<String> availableVariables = new ArrayList<>();
 
+        // Add Function Parameters as Variables inside the scope
         for (var parameter : functionParamesters) {
             availableVariables.add(parameter.getText());
         }
 
+        // Pass Scope to Visitor
         StatementVisitor statementVisitor = new StatementVisitor(availableVariables, program.getDefFunctions());
 
         for (var statement : statementsInFunction) {

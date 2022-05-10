@@ -9,6 +9,7 @@ import de.hfu.model.statement.Statement;
 
 public class DefFunction {
     private Token tokenId;
+    private String returnVariable;
     private List<String> parameterNames;
     private List<Statement> statements;
 
@@ -16,16 +17,22 @@ public class DefFunction {
         this.tokenId = tokeId;
         this.parameterNames = parameterNames;
         this.statements = new ArrayList<>();
+        this.returnVariable = null;
     }
 
-    public DefFunction(Token tokeId, List<String> parameterNames, List<Statement> statements) {
+    public DefFunction(Token tokeId, List<String> parameterNames, List<Statement> statements, String returnVariable) {
         this.tokenId = tokeId;
         this.parameterNames = parameterNames;
         this.statements = statements;
+        this.returnVariable = returnVariable;
     }
 
     public void setStatementList(List<Statement> statements) {
         this.statements = statements;
+    }
+
+    public void setReturnVariable(String returnVariable) {
+        this.returnVariable = returnVariable;
     }
 
     public List<String> getParameterNames() {
@@ -46,5 +53,9 @@ public class DefFunction {
 
     public Token getToken() {
         return tokenId;
+    }
+
+    public String getReturnVariable() {
+        return returnVariable;
     }
 }
