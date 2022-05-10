@@ -47,7 +47,7 @@ public class DefFunctionVisitor extends WhileBaseVisitor<Void> {
                                 new SemanticError("Function Is Already Implemented", ctx.ID().getSymbol()));
                     } else {
                         List<Statement> statements = parseStatements(functionStatements, functionParameters);
-                        def.setImplemented(true);
+                        def.setStatementList(statements);
                     }
                 } else {
                     program.addError(
@@ -69,7 +69,7 @@ public class DefFunctionVisitor extends WhileBaseVisitor<Void> {
                     parameters.add(parameter.getText());
                 }
                 List<Statement> statements = parseStatements(functionStatements, functionParameters);
-                program.addDefFunction(nodeId.getText(), new DefFunction(nodeId, parameters, true));
+                program.addDefFunction(nodeId.getText(), new DefFunction(nodeId, parameters, statements));
             }
         }
         return null;
@@ -77,6 +77,7 @@ public class DefFunctionVisitor extends WhileBaseVisitor<Void> {
 
     private List<Statement> parseStatements(List<StatementContext> statementsInFunction,
             List<TerminalNode> functionParamesters) {
+
         List<Statement> statements = new ArrayList<>();
         List<String> availableVariables = new ArrayList<>();
 

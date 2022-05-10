@@ -1,28 +1,31 @@
 package de.hfu.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.antlr.v4.runtime.Token;
 
+import de.hfu.model.statement.Statement;
+
 public class DefFunction {
     private Token tokenId;
-    private boolean isImplemented;
     private List<String> parameterNames;
+    private List<Statement> statements;
 
     public DefFunction(Token tokeId, List<String> parameterNames) {
         this.tokenId = tokeId;
-        this.isImplemented = false;
         this.parameterNames = parameterNames;
+        this.statements = new ArrayList<>();
     }
 
-    public DefFunction(Token tokeId, List<String> parameterNames, boolean isImplemented) {
+    public DefFunction(Token tokeId, List<String> parameterNames, List<Statement> statements) {
         this.tokenId = tokeId;
-        this.isImplemented = isImplemented;
         this.parameterNames = parameterNames;
+        this.statements = statements;
     }
 
-    public void setImplemented(boolean isImplemented) {
-        this.isImplemented = isImplemented;
+    public void setStatementList(List<Statement> statements) {
+        this.statements = statements;
     }
 
     public List<String> getParameterNames() {
@@ -38,7 +41,7 @@ public class DefFunction {
     }
 
     public boolean isImplemented() {
-        return isImplemented;
+        return !statements.isEmpty();
     }
 
     public Token getToken() {
