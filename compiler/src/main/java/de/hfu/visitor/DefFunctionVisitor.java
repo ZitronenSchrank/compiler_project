@@ -93,7 +93,7 @@ public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
         }
 
         // Pass Scope to Visitor
-        StatementVisitor statementVisitor = new StatementVisitor(availableVariables, program.getDefFunctions());
+        StatementVisitor statementVisitor = new StatementVisitor(availableVariables, program);
 
         for (var statement : statementsInFunction) {
             statements.add(statement.accept(statementVisitor));

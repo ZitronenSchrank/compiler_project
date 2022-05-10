@@ -29,7 +29,7 @@ public class ProgramVisitor extends WhileBaseVisitor<Program> {
         List<String> availableVariables = new ArrayList<>();
         DecFunctionVisitor decFunctionVisitor = new DecFunctionVisitor(program);
         DefFunctionVisitor defFunctionVisitor = new DefFunctionVisitor(program);
-        StatementVisitor statementVisitor = new StatementVisitor(availableVariables, program.getDefFunctions());
+        StatementVisitor statementVisitor = new StatementVisitor(availableVariables, program);
 
         for (var context : ctx.children) {
             if (context instanceof DecFunctionContext) {
