@@ -15,7 +15,7 @@ import de.hfu.model.Program;
 import de.hfu.model.statement.Statement;
 import de.hfu.visitor.statement.StatementVisitor;
 
-public class DefFunctionVisitor extends WhileBaseVisitor<Void> {
+public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
 
     private Program program;
 
@@ -24,7 +24,7 @@ public class DefFunctionVisitor extends WhileBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitDefFunction(DefFunctionContext ctx) {
+    public DefFunction visitDefFunction(DefFunctionContext ctx) {
         Token nodeId = ctx.ID().getSymbol();
         List<TerminalNode> functionParameters = ctx.defParameters().ID();
         List<StatementContext> functionStatements = ctx.statement();
@@ -48,6 +48,8 @@ public class DefFunctionVisitor extends WhileBaseVisitor<Void> {
                     } else {
                         List<Statement> statements = parseStatements(functionStatements, functionParameters);
                         def.setStatementList(statements);
+                        // DefFunction is already inside the collection, do not add it again
+                        return null;
                     }
                 } else {
                     program.addError(
@@ -69,7 +71,8 @@ public class DefFunctionVisitor extends WhileBaseVisitor<Void> {
                     parameters.add(parameter.getText());
                 }
                 List<Statement> statements = parseStatements(functionStatements, functionParameters);
-                program.addDefFunction(nodeId.getText(), new DefFunction(nodeId, parameters, statements));
+
+                return new DefFunction(nodeId, parameters, statements);
             }
         }
         return null;
@@ -85,7 +88,7 @@ public class DefFunctionVisitor extends WhileBaseVisitor<Void> {
             availableVariables.add(parameter.getText());
         }
 
-        StatementVisitor statementVisitor = new StatementVisitor();
+        StatementVisitor statementVisitor = new StatementVisitor(availableVariables, program.getDefFunctions());
 
         for (var statement : statementsInFunction) {
             statements.add(statement.accept(statementVisitor));

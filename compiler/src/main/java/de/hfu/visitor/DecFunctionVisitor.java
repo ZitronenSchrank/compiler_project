@@ -10,7 +10,7 @@ import de.hfu.grammar.WhileParser.DecFunctionContext;
 import de.hfu.model.DefFunction;
 import de.hfu.model.Program;
 
-public class DecFunctionVisitor extends WhileBaseVisitor<Void> {
+public class DecFunctionVisitor extends WhileBaseVisitor<DefFunction> {
 
     private Program program;
 
@@ -19,7 +19,7 @@ public class DecFunctionVisitor extends WhileBaseVisitor<Void> {
     }
 
     @Override
-    public Void visitDecFunction(DecFunctionContext ctx) {
+    public DefFunction visitDecFunction(DecFunctionContext ctx) {
         Token nodeId = ctx.ID().getSymbol();
         DefFunction def = program.getDefFunctions().get(nodeId.getText());
 
@@ -33,7 +33,7 @@ public class DecFunctionVisitor extends WhileBaseVisitor<Void> {
                 parameters.add(parameter.getText());
             }
 
-            program.addDefFunction(nodeId.getText(), new DefFunction(nodeId, parameters));
+            return new DefFunction(nodeId, parameters);
         }
 
         return null;
