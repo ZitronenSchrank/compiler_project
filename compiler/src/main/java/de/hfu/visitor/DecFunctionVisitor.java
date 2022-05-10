@@ -1,5 +1,8 @@
 package de.hfu.visitor;
 
+import org.antlr.v4.runtime.Token;
+
+import de.hfu.error.SemanticError;
 import de.hfu.grammar.WhileBaseVisitor;
 import de.hfu.grammar.WhileParser.DecFunctionContext;
 import de.hfu.model.DecFunction;
@@ -15,14 +18,14 @@ public class DecFunctionVisitor extends WhileBaseVisitor<Void> {
 
     @Override
     public Void visitDecFunction(DecFunctionContext ctx) {
-        String nodeId = ctx.ID().getText();
-        DecFunction dec = program.getDecFunctions().get(nodeId);
+        Token nodeId = ctx.ID().getSymbol();
+        DecFunction dec = program.getDecFunctions().get(nodeId.getText());
 
         if (dec != null) {
-            // TODO: Error: Function Already Defined Or Too Many Forward Declerations
-            System.err.println("Function Already Defined or Too Many Forward Declerations");
+            program.addError(
+                    new SemanticError("Function Already Defined or Too Many Forward Declerations", nodeId));
         } else {
-            program.addDecFunction(nodeId, new DecFunction(nodeId));
+            program.addDecFunction(nodeId.getText(), new DecFunction(nodeId));
         }
 
         return null;

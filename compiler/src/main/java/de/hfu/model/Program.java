@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.hfu.error.CompilerError;
 import de.hfu.model.statement.Statement;
 
 public class Program {
@@ -12,10 +13,13 @@ public class Program {
     private Map<String, DefFunction> defFunctions;
     private List<Statement> statements;
 
+    private List<CompilerError> errors;
+
     public Program() {
         decFunctions = new HashMap<>();
         defFunctions = new HashMap<>();
         statements = new ArrayList<>();
+        errors = new ArrayList<>();
     }
 
     public Map<String, DecFunction> getDecFunctions() {
@@ -30,6 +34,14 @@ public class Program {
         return statements;
     }
 
+    public List<CompilerError> getErrors() {
+        return errors;
+    }
+
+    public boolean containsErrors() {
+        return !errors.isEmpty();
+    }
+
     public boolean addDecFunction(String id, DecFunction decFunction) {
         return decFunctions.put(id, decFunction) == null;
     }
@@ -40,5 +52,9 @@ public class Program {
 
     public void addStatement(Statement statement) {
         statements.add(statement);
+    }
+
+    public void addError(CompilerError error) {
+        errors.add(error);
     }
 }

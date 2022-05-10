@@ -19,7 +19,6 @@ import org.objectweb.asm.util.TraceClassVisitor;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.Vocabulary;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
@@ -96,6 +95,14 @@ public class App {
             }
 
             Program program = new ProgramVisitor().visit(ast);
+
+            if (program.containsErrors()) {
+                for (var error : program.getErrors()) {
+                    System.err.println(error);
+                }
+            } else {
+                System.out.println("Keine Fehler gefunden.");
+            }
 
         } catch (IOException e) {
             e.printStackTrace();

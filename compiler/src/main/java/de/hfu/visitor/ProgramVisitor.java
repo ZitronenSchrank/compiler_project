@@ -1,5 +1,6 @@
 package de.hfu.visitor;
 
+import de.hfu.error.SemanticError;
 import de.hfu.grammar.WhileBaseVisitor;
 import de.hfu.grammar.WhileParser.DecFunctionContext;
 import de.hfu.grammar.WhileParser.DefFunctionContext;
@@ -29,8 +30,8 @@ public class ProgramVisitor extends WhileBaseVisitor<Program> {
 
         for (var element : program.getDecFunctions().values()) {
             if (!element.isImplemented()) {
-                // TODO: Error: Function Not Implemented
-                System.err.println("Function " + element.getId() + " not implemented!");
+                program.addError(
+                        new SemanticError("Function " + element.getId() + " not implemented!", element.getToken()));
             }
         }
 

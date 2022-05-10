@@ -1,5 +1,6 @@
 package de.hfu.visitor;
 
+import de.hfu.error.SemanticError;
 import de.hfu.grammar.WhileBaseVisitor;
 import de.hfu.grammar.WhileParser.DefFunctionContext;
 import de.hfu.model.DecFunction;
@@ -23,17 +24,22 @@ public class DefFunctionVisitor extends WhileBaseVisitor<Void> {
         if (ctx.DEFINE() == null) {
 
             if (dec == null) {
-                // TODO: Error: 'Def' Or Forward Decleration Missing
-                System.err.println("'Def' Or Forward Decleration Missing, Line:" + ctx.ID().getSymbol().getLine());
+                program.addError(
+                        new SemanticError("'Def' Or Forward Decleration Missing", ctx.ID().getSymbol()));
             } else {
-                dec.setImplemented(true);
-                program.addDefFunction(nodeId, new DefFunction(nodeId));
+                if (dec.isImplemented()) {
+                    program.addError(
+                            new SemanticError("Function Already Implemented", ctx.ID().getSymbol()));
+                } else {
+                    dec.setImplemented(true);
+                    program.addDefFunction(nodeId, new DefFunction(nodeId));
+                }
             }
 
         } else {
             if (dec != null) {
-                // TODO: Error: Function already defined
-                System.err.println("Function Already Defined");
+                program.addError(
+                        new SemanticError("Function Already Defined", ctx.ID().getSymbol()));
             } else {
                 program.addDecFunction(nodeId, new DecFunction(nodeId, true));
                 program.addDefFunction(nodeId, new DefFunction(nodeId));
