@@ -9,21 +9,15 @@ import de.hfu.error.CompilerError;
 import de.hfu.model.statement.Statement;
 
 public class Program {
-    private Map<String, DecFunction> decFunctions;
     private Map<String, DefFunction> defFunctions;
     private List<Statement> statements;
 
     private List<CompilerError> errors;
 
     public Program() {
-        decFunctions = new HashMap<>();
         defFunctions = new HashMap<>();
         statements = new ArrayList<>();
         errors = new ArrayList<>();
-    }
-
-    public Map<String, DecFunction> getDecFunctions() {
-        return decFunctions;
     }
 
     public Map<String, DefFunction> getDefFunctions() {
@@ -40,10 +34,6 @@ public class Program {
 
     public boolean containsErrors() {
         return !errors.isEmpty();
-    }
-
-    public boolean addDecFunction(String id, DecFunction decFunction) {
-        return decFunctions.put(id, decFunction) == null;
     }
 
     public boolean addDefFunction(String id, DefFunction defFunction) {

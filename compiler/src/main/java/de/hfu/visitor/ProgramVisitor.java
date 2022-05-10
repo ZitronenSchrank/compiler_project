@@ -28,7 +28,7 @@ public class ProgramVisitor extends WhileBaseVisitor<Program> {
             }
         }
 
-        for (var element : program.getDecFunctions().values()) {
+        for (var element : program.getDefFunctions().values()) {
             if (!element.isImplemented()) {
                 program.addError(
                         new SemanticError("Function " + element.getId() + " not implemented!", element.getToken()));

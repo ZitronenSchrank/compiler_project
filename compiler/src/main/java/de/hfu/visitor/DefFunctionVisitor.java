@@ -1,9 +1,10 @@
 package de.hfu.visitor;
 
+import org.antlr.v4.runtime.Token;
+
 import de.hfu.error.SemanticError;
 import de.hfu.grammar.WhileBaseVisitor;
 import de.hfu.grammar.WhileParser.DefFunctionContext;
-import de.hfu.model.DecFunction;
 import de.hfu.model.DefFunction;
 import de.hfu.model.Program;
 
@@ -17,32 +18,30 @@ public class DefFunctionVisitor extends WhileBaseVisitor<Void> {
 
     @Override
     public Void visitDefFunction(DefFunctionContext ctx) {
-        String nodeId = ctx.ID().getText();
-        DecFunction dec = program.getDecFunctions().get(nodeId);
+        Token nodeId = ctx.ID().getSymbol();
+        DefFunction def = program.getDefFunctions().get(nodeId.getText());
 
         // No Define Token?
         if (ctx.DEFINE() == null) {
 
-            if (dec == null) {
+            if (def == null) {
                 program.addError(
                         new SemanticError("'Def' Or Forward Decleration Missing", ctx.ID().getSymbol()));
             } else {
-                if (dec.isImplemented()) {
+                if (def.isImplemented()) {
                     program.addError(
                             new SemanticError("Function Already Implemented", ctx.ID().getSymbol()));
                 } else {
-                    dec.setImplemented(true);
-                    program.addDefFunction(nodeId, new DefFunction(nodeId));
+                    def.setImplemented(true);
                 }
             }
 
         } else {
-            if (dec != null) {
+            if (def != null) {
                 program.addError(
                         new SemanticError("Function Already Defined", ctx.ID().getSymbol()));
             } else {
-                program.addDecFunction(nodeId, new DecFunction(nodeId, true));
-                program.addDefFunction(nodeId, new DefFunction(nodeId));
+                program.addDefFunction(nodeId.getText(), new DefFunction(nodeId, true));
             }
         }
 
