@@ -9,8 +9,11 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 import de.hfu.error.SemanticError;
 import de.hfu.grammar.WhileBaseVisitor;
 import de.hfu.grammar.WhileParser.DefFunctionContext;
+import de.hfu.grammar.WhileParser.StatementContext;
 import de.hfu.model.DefFunction;
 import de.hfu.model.Program;
+import de.hfu.model.statement.Statement;
+import de.hfu.visitor.statement.StatementVisitor;
 
 public class DefFunctionVisitor extends WhileBaseVisitor<Void> {
 
@@ -24,6 +27,8 @@ public class DefFunctionVisitor extends WhileBaseVisitor<Void> {
     public Void visitDefFunction(DefFunctionContext ctx) {
         Token nodeId = ctx.ID().getSymbol();
         List<TerminalNode> functionParameters = ctx.defParameters().ID();
+        List<StatementContext> functionStatements = ctx.statement();
+
         DefFunction def = program.getDefFunctions().get(nodeId.getText());
 
         // Is Forward Decleration Used?
@@ -41,7 +46,7 @@ public class DefFunctionVisitor extends WhileBaseVisitor<Void> {
                         program.addError(
                                 new SemanticError("Function Is Already Implemented", ctx.ID().getSymbol()));
                     } else {
-                        parseStatements(ctx);
+                        List<Statement> statements = parseStatements(functionStatements, functionParameters);
                         def.setImplemented(true);
                     }
                 } else {
@@ -63,14 +68,28 @@ public class DefFunctionVisitor extends WhileBaseVisitor<Void> {
                 for (var parameter : functionParameters) {
                     parameters.add(parameter.getText());
                 }
-                parseStatements(ctx);
+                List<Statement> statements = parseStatements(functionStatements, functionParameters);
                 program.addDefFunction(nodeId.getText(), new DefFunction(nodeId, parameters, true));
             }
         }
         return null;
     }
 
-    private void parseStatements(DefFunctionContext ctx) {
+    private List<Statement> parseStatements(List<StatementContext> statementsInFunction,
+            List<TerminalNode> functionParamesters) {
+        List<Statement> statements = new ArrayList<>();
+        List<String> availableVariables = new ArrayList<>();
 
+        for (var parameter : functionParamesters) {
+            availableVariables.add(parameter.getText());
+        }
+
+        StatementVisitor statementVisitor = new StatementVisitor();
+
+        for (var statement : statementsInFunction) {
+            statements.add(statement.accept(statementVisitor));
+        }
+
+        return statements;
     }
 }
