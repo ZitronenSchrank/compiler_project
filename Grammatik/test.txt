@@ -1,7 +1,12 @@
 def mutliply(s1, s2);
 def sub(s1, s2, s3, s4);
 def sub(s1, s2, s3, s4);
-def hello(s1);
+def hello(s1, s1);
+
+def hallo(s1, s1) begin:
+    var retVal := 0;
+    return retVal;
+end
 
 sub(s1) begin:
     var retVal := 0; 

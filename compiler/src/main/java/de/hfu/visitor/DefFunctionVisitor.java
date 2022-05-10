@@ -1,6 +1,7 @@
 package de.hfu.visitor;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.antlr.v4.runtime.Token;
@@ -14,6 +15,7 @@ import de.hfu.model.DefFunction;
 import de.hfu.model.Program;
 import de.hfu.model.statement.Statement;
 import de.hfu.util.AvailableVariables;
+import de.hfu.util.SemanticUtils;
 import de.hfu.visitor.statement.StatementVisitor;
 
 public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
@@ -45,6 +47,7 @@ public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
             } else {
                 // It is in the map
                 if (functionParameters.size() == def.getParameterCount()) {
+
                     if (def.isImplemented()) {
                         program.addError(
                                 new SemanticError("Function Is Already Implemented", ctx.ID().getSymbol()));
@@ -70,13 +73,18 @@ public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
                 program.addError(
                         new SemanticError("Function Already Defined", ctx.ID().getSymbol()));
             } else {
-                ArrayList<String> parameters = new ArrayList<>();
-                for (var parameter : functionParameters) {
-                    parameters.add(parameter.getText());
-                }
-                List<Statement> statements = parseStatements(functionStatements, functionParameters);
+                if (SemanticUtils.isEachParameterNameUnique(functionParameters)) {
+                    ArrayList<String> parameters = new ArrayList<>();
+                    for (var parameter : functionParameters) {
+                        parameters.add(parameter.getText());
+                    }
+                    List<Statement> statements = parseStatements(functionStatements, functionParameters);
 
-                return new DefFunction(nodeId, parameters, statements, returnVariable);
+                    return new DefFunction(nodeId, parameters, statements, returnVariable);
+                } else {
+                    program.addError(
+                            new SemanticError("Each Parameter Needs An Unique Name", ctx.ID().getSymbol()));
+                }
             }
         }
         return null;
