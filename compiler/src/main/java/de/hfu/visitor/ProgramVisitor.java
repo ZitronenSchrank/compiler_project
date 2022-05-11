@@ -10,6 +10,7 @@ import de.hfu.model.DefFunction;
 import de.hfu.model.Program;
 import de.hfu.model.statement.Statement;
 import de.hfu.util.AvailableVariables;
+import de.hfu.util.ErrorMessages;
 import de.hfu.visitor.statement.StatementVisitor;
 
 public class ProgramVisitor extends WhileBaseVisitor<Program> {
@@ -42,7 +43,8 @@ public class ProgramVisitor extends WhileBaseVisitor<Program> {
         for (var element : program.getDefFunctions().values()) {
             if (!element.isImplemented()) {
                 program.addError(
-                        new SemanticError("Function " + element.getId() + " not implemented!", element.getToken()));
+                        new SemanticError(String.format(ErrorMessages.FUN_NOT_IMPLEMENTED, element.getId()),
+                                element.getToken()));
             }
         }
 

@@ -12,4 +12,5 @@ public final class ErrorMessages {
     public static final String FUN_ALREADY_DEF = "Function Already Defined";
     public static final String PARAM_NEED_UNIQUE_NAME = "Each Parameter Needs An Unique Name";
     public static final String TOO_MANY_DEF_DEC_FUN = "Function Already Defined or Too Many Forward Declerations";
+    public static final String FUN_NOT_IMPLEMENTED = "Function %s not implemented or contains errors!";
 }
