@@ -47,24 +47,31 @@ public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
             } else {
                 // It is in the map
                 if (functionParameters.size() == def.getParameterCount()) {
-
-                    if (def.isImplemented()) {
-                        program.addError(
-                                new SemanticError("Function Is Already Implemented", ctx.ID().getSymbol()));
-                    } else {
-                        StatementParseResult result = parseStatements(functionStatements, functionParameters);
-
-                        if (result.getAvailableVariables().contains(returnVariable.getText())) {
-                            def.setStatementList(result.getStatements());
-                            def.setReturnVariable(returnVariable.getText());
-                            // DefFunction is already inside the collection, do not add it again
-                            return null;
-                        } else {
+                    if (areParameterNamesTheSame(def, functionParameters)) {
+                        if (def.isImplemented()) {
                             program.addError(
-                                    new SemanticError("Variable in Return Statement does not exist", returnVariable));
-                        }
+                                    new SemanticError("Function Is Already Implemented", ctx.ID().getSymbol()));
+                        } else {
+                            StatementParseResult result = parseStatements(functionStatements, functionParameters);
 
+                            if (result.getAvailableVariables().contains(returnVariable.getText())) {
+                                def.setStatementList(result.getStatements());
+                                def.setReturnVariable(returnVariable.getText());
+                                // DefFunction is already inside the collection, do not add it again
+                                return null;
+                            } else {
+                                program.addError(
+                                        new SemanticError("Variable in Return Statement does not exist",
+                                                returnVariable));
+                            }
+                        }
+                    } else {
+                        program.addError(
+                                new SemanticError(
+                                        "Function Parameters In Definition and Decleration Have Unequal Names",
+                                        ctx.ID().getSymbol()));
                     }
+
                 } else {
                     program.addError(
                             new SemanticError(
@@ -121,5 +128,17 @@ public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
         }
 
         return new StatementParseResult(statements, availableVariables);
+    }
+
+    private boolean areParameterNamesTheSame(DefFunction function, List<TerminalNode> parameters) {
+        List<String> functionParameters = function.getParameterNames();
+
+        for (int i = 0; i < functionParameters.size(); i++) {
+            if (!functionParameters.get(i).equals(parameters.get(i).getText())) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
