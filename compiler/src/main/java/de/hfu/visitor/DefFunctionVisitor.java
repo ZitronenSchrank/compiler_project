@@ -14,6 +14,7 @@ import de.hfu.model.DefFunction;
 import de.hfu.model.Program;
 import de.hfu.model.statement.Statement;
 import de.hfu.util.AvailableVariables;
+import de.hfu.util.ErrorMessages;
 import de.hfu.util.SemanticUtils;
 import de.hfu.util.StatementParseResult;
 import de.hfu.visitor.statement.StatementVisitor;
@@ -42,15 +43,13 @@ public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
             // Then the function must be already inside the map
             if (def == null) {
                 // It is not inside the map
-                program.addError(
-                        new SemanticError("Keyword 'Def' Or Forward Decleration Missing", ctx.ID().getSymbol()));
+                program.addError(new SemanticError(ErrorMessages.DEF_OR_DEC_MISSING, nodeId));
             } else {
                 // It is in the map
                 if (functionParameters.size() == def.getParameterCount()) {
                     if (areParameterNamesTheSame(def, functionParameters)) {
                         if (def.isImplemented()) {
-                            program.addError(
-                                    new SemanticError("Function Is Already Implemented", ctx.ID().getSymbol()));
+                            program.addError(new SemanticError(ErrorMessages.FUN_ALREADY_IMPLEMENTED, nodeId));
                         } else {
                             StatementParseResult result = parseStatements(functionStatements, functionParameters);
 
@@ -60,23 +59,15 @@ public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
                                 // DefFunction is already inside the collection, do not add it again
                                 return null;
                             } else {
-                                program.addError(
-                                        new SemanticError("Variable in Return Statement does not exist",
-                                                returnVariable));
+                                program.addError(new SemanticError(ErrorMessages.RET_VAR_NOT_EXIST, returnVariable));
                             }
                         }
                     } else {
-                        program.addError(
-                                new SemanticError(
-                                        "Function Parameters In Definition and Decleration Have Unequal Names",
-                                        ctx.ID().getSymbol()));
+                        program.addError(new SemanticError(ErrorMessages.PARAM_DEF_DEC_NAMES, nodeId));
                     }
 
                 } else {
-                    program.addError(
-                            new SemanticError(
-                                    "Function Declaration And Function Definition Have An Unequal Number Of Parameters",
-                                    ctx.ID().getSymbol()));
+                    program.addError(new SemanticError(ErrorMessages.PARAM_DEF_DEC_COUNT, nodeId));
                 }
             }
         } else {
@@ -84,8 +75,7 @@ public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
             // Then the function must not be inside the map
             if (def != null) {
                 // It is inside the map
-                program.addError(
-                        new SemanticError("Function Already Defined", ctx.ID().getSymbol()));
+                program.addError(new SemanticError(ErrorMessages.FUN_ALREADY_DEF, nodeId));
             } else {
                 if (SemanticUtils.isEachParameterNameUnique(functionParameters)) {
                     ArrayList<String> parameters = new ArrayList<>();
@@ -97,12 +87,10 @@ public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
                     if (result.getAvailableVariables().contains(returnVariable.getText())) {
                         return new DefFunction(nodeId, parameters, result.getStatements(), returnVariable.getText());
                     } else {
-                        program.addError(
-                                new SemanticError("Variable in Return Statement does not exist", returnVariable));
+                        program.addError(new SemanticError(ErrorMessages.RET_VAR_NOT_EXIST, returnVariable));
                     }
                 } else {
-                    program.addError(
-                            new SemanticError("Each Parameter Needs An Unique Name", ctx.ID().getSymbol()));
+                    program.addError(new SemanticError(ErrorMessages.PARAM_NEED_UNIQUE_NAME, nodeId));
                 }
             }
         }
