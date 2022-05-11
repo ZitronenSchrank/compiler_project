@@ -1,7 +1,6 @@
 package de.hfu.visitor;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import org.antlr.v4.runtime.Token;
@@ -16,6 +15,7 @@ import de.hfu.model.Program;
 import de.hfu.model.statement.Statement;
 import de.hfu.util.AvailableVariables;
 import de.hfu.util.SemanticUtils;
+import de.hfu.util.StatementParseResult;
 import de.hfu.visitor.statement.StatementVisitor;
 
 public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
@@ -30,7 +30,7 @@ public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
     public DefFunction visitDefFunction(DefFunctionContext ctx) {
         Token nodeId = ctx.ID().getSymbol();
 
-        String returnVariable = ctx.retStatement().ID().getText();
+        Token returnVariable = ctx.retStatement().ID().getSymbol();
         List<TerminalNode> functionParameters = ctx.defParameters().ID();
         List<StatementContext> functionStatements = ctx.statement();
 
@@ -52,11 +52,18 @@ public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
                         program.addError(
                                 new SemanticError("Function Is Already Implemented", ctx.ID().getSymbol()));
                     } else {
-                        List<Statement> statements = parseStatements(functionStatements, functionParameters);
-                        def.setStatementList(statements);
-                        def.setReturnVariable(returnVariable);
-                        // DefFunction is already inside the collection, do not add it again
-                        return null;
+                        StatementParseResult result = parseStatements(functionStatements, functionParameters);
+
+                        if (result.getAvailableVariables().contains(returnVariable.getText())) {
+                            def.setStatementList(result.getStatements());
+                            def.setReturnVariable(returnVariable.getText());
+                            // DefFunction is already inside the collection, do not add it again
+                            return null;
+                        } else {
+                            program.addError(
+                                    new SemanticError("Variable in Return Statement does not exist", returnVariable));
+                        }
+
                     }
                 } else {
                     program.addError(
@@ -78,9 +85,14 @@ public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
                     for (var parameter : functionParameters) {
                         parameters.add(parameter.getText());
                     }
-                    List<Statement> statements = parseStatements(functionStatements, functionParameters);
+                    StatementParseResult result = parseStatements(functionStatements, functionParameters);
 
-                    return new DefFunction(nodeId, parameters, statements, returnVariable);
+                    if (result.getAvailableVariables().contains(returnVariable.getText())) {
+                        return new DefFunction(nodeId, parameters, result.getStatements(), returnVariable.getText());
+                    } else {
+                        program.addError(
+                                new SemanticError("Variable in Return Statement does not exist", returnVariable));
+                    }
                 } else {
                     program.addError(
                             new SemanticError("Each Parameter Needs An Unique Name", ctx.ID().getSymbol()));
@@ -90,7 +102,7 @@ public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
         return null;
     }
 
-    private List<Statement> parseStatements(List<StatementContext> statementsInFunction,
+    private StatementParseResult parseStatements(List<StatementContext> statementsInFunction,
             List<TerminalNode> functionParamesters) {
 
         List<Statement> statements = new ArrayList<>();
@@ -108,6 +120,6 @@ public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
             statements.add(statement.accept(statementVisitor));
         }
 
-        return statements;
+        return new StatementParseResult(statements, availableVariables);
     }
 }
