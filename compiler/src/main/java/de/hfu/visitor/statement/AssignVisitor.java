@@ -34,7 +34,7 @@ public class AssignVisitor extends WhileBaseVisitor<Assign> {
             if (expr == null) {
                 return null;
             } else {
-                return new Assign();
+                return new Assign(varName.getText(), expr);
             }
         }
         return null;
