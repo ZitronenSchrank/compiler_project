@@ -8,6 +8,7 @@ import de.hfu.grammar.WhileParser.DefVarContext;
 
 import de.hfu.model.Program;
 import de.hfu.model.expression.Expression;
+import de.hfu.model.expression.VarExpression;
 import de.hfu.model.statement.DefVar;
 import de.hfu.util.AvailableVariables;
 import de.hfu.util.ErrorMessages;
@@ -31,13 +32,15 @@ public class DefVarVisitor extends WhileBaseVisitor<DefVar> {
             program.addError(
                     new SemanticError(String.format(ErrorMessages.VAR_ALREADY_DEF, varName.getText()), varName));
         } else {
-            availableVariables.addAvailableVariable(varName.getText());
 
             Expression expr = ctx.expr().accept(new ExpressionVisitor());
             if (expr == null) {
                 return null;
             } else {
-                return new DefVar();
+
+                availableVariables.addAvailableVariable(varName.getText());
+                return new DefVar(varName.getText(), expr);
+
             }
 
         }
