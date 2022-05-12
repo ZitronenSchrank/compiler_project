@@ -24,7 +24,7 @@ defFunction     : DEFINE ID '(' defParameters ')' BEGIN ':' (statement)* retStat
 decFunction     : DEFINE ID '(' defParameters ')' SEMICOLON
                 ;
 
-defVar          : VARIABLE assign
+defVar          : VARIABLE ID ASSIGN expr SEMICOLON
                 ;
 
 defParameters   : ID (',' ID)*

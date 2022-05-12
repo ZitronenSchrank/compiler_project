@@ -1,11 +1,17 @@
 package de.hfu.visitor.statement;
 
+import org.antlr.v4.runtime.Token;
+
+import de.hfu.error.SemanticError;
 import de.hfu.grammar.WhileBaseVisitor;
 import de.hfu.grammar.WhileParser.DefVarContext;
 
 import de.hfu.model.Program;
+import de.hfu.model.expression.Expression;
 import de.hfu.model.statement.DefVar;
 import de.hfu.util.AvailableVariables;
+import de.hfu.util.ErrorMessages;
+import de.hfu.visitor.expression.ExpressionVisitor;
 
 public class DefVarVisitor extends WhileBaseVisitor<DefVar> {
 
@@ -19,7 +25,22 @@ public class DefVarVisitor extends WhileBaseVisitor<DefVar> {
 
     @Override
     public DefVar visitDefVar(DefVarContext ctx) {
-        // TODO Auto-generated method stub
-        return super.visitDefVar(ctx);
+        Token varName = ctx.ID().getSymbol();
+
+        if (availableVariables.contains(varName.getText())) {
+            program.addError(
+                    new SemanticError(String.format(ErrorMessages.VAR_ALREADY_DEF, varName.getText()), varName));
+        } else {
+            availableVariables.addAvailableVariable(varName.getText());
+
+            Expression expr = ctx.expr().accept(new ExpressionVisitor());
+            if (expr == null) {
+                return null;
+            } else {
+                return new DefVar();
+            }
+
+        }
+        return null;
     }
 }
