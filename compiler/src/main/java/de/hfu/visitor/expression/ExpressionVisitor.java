@@ -33,17 +33,22 @@ public class ExpressionVisitor extends WhileBaseVisitor<Expression> {
         } else if (child instanceof CallFunctionContext) {
             System.out.println("Call");
         } else if (ctx.ID() != null) {
-            Token varName = ctx.ID().getSymbol();
-            if (availableVariables.contains(varName.getText())) {
-                return new VarExpression(varName.getText());
-            } else {
-                program.addError(
-                        new SemanticError(String.format(ErrorMessages.VAR_NOT_DEF, varName.getText()), varName));
-            }
+            return parseVarExpression(ctx);
 
         } else if (ctx.NUM() != null) {
             return new NumExpression(ctx.NUM().getText());
         }
         return null;
+    }
+
+    private VarExpression parseVarExpression(ExprContext context) {
+        Token varName = context.ID().getSymbol();
+        if (availableVariables.contains(varName.getText())) {
+            return new VarExpression(varName.getText());
+        } else {
+            program.addError(
+                    new SemanticError(String.format(ErrorMessages.VAR_NOT_DEF, varName.getText()), varName));
+            return null;
+        }
     }
 }
