@@ -30,7 +30,7 @@ public class AssignVisitor extends WhileBaseVisitor<Assign> {
                     new SemanticError(String.format(ErrorMessages.FORBIDDEN_VAR_WRITE, varName.getText()), varName));
         } else {
             System.out.println("Assing");
-            Expression expr = ctx.expr().accept(new ExpressionVisitor());
+            Expression expr = ctx.expr().accept(new ExpressionVisitor(availableVariables, program));
             if (expr == null) {
                 return null;
             } else {

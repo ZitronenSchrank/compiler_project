@@ -20,6 +20,11 @@ public class ExpressionVisitor extends WhileBaseVisitor<Expression> {
     AvailableVariables availableVariables;
     Program program;
 
+    public ExpressionVisitor(AvailableVariables availableVariables, Program program) {
+        this.availableVariables = availableVariables;
+        this.program = program;
+    }
+
     @Override
     public Expression visitExpr(ExprContext ctx) {
         ParseTree child = ctx.children.get(0);
@@ -30,10 +35,10 @@ public class ExpressionVisitor extends WhileBaseVisitor<Expression> {
         } else if (ctx.ID() != null) {
             Token varName = ctx.ID().getSymbol();
             if (availableVariables.contains(varName.getText())) {
+                return new VarExpression(varName.getText());
+            } else {
                 program.addError(
                         new SemanticError(String.format(ErrorMessages.VAR_NOT_DEF, varName.getText()), varName));
-            } else {
-                return new VarExpression(varName.getText());
             }
 
         } else if (ctx.NUM() != null) {
