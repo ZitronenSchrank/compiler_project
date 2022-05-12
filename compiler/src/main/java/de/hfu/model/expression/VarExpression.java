@@ -3,7 +3,7 @@ package de.hfu.model.expression;
 public class VarExpression extends Expression {
     String varName;
 
-    VarExpression(String varName) {
+    public VarExpression(String varName) {
         this.varName = varName;
     }
 

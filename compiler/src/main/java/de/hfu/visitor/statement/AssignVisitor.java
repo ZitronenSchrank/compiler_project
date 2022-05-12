@@ -25,9 +25,9 @@ public class AssignVisitor extends WhileBaseVisitor<Assign> {
     @Override
     public Assign visitAssign(AssignContext ctx) {
         Token varName = ctx.ID().getSymbol();
-        if (availableVariables.contains(varName.getText())) {
+        if (availableVariables.forbiddenVariablesContains(varName.getText())) {
             program.addError(
-                    new SemanticError(String.format(ErrorMessages.VAR_ALREADY_DEF, varName.getText()), varName));
+                    new SemanticError(String.format(ErrorMessages.FORBIDDEN_VAR_WRITE, varName.getText()), varName));
         } else {
             System.out.println("Assing");
             Expression expr = ctx.expr().accept(new ExpressionVisitor());

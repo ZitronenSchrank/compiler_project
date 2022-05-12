@@ -1,14 +1,19 @@
 package de.hfu.visitor.expression;
 
+import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import de.hfu.error.SemanticError;
 import de.hfu.grammar.WhileBaseVisitor;
 import de.hfu.grammar.WhileParser.CallFunctionContext;
 import de.hfu.grammar.WhileParser.ExprContext;
 import de.hfu.grammar.WhileParser.ReadContext;
 import de.hfu.model.Program;
 import de.hfu.model.expression.Expression;
+import de.hfu.model.expression.NumExpression;
+import de.hfu.model.expression.VarExpression;
 import de.hfu.util.AvailableVariables;
+import de.hfu.util.ErrorMessages;
 
 public class ExpressionVisitor extends WhileBaseVisitor<Expression> {
 
@@ -23,9 +28,16 @@ public class ExpressionVisitor extends WhileBaseVisitor<Expression> {
         } else if (child instanceof CallFunctionContext) {
             System.out.println("Call");
         } else if (ctx.ID() != null) {
-            System.out.println("ID");
+            Token varName = ctx.ID().getSymbol();
+            if (availableVariables.contains(varName.getText())) {
+                program.addError(
+                        new SemanticError(String.format(ErrorMessages.VAR_NOT_DEF, varName.getText()), varName));
+            } else {
+                return new VarExpression(varName.getText());
+            }
+
         } else if (ctx.NUM() != null) {
-            System.out.println("NUM");
+            return new NumExpression(ctx.NUM().getText());
         }
         return null;
     }

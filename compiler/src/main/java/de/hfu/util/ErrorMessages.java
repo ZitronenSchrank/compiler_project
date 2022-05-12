@@ -15,4 +15,6 @@ public final class ErrorMessages {
     public static final String FUN_NOT_IMPLEMENTED = "Function %s not implemented or contains errors!";
 
     public static final String VAR_ALREADY_DEF = "Variable %s is already defined.";
+    public static final String VAR_NOT_DEF = "Variable %s is not defined.";
+    public static final String FORBIDDEN_VAR_WRITE = "Variable %s can not be written to.";
 }
