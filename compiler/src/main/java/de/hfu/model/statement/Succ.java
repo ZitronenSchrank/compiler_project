@@ -6,4 +6,8 @@ public class Succ extends Statement {
     public Succ(String varName) {
         this.varName = varName;
     }
+
+    public String getVarName() {
+        return varName;
+    }
 }
