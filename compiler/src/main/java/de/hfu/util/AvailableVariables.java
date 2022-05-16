@@ -39,7 +39,7 @@ public class AvailableVariables {
 
     public boolean addForbiddenVariable(String variable) {
         int currentIndex = availableVariables.size() - 1;
-        return availableVariables.get(currentIndex).add(variable);
+        return forbiddenVariables.get(currentIndex).add(variable);
     }
 
     public boolean availableVariablesContains(String variable) {

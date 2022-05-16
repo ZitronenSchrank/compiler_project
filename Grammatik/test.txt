@@ -9,14 +9,16 @@ def hallo(s1, s2) begin:
     hello := 213;
     hello := add(2);
     
-    while(hello) begin:
+    loop(hello) begin:
         var lol := 0;
         succ(lol);
         succ(s1);
-        hello := add(s1);
-    end
 
-    succ(lol);
+        loop(hello) begin:
+            succ(s1);
+        end
+
+    end
 
     return hello;
 end
