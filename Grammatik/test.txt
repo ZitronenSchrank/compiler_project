@@ -5,7 +5,8 @@ end
 def hallo(s1, s2) begin:
     s1 := 9999999;
     var hello := read();
-    var retVal := hello;
+    var retVal := add(s1);
     hello := 213;
+    hello := add(2);
     return hello;
 end

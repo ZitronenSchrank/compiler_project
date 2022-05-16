@@ -41,14 +41,12 @@ public class CallFunctionVisitor extends WhileBaseVisitor<CallFunction> {
                     .accept(new CallParameterVisitor(availableVariables, program));
             if (parameterExpressions != null) {
                 if (parameterExpressions.size() == fun.getParameterCount()) {
-
+                    return new CallFunction(funId.getText(), parameterExpressions);
                 } else {
                     program.addError(new SemanticError(
                             String.format(ErrorMessages.FUN_CALL_NOT_ENOUGH_PARAMS, funId.getText()), funId));
                     return null;
                 }
-            } else {
-                return null;
             }
         }
 
