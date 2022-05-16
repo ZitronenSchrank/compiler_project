@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.antlr.v4.runtime.Token;
 
-import de.hfu.error.SemanticError;
+import de.hfu.error.ErrorFactory;
 import de.hfu.grammar.WhileBaseVisitor;
 import de.hfu.grammar.WhileParser.CallFunctionContext;
 import de.hfu.grammar.WhileParser.CallParametersContext;
@@ -34,7 +34,7 @@ public class CallFunctionVisitor extends WhileBaseVisitor<CallFunction> {
 
         // Is Function defined/Declared?
         if (fun == null) {
-            program.addError(new SemanticError(String.format(ErrorMessages.FUN_NOT_DEF, funId.getText()), funId));
+            program.addError(ErrorFactory.formattedSemanticError(ErrorMessages.FUN_NOT_DEF, funId));
             return null;
         } else {
             List<Expression> parameterExpressions = parameters
@@ -43,8 +43,8 @@ public class CallFunctionVisitor extends WhileBaseVisitor<CallFunction> {
                 if (parameterExpressions.size() == fun.getParameterCount()) {
                     return new CallFunction(funId.getText(), parameterExpressions);
                 } else {
-                    program.addError(new SemanticError(
-                            String.format(ErrorMessages.FUN_CALL_NOT_ENOUGH_PARAMS, funId.getText()), funId));
+                    program.addError(
+                            ErrorFactory.formattedSemanticError(ErrorMessages.FUN_CALL_NOT_ENOUGH_PARAMS, funId));
                     return null;
                 }
             }

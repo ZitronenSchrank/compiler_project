@@ -3,7 +3,7 @@ package de.hfu.visitor.expression;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
 
-import de.hfu.error.SemanticError;
+import de.hfu.error.ErrorFactory;
 import de.hfu.grammar.WhileBaseVisitor;
 import de.hfu.grammar.WhileParser.CallFunctionContext;
 import de.hfu.grammar.WhileParser.ExprContext;
@@ -45,8 +45,7 @@ public class ExpressionVisitor extends WhileBaseVisitor<Expression> {
         if (availableVariables.contains(varName.getText())) {
             return new VarExpression(varName.getText());
         } else {
-            program.addError(
-                    new SemanticError(String.format(ErrorMessages.VAR_NOT_DEF, varName.getText()), varName));
+            program.addError(ErrorFactory.formattedSemanticError(ErrorMessages.VAR_NOT_DEF, varName));
             return null;
         }
     }

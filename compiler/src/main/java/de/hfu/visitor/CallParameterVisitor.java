@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-import de.hfu.error.SemanticError;
+import de.hfu.error.ErrorFactory;
 import de.hfu.grammar.WhileBaseVisitor;
 import de.hfu.grammar.WhileParser.CallParametersContext;
 import de.hfu.model.Program;
@@ -39,8 +39,7 @@ public class CallParameterVisitor extends WhileBaseVisitor<List<Expression>> {
                         parameters.add(new VarExpression(child.getText()));
                     } else {
                         program.addError(
-                                new SemanticError(String.format(ErrorMessages.VAR_NOT_DEF, token.getText()),
-                                        token.getSymbol()));
+                                ErrorFactory.formattedSemanticError(ErrorMessages.VAR_NOT_DEF, token.getSymbol()));
                         return null;
                     }
                 } else if (listOfNumNodes.contains(child)) {

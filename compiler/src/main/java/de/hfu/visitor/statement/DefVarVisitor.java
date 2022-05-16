@@ -2,7 +2,7 @@ package de.hfu.visitor.statement;
 
 import org.antlr.v4.runtime.Token;
 
-import de.hfu.error.SemanticError;
+import de.hfu.error.ErrorFactory;
 import de.hfu.grammar.WhileBaseVisitor;
 import de.hfu.grammar.WhileParser.DefVarContext;
 
@@ -28,8 +28,7 @@ public class DefVarVisitor extends WhileBaseVisitor<DefVar> {
         Token varName = ctx.ID().getSymbol();
 
         if (availableVariables.contains(varName.getText())) {
-            program.addError(
-                    new SemanticError(String.format(ErrorMessages.VAR_ALREADY_DEF, varName.getText()), varName));
+            program.addError(ErrorFactory.formattedSemanticError(ErrorMessages.VAR_ALREADY_DEF, varName));
         } else {
 
             Expression expr = ctx.expr().accept(new ExpressionVisitor(availableVariables, program));

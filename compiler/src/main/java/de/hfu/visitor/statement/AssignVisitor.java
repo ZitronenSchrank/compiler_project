@@ -2,7 +2,7 @@ package de.hfu.visitor.statement;
 
 import org.antlr.v4.runtime.Token;
 
-import de.hfu.error.SemanticError;
+import de.hfu.error.ErrorFactory;
 import de.hfu.grammar.WhileBaseVisitor;
 import de.hfu.grammar.WhileParser.AssignContext;
 import de.hfu.model.Program;
@@ -28,8 +28,7 @@ public class AssignVisitor extends WhileBaseVisitor<Assign> {
         if (availableVariables.contains(varName.getText())) {
             if (availableVariables.forbiddenVariablesContains(varName.getText())) {
                 program.addError(
-                        new SemanticError(String.format(ErrorMessages.FORBIDDEN_VAR_WRITE, varName.getText()),
-                                varName));
+                        ErrorFactory.formattedSemanticError(ErrorMessages.FORBIDDEN_VAR_WRITE, varName));
             } else {
                 Expression expr = ctx.expr().accept(new ExpressionVisitor(availableVariables, program));
                 if (expr == null) {
@@ -40,8 +39,7 @@ public class AssignVisitor extends WhileBaseVisitor<Assign> {
             }
         } else {
             program.addError(
-                    new SemanticError(String.format(ErrorMessages.VAR_NOT_DEF, varName.getText()),
-                            varName));
+                    ErrorFactory.formattedSemanticError(ErrorMessages.VAR_NOT_DEF, varName));
         }
 
         return null;

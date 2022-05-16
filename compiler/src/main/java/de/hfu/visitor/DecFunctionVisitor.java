@@ -6,7 +6,7 @@ import java.util.List;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-import de.hfu.error.SemanticError;
+import de.hfu.error.ErrorFactory;
 import de.hfu.grammar.WhileBaseVisitor;
 import de.hfu.grammar.WhileParser.DecFunctionContext;
 import de.hfu.model.DefFunction;
@@ -29,8 +29,7 @@ public class DecFunctionVisitor extends WhileBaseVisitor<DefFunction> {
         List<TerminalNode> functionParameters = ctx.defParameters().ID();
 
         if (def != null) {
-            program.addError(
-                    new SemanticError(ErrorMessages.TOO_MANY_DEF_DEC_FUN, nodeId));
+            program.addError(ErrorFactory.semanticError(ErrorMessages.TOO_MANY_DEF_DEC_FUN, nodeId));
         } else {
             if (SemanticUtils.isEachParameterNameUnique(functionParameters)) {
                 ArrayList<String> parameters = new ArrayList<>();
@@ -39,7 +38,7 @@ public class DecFunctionVisitor extends WhileBaseVisitor<DefFunction> {
                 }
                 return new DefFunction(nodeId, parameters);
             } else {
-                program.addError(new SemanticError(ErrorMessages.PARAM_NEED_UNIQUE_NAME, nodeId));
+                program.addError(ErrorFactory.semanticError(ErrorMessages.PARAM_NEED_UNIQUE_NAME, nodeId));
             }
 
         }
