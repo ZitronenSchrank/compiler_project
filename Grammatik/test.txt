@@ -1,7 +1,18 @@
+def add(s1, s2) begin:
+    var sum := s1;
+
+    while(s2) begin:
+        succ(sum);
+        pred(s2);
+    end
+
+    return sum;
+end
+
 def hallo(s1, s2) begin:
-    var retVal := 9999999;
-    var hello := s1;
-    retVal := hello;
+    s1 := 9999999;
+    var hello := read();
+    retVal := add(s3, 3);
     hello := 213;
-    return retVal;
+    return hello;
 end

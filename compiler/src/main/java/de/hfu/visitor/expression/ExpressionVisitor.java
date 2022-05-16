@@ -29,12 +29,11 @@ public class ExpressionVisitor extends WhileBaseVisitor<Expression> {
     public Expression visitExpr(ExprContext ctx) {
         ParseTree child = ctx.children.get(0);
         if (child instanceof ReadContext) {
-            System.out.println("Read");
+            return child.accept(new ReadVisitor(availableVariables, program));
         } else if (child instanceof CallFunctionContext) {
-            System.out.println("Call");
+            return child.accept(new CallFunctionVisitor(availableVariables, program));
         } else if (ctx.ID() != null) {
             return parseVarExpression(ctx);
-
         } else if (ctx.NUM() != null) {
             return new NumExpression(ctx.NUM().getText());
         }

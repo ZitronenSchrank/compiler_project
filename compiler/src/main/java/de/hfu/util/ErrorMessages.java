@@ -17,4 +17,6 @@ public final class ErrorMessages {
     public static final String VAR_ALREADY_DEF = "Variable %s is already defined.";
     public static final String VAR_NOT_DEF = "Variable %s is not defined.";
     public static final String FORBIDDEN_VAR_WRITE = "Variable %s can not be written to.";
+    public static final String FUN_NOT_DEF = "Function %s is not defined or declared.";
+    public static final String FUN_CALL_NOT_ENOUGH_PARAMS = "Call Of Function %s does not have the correct number of parameters.";
 }
