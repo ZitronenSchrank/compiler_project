@@ -113,7 +113,10 @@ public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
         StatementVisitor statementVisitor = new StatementVisitor(availableVariables, program);
 
         for (var statement : statementsInFunction) {
-            statements.add(statement.accept(statementVisitor));
+            Statement stmt = statement.accept(statementVisitor);
+            if (stmt != null) {
+                statements.add(stmt);
+            }
         }
 
         return new StatementParseResult(statements, availableVariables);

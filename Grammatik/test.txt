@@ -8,6 +8,15 @@ def hallo(s1, s2) begin:
     var retVal := add(s1);
     hello := 213;
     hello := add(2);
+    
+    while(hello) begin:
+        var lol := 0;
+        succ(lol);
+        succ(s1);
+        hello := add(s1);
+    end
+
     succ(lol);
+
     return hello;
 end
