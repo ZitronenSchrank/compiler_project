@@ -12,11 +12,10 @@ def hallo(s1, s2) begin:
     loop(hello) begin:
         var lol := 0;
         succ(lol);
-        pred(hello);
-
+        write(hello, lol);
     end
 
-    pred(lol);
+    write(hello, retVal, s1, haha);
 
     return hello;
 end

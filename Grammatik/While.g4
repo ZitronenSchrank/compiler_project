@@ -5,7 +5,7 @@ prog            : (decFunction | defFunction | statement)* EOF;
 read            : READ '(' ')'
                 ;
 
-write           : WRITE '(' defParameters* ')' SEMICOLON
+write           : WRITE '(' defParameters ')' SEMICOLON
                 ;
 
 succ            : SUCC '(' ID ')' SEMICOLON

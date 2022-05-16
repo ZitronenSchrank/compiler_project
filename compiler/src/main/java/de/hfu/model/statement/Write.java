@@ -1,5 +1,15 @@
 package de.hfu.model.statement;
 
-public class Write extends Statement {
+import java.util.List;
 
+public class Write extends Statement {
+    List<String> varNames;
+
+    public Write(List<String> varNames) {
+        this.varNames = varNames;
+    }
+
+    public List<String> getVarNames() {
+        return varNames;
+    }
 }
