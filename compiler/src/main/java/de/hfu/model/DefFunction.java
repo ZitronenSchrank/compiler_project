@@ -58,4 +58,8 @@ public class DefFunction {
     public String getReturnVariable() {
         return returnVariable;
     }
+
+    public List<Statement> getStatements() {
+        return statements;
+    }
 }
