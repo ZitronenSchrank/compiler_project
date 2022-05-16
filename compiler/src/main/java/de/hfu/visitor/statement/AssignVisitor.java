@@ -25,17 +25,25 @@ public class AssignVisitor extends WhileBaseVisitor<Assign> {
     @Override
     public Assign visitAssign(AssignContext ctx) {
         Token varName = ctx.ID().getSymbol();
-        if (availableVariables.forbiddenVariablesContains(varName.getText())) {
-            program.addError(
-                    new SemanticError(String.format(ErrorMessages.FORBIDDEN_VAR_WRITE, varName.getText()), varName));
-        } else {
-            Expression expr = ctx.expr().accept(new ExpressionVisitor(availableVariables, program));
-            if (expr == null) {
-                return null;
+        if (availableVariables.contains(varName.getText())) {
+            if (availableVariables.forbiddenVariablesContains(varName.getText())) {
+                program.addError(
+                        new SemanticError(String.format(ErrorMessages.FORBIDDEN_VAR_WRITE, varName.getText()),
+                                varName));
             } else {
-                return new Assign(varName.getText(), expr);
+                Expression expr = ctx.expr().accept(new ExpressionVisitor(availableVariables, program));
+                if (expr == null) {
+                    return null;
+                } else {
+                    return new Assign(varName.getText(), expr);
+                }
             }
+        } else {
+            program.addError(
+                    new SemanticError(String.format(ErrorMessages.VAR_NOT_DEF, varName.getText()),
+                            varName));
         }
+
         return null;
     }
 }
