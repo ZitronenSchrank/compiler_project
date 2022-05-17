@@ -5,7 +5,7 @@ prog            : (decFunction | defFunction | statement)* EOF;
 read            : READ '(' ')'
                 ;
 
-write           : WRITE '(' defParameters* ')' SEMICOLON
+write           : WRITE '(' defParameters ')' SEMICOLON
                 ;
 
 succ            : SUCC '(' ID ')' SEMICOLON
@@ -24,7 +24,7 @@ defFunction     : DEFINE ID '(' defParameters ')' BEGIN ':' (statement)* retStat
 decFunction     : DEFINE ID '(' defParameters ')' SEMICOLON
                 ;
 
-defVar          : VARIABLE assign
+defVar          : VARIABLE ID ASSIGN expr SEMICOLON
                 ;
 
 defParameters   : ID (',' ID)*

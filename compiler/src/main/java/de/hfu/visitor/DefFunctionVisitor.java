@@ -6,7 +6,7 @@ import java.util.List;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-import de.hfu.error.SemanticError;
+import de.hfu.error.ErrorFactory;
 import de.hfu.grammar.WhileBaseVisitor;
 import de.hfu.grammar.WhileParser.DefFunctionContext;
 import de.hfu.grammar.WhileParser.StatementContext;
@@ -43,13 +43,13 @@ public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
             // Then the function must be already inside the map
             if (def == null) {
                 // It is not inside the map
-                program.addError(new SemanticError(ErrorMessages.DEF_OR_DEC_MISSING, nodeId));
+                program.addError(ErrorFactory.semanticError(ErrorMessages.DEF_OR_DEC_MISSING, nodeId));
             } else {
                 // It is in the map
                 if (functionParameters.size() == def.getParameterCount()) {
                     if (areParameterNamesTheSame(def, functionParameters)) {
                         if (def.isImplemented()) {
-                            program.addError(new SemanticError(ErrorMessages.FUN_ALREADY_IMPLEMENTED, nodeId));
+                            program.addError(ErrorFactory.semanticError(ErrorMessages.FUN_ALREADY_IMPLEMENTED, nodeId));
                         } else {
                             StatementParseResult result = parseStatements(functionStatements, functionParameters);
 
@@ -59,15 +59,16 @@ public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
                                 // DefFunction is already inside the collection, do not add it again
                                 return null;
                             } else {
-                                program.addError(new SemanticError(ErrorMessages.RET_VAR_NOT_EXIST, returnVariable));
+                                program.addError(
+                                        ErrorFactory.semanticError(ErrorMessages.RET_VAR_NOT_EXIST, returnVariable));
                             }
                         }
                     } else {
-                        program.addError(new SemanticError(ErrorMessages.PARAM_DEF_DEC_NAMES, nodeId));
+                        program.addError(ErrorFactory.semanticError(ErrorMessages.PARAM_DEF_DEC_NAMES, nodeId));
                     }
 
                 } else {
-                    program.addError(new SemanticError(ErrorMessages.PARAM_DEF_DEC_COUNT, nodeId));
+                    program.addError(ErrorFactory.semanticError(ErrorMessages.PARAM_DEF_DEC_COUNT, nodeId));
                 }
             }
         } else {
@@ -75,7 +76,7 @@ public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
             // Then the function must not be inside the map
             if (def != null) {
                 // It is inside the map
-                program.addError(new SemanticError(ErrorMessages.FUN_ALREADY_DEF, nodeId));
+                program.addError(ErrorFactory.semanticError(ErrorMessages.FUN_ALREADY_DEF, nodeId));
             } else {
                 if (SemanticUtils.isEachParameterNameUnique(functionParameters)) {
                     ArrayList<String> parameters = new ArrayList<>();
@@ -87,10 +88,10 @@ public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
                     if (result.getAvailableVariables().contains(returnVariable.getText())) {
                         return new DefFunction(nodeId, parameters, result.getStatements(), returnVariable.getText());
                     } else {
-                        program.addError(new SemanticError(ErrorMessages.RET_VAR_NOT_EXIST, returnVariable));
+                        program.addError(ErrorFactory.semanticError(ErrorMessages.RET_VAR_NOT_EXIST, returnVariable));
                     }
                 } else {
-                    program.addError(new SemanticError(ErrorMessages.PARAM_NEED_UNIQUE_NAME, nodeId));
+                    program.addError(ErrorFactory.semanticError(ErrorMessages.PARAM_NEED_UNIQUE_NAME, nodeId));
                 }
             }
         }
@@ -112,7 +113,10 @@ public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
         StatementVisitor statementVisitor = new StatementVisitor(availableVariables, program);
 
         for (var statement : statementsInFunction) {
-            statements.add(statement.accept(statementVisitor));
+            Statement stmt = statement.accept(statementVisitor);
+            if (stmt != null) {
+                statements.add(stmt);
+            }
         }
 
         return new StatementParseResult(statements, availableVariables);

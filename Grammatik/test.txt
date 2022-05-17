@@ -1,38 +1,21 @@
-def mutliply(s1, s2);
-def sub(s1, s2, s3, s4);
-def sub(s1, s2, s3, s4);
-def hello(s1, s1);
-
-def hallo(s1, s1) begin:
-    var retVal := 0;
-    return retVal;
+def add(s1) begin:
+    return s1;
 end
 
-sub(s1) begin:
-    var retVal := 0; 
-    return retVal;
-end
+def hallo(s1, s2) begin:
+    s1 := 9999999;
+    var hello := read();
+    var retVal := add(s1);
+    hello := 213;
+    hello := add(2);
+    
+    loop(hello) begin:
+        var lol := 0;
+        succ(lol);
+        write(hello, lol);
+    end
 
-var hello := 2;
+    write(hello, retVal, s1, haha);
 
-add(s1, s2) begin: 
-    var retVal := 0;
-    return retVal;
-end
-
-var world := 3; 
-
-mutliply(s1, s2) begin:
-    var retVal := 0;
-    return retVal;
-end
-
-mutliply(s1, s2) begin:
-    var retVal := 0;
-    return retVal;
-end
-
-def mutliply(s1, s2) begin:
-    var retVal := 0;
-    return retVal;
+    return hello;
 end

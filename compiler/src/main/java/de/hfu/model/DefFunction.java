@@ -48,7 +48,7 @@ public class DefFunction {
     }
 
     public boolean isImplemented() {
-        return !statements.isEmpty();
+        return !returnVariable.isBlank();
     }
 
     public Token getToken() {
@@ -57,5 +57,9 @@ public class DefFunction {
 
     public String getReturnVariable() {
         return returnVariable;
+    }
+
+    public List<Statement> getStatements() {
+        return statements;
     }
 }

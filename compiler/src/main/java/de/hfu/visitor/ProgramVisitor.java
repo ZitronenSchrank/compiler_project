@@ -1,6 +1,6 @@
 package de.hfu.visitor;
 
-import de.hfu.error.SemanticError;
+import de.hfu.error.ErrorFactory;
 import de.hfu.grammar.WhileBaseVisitor;
 import de.hfu.grammar.WhileParser.DecFunctionContext;
 import de.hfu.grammar.WhileParser.DefFunctionContext;
@@ -43,8 +43,7 @@ public class ProgramVisitor extends WhileBaseVisitor<Program> {
         for (var element : program.getDefFunctions().values()) {
             if (!element.isImplemented()) {
                 program.addError(
-                        new SemanticError(String.format(ErrorMessages.FUN_NOT_IMPLEMENTED, element.getId()),
-                                element.getToken()));
+                        ErrorFactory.formattedSemanticError(ErrorMessages.FUN_NOT_IMPLEMENTED, element.getToken()));
             }
         }
 

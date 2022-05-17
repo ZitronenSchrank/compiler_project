@@ -1,5 +1,21 @@
 package de.hfu.model.statement;
 
-public class While extends Statement {
+import java.util.List;
 
+public class While extends Statement {
+    private String varName;
+    private List<Statement> statements;
+
+    public While(String varName, List<Statement> statements) {
+        this.varName = varName;
+        this.statements = statements;
+    }
+
+    public String getVarName() {
+        return varName;
+    }
+
+    public List<Statement> getStatements() {
+        return statements;
+    }
 }
