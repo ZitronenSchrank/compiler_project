@@ -15,7 +15,7 @@ def hallo(s1, s2) begin:
         write(hello, lol);
     end
 
-    write(hello, retVal, s1, haha);
-
     return hello;
 end
+
+var r0HalloAnton := 6;

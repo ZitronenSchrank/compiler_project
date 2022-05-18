@@ -23,6 +23,7 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 
+import de.hfu.generator.Generator;
 import de.hfu.grammar.WhileLexer;
 import de.hfu.grammar.WhileParser;
 import de.hfu.model.Program;
@@ -69,7 +70,7 @@ public class App {
             InputStream input = new FileInputStream(new File("./Example.class"));
 
             ClassReader classReader = new ClassReader(input);
-            TraceClassVisitor cv = new TraceClassVisitor(null, new ASMifier(), new PrintWriter(System.out));
+            TraceClassVisitor cv = new TraceClassVisitor(null, new ASMifier(), new PrintWriter(new BufferedOutputStream(Files.newOutputStream(Paths.get("ASMOutput.java"), CREATE, WRITE, TRUNCATE_EXISTING))));
 
             classReader.accept(cv, 0);
 
@@ -80,7 +81,7 @@ public class App {
     }
 
     public static void main(String[] args) {
-        new App();
+        //new App();
 
         try {
             System.out.println(args[0]);
@@ -96,6 +97,9 @@ public class App {
 
             Program program = new ProgramVisitor().visit(ast);
 
+            
+            System.out.println("Size0: " + program.getDefFunctions().size());
+
             if (program.containsErrors()) {
                 for (var error : program.getErrors()) {
                     System.err.println(error);
@@ -103,6 +107,8 @@ public class App {
             } else {
                 System.out.println("Keine Fehler gefunden.");
             }
+            Generator generator = new Generator(program, Paths.get("./GG.class"));
+            generator.generateCode();
 
         } catch (IOException e) {
             e.printStackTrace();
