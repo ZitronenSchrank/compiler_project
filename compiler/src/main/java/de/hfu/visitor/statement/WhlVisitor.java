@@ -28,7 +28,7 @@ public class WhlVisitor extends WhileBaseVisitor<While> {
     public While visitWhl(WhlContext ctx) {
         Token varName = ctx.ID().getSymbol();
         if (availableVariables.contains(varName.getText())) {
-            if (!availableVariables.forbiddenVariablesContains(varName.getText())) {
+            if (!availableVariables.readOnlyVariablesContains(varName.getText())) {
                 List<Statement> statements = new ArrayList<>();
                 availableVariables.pushNewContext();
 

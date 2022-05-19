@@ -31,7 +31,7 @@ public class LoopVisitor extends WhileBaseVisitor<Loop> {
         if (availableVariables.availableVariablesContains(varName.getText())) {
             List<Statement> statements = new ArrayList<>();
             availableVariables.pushNewContext();
-            availableVariables.addForbiddenVariable(varName.getText());
+            availableVariables.addReadOnlyVariable(varName.getText());
 
             for (var statement : ctx.statement()) {
                 Statement stmt = statement.accept(new StatementVisitor(availableVariables, program));

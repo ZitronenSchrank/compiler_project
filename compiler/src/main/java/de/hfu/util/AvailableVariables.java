@@ -7,11 +7,11 @@ import java.util.Stack;
 
 public class AvailableVariables {
     private Stack<Set<String>> availableVariables;
-    private Stack<Set<String>> forbiddenVariables;
+    private Stack<Set<String>> readOnlyVariables;
 
     public AvailableVariables() {
         availableVariables = new Stack<>();
-        forbiddenVariables = new Stack<>();
+        readOnlyVariables = new Stack<>();
         pushNewContext();
     }
 
@@ -19,23 +19,23 @@ public class AvailableVariables {
         try {
             // Copy Every VarName From Old Context Into The New One
             Set<String> oldAvailable = availableVariables.lastElement();
-            Set<String> oldForbidden = forbiddenVariables.lastElement();
+            Set<String> oldReadOnly = readOnlyVariables.lastElement();
 
             Set<String> newAvailable = new HashSet<>();
-            Set<String> newForbidden = new HashSet<>();
+            Set<String> newReadOnly = new HashSet<>();
 
             for (var s : oldAvailable) {
                 newAvailable.add(s);
             }
-            for (var s : oldForbidden) {
-                newForbidden.add(s);
+            for (var s : oldReadOnly) {
+                newReadOnly.add(s);
             }
 
             availableVariables.push(newAvailable);
-            forbiddenVariables.push(newForbidden);
+            readOnlyVariables.push(newReadOnly);
         } catch (NoSuchElementException e) {
             availableVariables.push(new HashSet<>());
-            forbiddenVariables.push(new HashSet<>());
+            readOnlyVariables.push(new HashSet<>());
         }
     }
 
@@ -44,7 +44,7 @@ public class AvailableVariables {
             return false;
         } else {
             availableVariables.pop();
-            forbiddenVariables.pop();
+            readOnlyVariables.pop();
             return true;
         }
 
@@ -54,8 +54,8 @@ public class AvailableVariables {
         return availableVariables.lastElement().add(variable);
     }
 
-    public boolean addForbiddenVariable(String variable) {
-        return forbiddenVariables.lastElement().add(variable);
+    public boolean addReadOnlyVariable(String variable) {
+        return readOnlyVariables.lastElement().add(variable);
     }
 
     public boolean availableVariablesContains(String variable) {
@@ -67,8 +67,8 @@ public class AvailableVariables {
 
     }
 
-    public boolean forbiddenVariablesContains(String variable) {
-        Set<String> set = forbiddenVariables.lastElement();
+    public boolean readOnlyVariablesContains(String variable) {
+        Set<String> set = readOnlyVariables.lastElement();
         if (set.contains(variable) == true) {
             return true;
         }
@@ -78,7 +78,7 @@ public class AvailableVariables {
     public boolean contains(String variable) {
 
         if (availableVariables.lastElement().contains(variable)
-                | forbiddenVariables.lastElement().contains(variable)) {
+                | readOnlyVariables.lastElement().contains(variable)) {
             return true;
         }
 

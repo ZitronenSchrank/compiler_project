@@ -26,7 +26,7 @@ public class AssignVisitor extends WhileBaseVisitor<Assign> {
     public Assign visitAssign(AssignContext ctx) {
         Token varName = ctx.ID().getSymbol();
         if (availableVariables.contains(varName.getText())) {
-            if (availableVariables.forbiddenVariablesContains(varName.getText())) {
+            if (availableVariables.readOnlyVariablesContains(varName.getText())) {
                 program.addError(
                         ErrorFactory.formattedSemanticError(ErrorMessages.FORBIDDEN_VAR_WRITE, varName));
             } else {
