@@ -13,6 +13,10 @@ def hallo(s1, s2) begin:
         var lol := 0;
         succ(lol);
         write(hello, lol);
+
+        while(hello) begin:
+            succ(hello);
+        end
     end
 
     return hello;
