@@ -7,6 +7,9 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
+
 import static java.nio.file.StandardOpenOption.*;
 
 import org.objectweb.asm.ClassWriter;
@@ -25,15 +28,21 @@ public class Generator {
     private final Program whileProgram;
     private final Path destination;
     private ClassWriter classWriter;
+    private int varCounter;
+    private Map<String, Integer> nameToIdMap;
 
     public Generator(Program whileProgram) {
         this.whileProgram = whileProgram;
         this.destination = Paths.get("./out.java");
+        this.nameToIdMap = new HashMap<>();
+        varCounter = 0;
     }
 
     public Generator(Program whileProgram, Path destination) {
         this.whileProgram = whileProgram;
         this.destination = destination;
+        this.nameToIdMap = new HashMap<>();
+        varCounter = 0;
     }
 
     public void generateCode() throws IOException {
@@ -51,12 +60,16 @@ public class Generator {
         this.generateLanguageFunctionalityCode();
 
         for (DefFunction function : whileProgram.getDefFunctions().values()) {
+            varCounter = 0;
+            nameToIdMap.clear();
             this.generateFunctionCode(function);
         }
 
         MethodVisitor mainMethodVisitor = classWriter.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main",
                 "([Ljava/lang/String;)V", null, null);
 
+        varCounter = 0;
+        nameToIdMap.clear();
         for (Statement statement : whileProgram.getStatements()) {
             this.generateStatementCode(mainMethodVisitor, statement);
         }
@@ -146,17 +159,10 @@ public class Generator {
 
     private void generateDefVarCode(MethodVisitor methodVisitor, DefVar defVar) {
         // TODO
-        methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
-        methodVisitor.visitLdcInsn(defVar.getVarName() + " TEST ");
-        methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V",
-                false);
-
-        methodVisitor.visitTypeInsn(Opcodes.NEW, "java/math/BigInteger");
-        methodVisitor.visitInsn(Opcodes.DUP);
-        methodVisitor.visitLdcInsn("55");
-        methodVisitor.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/math/BigInteger", "<init>", "(Ljava/lang/String;)V",
-                false);
-        methodVisitor.visitVarInsn(Opcodes.ASTORE, 1);
+        generateExpressionCode(methodVisitor, defVar.getInitValue());
+        varCounter++;
+        nameToIdMap.put(defVar.getVarName(), varCounter);
+        methodVisitor.visitVarInsn(Opcodes.ASTORE, varCounter);
     }
 
     private void generateLoopCode(MethodVisitor methodVisitor, Loop statement) {
@@ -179,12 +185,7 @@ public class Generator {
         for (String name : statement.getVarNames()) {
 
             methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
-            methodVisitor.visitLdcInsn(name + " TEST ");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println",
-                    "(Ljava/lang/String;)V", false);
-
-            methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
-            methodVisitor.visitVarInsn(Opcodes.ALOAD, 1);
+            methodVisitor.visitVarInsn(Opcodes.ALOAD, nameToIdMap.get(name));
             methodVisitor.visitInvokeDynamicInsn("makeConcatWithConstants",
                     "(Ljava/math/BigInteger;)Ljava/lang/String;",
                     new Handle(Opcodes.H_INVOKESTATIC, "java/lang/invoke/StringConcatFactory",
@@ -203,6 +204,11 @@ public class Generator {
 
     private void generateNumExpressionCode(MethodVisitor methodVisitor, NumExpression expression) {
         // TODO
+        methodVisitor.visitTypeInsn(Opcodes.NEW, "java/math/BigInteger");
+        methodVisitor.visitInsn(Opcodes.DUP);
+        methodVisitor.visitLdcInsn(expression.getNumString());
+        methodVisitor.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/math/BigInteger", "<init>", "(Ljava/lang/String;)V",
+                false);
     }
 
     private void generateReadCode(MethodVisitor methodVisitor, Read expression) {
@@ -210,6 +216,6 @@ public class Generator {
     }
 
     private void generateVarExpressionCode(MethodVisitor methodVisitor, VarExpression expression) {
-        // TODO
+        methodVisitor.visitVarInsn(Opcodes.ALOAD, nameToIdMap.get(expression.getVarName()));
     }
 }
