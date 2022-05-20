@@ -137,9 +137,6 @@ public class Generator {
             methodVisitor = classWriter.visitMethod(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC, "succ",
                     "(Ljava/math/BigInteger;)Ljava/math/BigInteger;", null, null);
             methodVisitor.visitCode();
-            Label label0 = new Label();
-            methodVisitor.visitLabel(label0);
-            methodVisitor.visitLineNumber(22, label0);
             methodVisitor.visitVarInsn(Opcodes.ALOAD, 0);
             methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, "java/math/BigInteger", "ONE", "Ljava/math/BigInteger;");
             methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/math/BigInteger", "add",
@@ -284,11 +281,19 @@ public class Generator {
     }
 
     private void generatePredCode(MethodVisitor methodVisitor, Pred statement) {
-        // TODO
+        methodVisitor.visitVarInsn(Opcodes.ALOAD, nameToIdMap.get(statement.getVarName()));
+        methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "GG", "pred",
+                "(Ljava/math/BigInteger;)Ljava/math/BigInteger;",
+                false);
+        methodVisitor.visitVarInsn(Opcodes.ASTORE, nameToIdMap.get(statement.getVarName()));
     }
 
     private void generateSuccCode(MethodVisitor methodVisitor, Succ statement) {
-        // TODO
+        methodVisitor.visitVarInsn(Opcodes.ALOAD, nameToIdMap.get(statement.getVarName()));
+        methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "GG", "succ",
+                "(Ljava/math/BigInteger;)Ljava/math/BigInteger;",
+                false);
+        methodVisitor.visitVarInsn(Opcodes.ASTORE, nameToIdMap.get(statement.getVarName()));
     }
 
     private void generateWhileCode(MethodVisitor methodVisitor, While statement) {
