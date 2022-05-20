@@ -152,18 +152,14 @@ public class Generator {
             methodVisitor = classWriter.visitMethod(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC, "read",
                     "(Ljava/lang/String;)Ljava/math/BigInteger;", null, null);
             methodVisitor.visitCode();
-            Label label0 = new Label();
-            methodVisitor.visitLabel(label0);
-            methodVisitor.visitLineNumber(27, label0);
+
             methodVisitor.visitTypeInsn(Opcodes.NEW, "java/util/Scanner");
             methodVisitor.visitInsn(Opcodes.DUP);
             methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "in", "Ljava/io/InputStream;");
             methodVisitor.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/util/Scanner", "<init>",
                     "(Ljava/io/InputStream;)V", false);
             methodVisitor.visitVarInsn(Opcodes.ASTORE, 1);
-            Label label1 = new Label();
-            methodVisitor.visitLabel(label1);
-            methodVisitor.visitLineNumber(28, label1);
+
             methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
             methodVisitor.visitVarInsn(Opcodes.ALOAD, 0);
             methodVisitor.visitInvokeDynamicInsn("makeConcatWithConstants", "(Ljava/lang/String;)Ljava/lang/String;",
@@ -174,21 +170,15 @@ public class Generator {
                     new Object[] { "\u0001 := " });
             methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "print",
                     "(Ljava/lang/String;)V", false);
-            Label label2 = new Label();
-            methodVisitor.visitLabel(label2);
-            methodVisitor.visitLineNumber(29, label2);
+
             methodVisitor.visitVarInsn(Opcodes.ALOAD, 1);
             methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/util/Scanner", "nextLine",
                     "()Ljava/lang/String;", false);
             methodVisitor.visitVarInsn(Opcodes.ASTORE, 2);
-            Label label3 = new Label();
-            methodVisitor.visitLabel(label3);
-            methodVisitor.visitLineNumber(30, label3);
+
             methodVisitor.visitVarInsn(Opcodes.ALOAD, 1);
             methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/util/Scanner", "close", "()V", false);
-            Label label4 = new Label();
-            methodVisitor.visitLabel(label4);
-            methodVisitor.visitLineNumber(31, label4);
+
             methodVisitor.visitTypeInsn(Opcodes.NEW, "java/math/BigInteger");
             methodVisitor.visitInsn(Opcodes.DUP);
             methodVisitor.visitVarInsn(Opcodes.ALOAD, 2);
@@ -335,7 +325,10 @@ public class Generator {
     }
 
     private void generateReadCode(MethodVisitor methodVisitor, Read expression) {
-        // TODO
+        // TODO: Other Parameter, Change OWNER
+        methodVisitor.visitLdcInsn("Lel");
+        methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "GG", "read", "(Ljava/lang/String;)Ljava/math/BigInteger;",
+                false);
     }
 
     private void generateVarExpressionCode(MethodVisitor methodVisitor, VarExpression expression) {
