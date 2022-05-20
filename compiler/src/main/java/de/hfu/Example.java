@@ -171,20 +171,9 @@ public class Example {
 
     // Jedes Statemant ausserhalb von Funktionen landet in der Main-Methode
     public static void main(String[] args) {
-
-        // var result := 1
-        BigInteger result = BigInteger.valueOf(1);
-
-        // var r0 = read()
-        BigInteger r0 = read("r0");
-
-        // result := r0
-        result = r0;
-        Example a = new Example();
-
-        // write(result)
-        Value b = a.new Value("String", BigInteger.ZERO);
-        write(b);
+        BigInteger r = new BigInteger("10");
+        BigInteger result = isZero(r);
+        System.out.println("result := " + r);
     }
 
 }

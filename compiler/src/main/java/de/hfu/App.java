@@ -70,7 +70,8 @@ public class App {
             InputStream input = new FileInputStream(new File("./Example.class"));
 
             ClassReader classReader = new ClassReader(input);
-            TraceClassVisitor cv = new TraceClassVisitor(null, new ASMifier(), new PrintWriter(new BufferedOutputStream(Files.newOutputStream(Paths.get("ASMOutput.java"), CREATE, WRITE, TRUNCATE_EXISTING))));
+            TraceClassVisitor cv = new TraceClassVisitor(null, new ASMifier(), new PrintWriter(new BufferedOutputStream(
+                    Files.newOutputStream(Paths.get("ASMOutput.java"), CREATE, WRITE, TRUNCATE_EXISTING))));
 
             classReader.accept(cv, 0);
 
@@ -81,7 +82,7 @@ public class App {
     }
 
     public static void main(String[] args) {
-        //new App();
+        new App();
 
         try {
             System.out.println(args[0]);
@@ -97,7 +98,6 @@ public class App {
 
             Program program = new ProgramVisitor().visit(ast);
 
-            
             System.out.println("Size0: " + program.getDefFunctions().size());
 
             if (program.containsErrors()) {

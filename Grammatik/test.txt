@@ -1,21 +1,4 @@
-def add(s1) begin:
-    return s1;
-end
-
-def hallo(s1, s2) begin:
-    s1 := 9999999;
-    var hello := read();
-    var retVal := add(s1);
-    hello := 213;
-    hello := add(2);
-    
-    loop(hello) begin:
-        var lol := 0;
-        succ(lol);
-        write(hello, lol);
-    end
-
-    return hello;
-end
-
-var r0HalloAnton := 6;
+var lol := 3247283947829;
+var hello := 2;
+var kek := lol;
+write(lol, hello, kek);
