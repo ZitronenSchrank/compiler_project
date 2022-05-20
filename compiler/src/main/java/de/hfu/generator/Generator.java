@@ -267,7 +267,8 @@ public class Generator {
     }
 
     private void generateAssignCode(MethodVisitor methodVisitor, Assign statement) {
-        // TODO
+        generateExpressionCode(methodVisitor, statement.getExpression());
+        methodVisitor.visitVarInsn(Opcodes.ASTORE, nameToIdMap.get(statement.getTargetVarName()));
     }
 
     private void generateDefVarCode(MethodVisitor methodVisitor, DefVar defVar) {
