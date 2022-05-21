@@ -30,8 +30,8 @@ public class DefVarVisitor extends WhileBaseVisitor<DefVar> {
         if (availableVariables.contains(varName.getText())) {
             program.addError(ErrorFactory.formattedSemanticError(ErrorMessages.VAR_ALREADY_DEF, varName));
         } else {
-
-            Expression expr = ctx.expr().accept(new ExpressionVisitor(availableVariables, program));
+            Expression expr = ctx.expr()
+                    .accept(new ExpressionVisitor(availableVariables, program, varName.getText()));
             if (expr == null) {
                 return null;
             } else {

@@ -19,17 +19,19 @@ public class ExpressionVisitor extends WhileBaseVisitor<Expression> {
 
     AvailableVariables availableVariables;
     Program program;
+    String targetVar;
 
-    public ExpressionVisitor(AvailableVariables availableVariables, Program program) {
+    public ExpressionVisitor(AvailableVariables availableVariables, Program program, String targetVar) {
         this.availableVariables = availableVariables;
         this.program = program;
+        this.targetVar = targetVar;
     }
 
     @Override
     public Expression visitExpr(ExprContext ctx) {
         ParseTree child = ctx.children.get(0);
         if (child instanceof ReadContext) {
-            return child.accept(new ReadVisitor(availableVariables, program));
+            return child.accept(new ReadVisitor(availableVariables, program, targetVar));
         } else if (child instanceof CallFunctionContext) {
             return child.accept(new CallFunctionVisitor(availableVariables, program));
         } else if (ctx.ID() != null) {
