@@ -19,4 +19,6 @@ public final class ErrorMessages {
     public static final String FORBIDDEN_VAR_WRITE = "Variable %s can not be written to.";
     public static final String FUN_NOT_DEF = "Function %s is not defined or declared.";
     public static final String FUN_CALL_NOT_ENOUGH_PARAMS = "Call Of Function %s does not have the correct number of parameters.";
+
+    public static final String LOOP_VAR_IN_WHILE = "Using a loop variable inside a while will result in a endless loop";
 }

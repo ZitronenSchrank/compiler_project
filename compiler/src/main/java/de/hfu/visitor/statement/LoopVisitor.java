@@ -28,22 +28,26 @@ public class LoopVisitor extends WhileBaseVisitor<Loop> {
     @Override
     public Loop visitLoop(LoopContext ctx) {
         Token varName = ctx.ID().getSymbol();
-        if (availableVariables.availableVariablesContains(varName.getText())) {
-            List<Statement> statements = new ArrayList<>();
-            availableVariables.pushNewContext();
-            availableVariables.addForbiddenVariable(varName.getText());
+        if (availableVariables.contains(varName.getText())) {
+            if (!availableVariables.readOnlyVariablesContains(varName.getText())) {
+                List<Statement> statements = new ArrayList<>();
+                availableVariables.pushNewContext();
+                availableVariables.addReadOnlyVariable(varName.getText());
 
-            for (var statement : ctx.statement()) {
-                Statement stmt = statement.accept(new StatementVisitor(availableVariables, program));
-                if (stmt != null) {
-                    statements.add(stmt);
+                for (var statement : ctx.statement()) {
+                    Statement stmt = statement.accept(new StatementVisitor(availableVariables, program));
+                    if (stmt != null) {
+                        statements.add(stmt);
+                    }
                 }
-            }
 
-            availableVariables.pop();
-            return new Loop(varName.getText(), statements);
+                availableVariables.pop();
+                return new Loop(varName.getText(), statements);
+            } else {
+                program.addError(ErrorFactory.formattedSemanticError(ErrorMessages.FORBIDDEN_VAR_WRITE, varName));
+            }
         } else {
-            program.addError(ErrorFactory.formattedSemanticError(ErrorMessages.FORBIDDEN_VAR_WRITE, varName));
+            program.addError(ErrorFactory.formattedSemanticError(ErrorMessages.VAR_NOT_DEF, varName));
         }
         return null;
     }

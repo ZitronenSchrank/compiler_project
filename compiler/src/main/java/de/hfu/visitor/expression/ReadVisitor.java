@@ -10,15 +10,17 @@ public class ReadVisitor extends WhileBaseVisitor<Read> {
 
     AvailableVariables availableVariables;
     Program program;
+    String targetVar;
 
-    public ReadVisitor(AvailableVariables availableVariables, Program program) {
+    public ReadVisitor(AvailableVariables availableVariables, Program program, String targetVar) {
         this.availableVariables = availableVariables;
         this.program = program;
+        this.targetVar = targetVar;
     }
 
     @Override
     public Read visitRead(ReadContext ctx) {
-        return new Read();
+        return new Read(targetVar);
     }
 
 }

@@ -106,9 +106,9 @@ public class App {
                 }
             } else {
                 System.out.println("Keine Fehler gefunden.");
+                Generator generator = new Generator(program, Paths.get("./GG.class"));
+                generator.generateCode();
             }
-            Generator generator = new Generator(program, Paths.get("./GG.class"));
-            generator.generateCode();
 
         } catch (IOException e) {
             e.printStackTrace();

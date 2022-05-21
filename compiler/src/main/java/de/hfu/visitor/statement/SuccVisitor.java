@@ -25,7 +25,7 @@ public class SuccVisitor extends WhileBaseVisitor<Succ> {
         Token varName = ctx.ID().getSymbol();
 
         if (availableVariables.contains(varName.getText())) {
-            if (!availableVariables.forbiddenVariablesContains(varName.getText())) {
+            if (!availableVariables.readOnlyVariablesContains(varName.getText())) {
                 return new Succ(varName.getText());
             } else {
                 program.addError(ErrorFactory.formattedSemanticError(ErrorMessages.FORBIDDEN_VAR_WRITE, varName));
