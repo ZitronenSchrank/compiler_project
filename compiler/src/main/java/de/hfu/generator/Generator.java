@@ -332,7 +332,7 @@ public class Generator {
 
     private void generateReadCode(MethodVisitor methodVisitor, Read expression) {
         // TODO: Other Parameter, Change OWNER
-        methodVisitor.visitLdcInsn("Lel");
+        methodVisitor.visitLdcInsn(expression.getTargetVar());
         methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "GG", "read", "(Ljava/lang/String;)Ljava/math/BigInteger;",
                 false);
     }
