@@ -32,12 +32,14 @@ public class Generator {
     private ClassWriter classWriter;
     private int varCounter;
     private Map<String, Integer> nameToIdMap;
+    private String className;
 
     public Generator(Program whileProgram) {
         this.whileProgram = whileProgram;
         this.destination = Paths.get("./out.java");
         this.nameToIdMap = new HashMap<>();
         varCounter = 0;
+        className = "out";
     }
 
     public Generator(Program whileProgram, Path destination) {
@@ -45,6 +47,7 @@ public class Generator {
         this.destination = destination;
         this.nameToIdMap = new HashMap<>();
         varCounter = 0;
+        className = destination.getFileName().toString().split("\\.")[0];
     }
 
     public void generateCode() throws IOException {
@@ -53,7 +56,7 @@ public class Generator {
         classWriter.visit(
                 Opcodes.V1_8, // Java 1.8
                 Opcodes.ACC_PUBLIC + Opcodes.ACC_SUPER, // public static
-                destination.getFileName().toString().split("\\.")[0], // Class Name //TODO
+                className, // Class Name
                 null, // Generics <T>
                 "java/lang/Object", // Interface extends Object (Super Class),
                 null // interface names
@@ -118,14 +121,14 @@ public class Generator {
         methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "in", "Ljava/io/InputStream;");
         methodVisitor.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/util/Scanner", "<init>", "(Ljava/io/InputStream;)V",
                 false);
-        methodVisitor.visitFieldInsn(Opcodes.PUTSTATIC, "GG", "in", "Ljava/util/Scanner;");
+        methodVisitor.visitFieldInsn(Opcodes.PUTSTATIC, className, "in", "Ljava/util/Scanner;");
         methodVisitor.visitInsn(Opcodes.RETURN);
         methodVisitor.visitMaxs(3, 0);
         methodVisitor.visitEnd();
     }
 
     private void generateStaticScannerClose(MethodVisitor methodVisitor) {
-        methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, "GG", "in", "Ljava/util/Scanner;");
+        methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, className, "in", "Ljava/util/Scanner;");
         methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/util/Scanner", "close", "()V", false);
     }
 
@@ -207,7 +210,7 @@ public class Generator {
             Label label1 = new Label();
             methodVisitor.visitLabel(label1);
             methodVisitor.visitLineNumber(30, label1);
-            methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, "GG", "in", "Ljava/util/Scanner;");
+            methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, className, "in", "Ljava/util/Scanner;");
             methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/util/Scanner", "nextLine",
                     "()Ljava/lang/String;", false);
             methodVisitor.visitVarInsn(Opcodes.ASTORE, 1);
@@ -321,7 +324,7 @@ public class Generator {
 
     private void generatePredCode(MethodVisitor methodVisitor, Pred statement) {
         methodVisitor.visitVarInsn(Opcodes.ALOAD, nameToIdMap.get(statement.getVarName()));
-        methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "GG", "pred",
+        methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, className, "pred",
                 "(Ljava/math/BigInteger;)Ljava/math/BigInteger;",
                 false);
         methodVisitor.visitVarInsn(Opcodes.ASTORE, nameToIdMap.get(statement.getVarName()));
@@ -329,7 +332,7 @@ public class Generator {
 
     private void generateSuccCode(MethodVisitor methodVisitor, Succ statement) {
         methodVisitor.visitVarInsn(Opcodes.ALOAD, nameToIdMap.get(statement.getVarName()));
-        methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "GG", "succ",
+        methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, className, "succ",
                 "(Ljava/math/BigInteger;)Ljava/math/BigInteger;",
                 false);
         methodVisitor.visitVarInsn(Opcodes.ASTORE, nameToIdMap.get(statement.getVarName()));
@@ -372,7 +375,8 @@ public class Generator {
     private void generateReadCode(MethodVisitor methodVisitor, Read expression) {
         // TODO: Other Parameter, Change OWNER
         methodVisitor.visitLdcInsn(expression.getTargetVar());
-        methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, "GG", "read", "(Ljava/lang/String;)Ljava/math/BigInteger;",
+        methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, className, "read",
+                "(Ljava/lang/String;)Ljava/math/BigInteger;",
                 false);
     }
 
