@@ -94,11 +94,11 @@ public class Generator {
         out.close();
     }
 
-    private String getFunctionDescriptor(DefFunction function) {
+    private String getFunctionDescriptor(int paramCount) {
         StringBuilder builder = new StringBuilder();
         String type = "Ljava/math/BigInteger;";
         builder.append("(");
-        for (int i = 0; i < function.getParameterCount(); i++) {
+        for (int i = 0; i < paramCount; i++) {
             builder.append(type);
         }
         builder.append(")");
@@ -231,7 +231,7 @@ public class Generator {
 
     private void generateFunctionCode(DefFunction function) {
         MethodVisitor currentFunctionVisitor = classWriter.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC,
-                function.getId(), getFunctionDescriptor(function), null, null);
+                function.getId(), getFunctionDescriptor(function.getParameterCount()), null, null);
         currentFunctionVisitor.visitCode();
 
         // TODO Einlesen von Parametern
@@ -240,6 +240,7 @@ public class Generator {
             this.generateStatementCode(currentFunctionVisitor, statement);
         }
 
+        currentFunctionVisitor.visitVarInsn(Opcodes.ALOAD, nameToIdMap.get(function.getReturnVariable()));
         currentFunctionVisitor.visitInsn(Opcodes.ARETURN); // TODO Return muss noch getestet werden und verbindung mit
                                                            // Statements muss hergestellt werden (Laden vom
                                                            // Rückgabewert)
@@ -361,6 +362,23 @@ public class Generator {
 
     private void generateCallFunctionCode(MethodVisitor methodVisitor, CallFunction expression) {
         // TODO
+        // methodVisitor.visitVarInsn(Opcodes.ALOAD, nameToIdMap.get(expression.));
+        for (var value : expression.getCallParameters()) {
+            /*
+             * if (value instanceof VarExpression) {
+             * VarExpression var = (VarExpression) value;
+             * methodVisitor.visitVarInsn(Opcodes.ALOAD, nameToIdMap.get(var.getVarName()));
+             * } else if (value instanceof NumExpression) {
+             * generateNumExpressionCode(methodVisitor, (NumExpression) value);
+             * }
+             */
+            generateExpressionCode(methodVisitor, value);
+        }
+        methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, className, expression.getFunctionName(),
+                getFunctionDescriptor(expression.getCallParameters().size()),
+                false);
+        // methodVisitor.visitVarInsn(Opcodes.ASTORE,
+        // nameToIdMap.get(expression.get()));
     }
 
     private void generateNumExpressionCode(MethodVisitor methodVisitor, NumExpression expression) {
