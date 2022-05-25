@@ -26,10 +26,6 @@ classWriter.visit(V18, ACC_PUBLIC | ACC_SUPER, "de/hfu/Example", null, "java/lan
 
 classWriter.visitSource("Example.java", null);
 
-classWriter.visitNestMember("de/hfu/Example$Value");
-
-classWriter.visitInnerClass("de/hfu/Example$Value", "de/hfu/Example", "Value", 0);
-
 classWriter.visitInnerClass("java/lang/invoke/MethodHandles$Lookup", "java/lang/invoke/MethodHandles", "Lookup", ACC_PUBLIC | ACC_FINAL | ACC_STATIC);
 
 {
@@ -451,22 +447,20 @@ methodVisitor.visitMaxs(2, 2);
 methodVisitor.visitEnd();
 }
 {
-methodVisitor = classWriter.visitMethod(ACC_PUBLIC | ACC_STATIC | ACC_VARARGS, "write", "([Lde/hfu/Example$Value;)V", null, null);
+methodVisitor = classWriter.visitMethod(ACC_PUBLIC | ACC_STATIC, "test", "(Ljava/math/BigInteger;Ljava/math/BigInteger;)Ljava/math/BigInteger;", null, null);
 methodVisitor.visitCode();
 Label label0 = new Label();
 methodVisitor.visitLabel(label0);
 methodVisitor.visitLineNumber(160, label0);
 methodVisitor.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
 methodVisitor.visitVarInsn(ALOAD, 0);
-methodVisitor.visitInsn(ICONST_0);
-methodVisitor.visitInsn(AALOAD);
-methodVisitor.visitFieldInsn(GETFIELD, "de/hfu/Example$Value", "name", "Ljava/lang/String;");
-methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
+methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/Object;)V", false);
 Label label1 = new Label();
 methodVisitor.visitLabel(label1);
 methodVisitor.visitLineNumber(161, label1);
-methodVisitor.visitInsn(RETURN);
-methodVisitor.visitMaxs(3, 1);
+methodVisitor.visitVarInsn(ALOAD, 1);
+methodVisitor.visitInsn(ARETURN);
+methodVisitor.visitMaxs(2, 2);
 methodVisitor.visitEnd();
 }
 {
@@ -474,7 +468,7 @@ methodVisitor = classWriter.visitMethod(ACC_PUBLIC | ACC_STATIC, "main", "([Ljav
 methodVisitor.visitCode();
 Label label0 = new Label();
 methodVisitor.visitLabel(label0);
-methodVisitor.visitLineNumber(175, label0);
+methodVisitor.visitLineNumber(166, label0);
 methodVisitor.visitTypeInsn(NEW, "java/math/BigInteger");
 methodVisitor.visitInsn(DUP);
 methodVisitor.visitLdcInsn("10");
@@ -482,33 +476,36 @@ methodVisitor.visitMethodInsn(INVOKESPECIAL, "java/math/BigInteger", "<init>", "
 methodVisitor.visitVarInsn(ASTORE, 1);
 Label label1 = new Label();
 methodVisitor.visitLabel(label1);
-methodVisitor.visitLineNumber(176, label1);
-methodVisitor.visitLdcInsn("d");
-methodVisitor.visitMethodInsn(INVOKESTATIC, "de/hfu/Example", "read", "(Ljava/lang/String;)Ljava/math/BigInteger;", false);
+methodVisitor.visitLineNumber(167, label1);
+methodVisitor.visitTypeInsn(NEW, "java/math/BigInteger");
+methodVisitor.visitInsn(DUP);
+methodVisitor.visitLdcInsn("10");
+methodVisitor.visitMethodInsn(INVOKESPECIAL, "java/math/BigInteger", "<init>", "(Ljava/lang/String;)V", false);
 methodVisitor.visitVarInsn(ASTORE, 2);
 Label label2 = new Label();
 methodVisitor.visitLabel(label2);
-methodVisitor.visitLineNumber(177, label2);
-methodVisitor.visitLdcInsn("d");
-methodVisitor.visitMethodInsn(INVOKESTATIC, "de/hfu/Example", "read", "(Ljava/lang/String;)Ljava/math/BigInteger;", false);
-methodVisitor.visitVarInsn(ASTORE, 3);
+methodVisitor.visitLineNumber(168, label2);
+methodVisitor.visitVarInsn(ALOAD, 1);
+methodVisitor.visitVarInsn(ALOAD, 2);
+methodVisitor.visitMethodInsn(INVOKESTATIC, "de/hfu/Example", "test", "(Ljava/math/BigInteger;Ljava/math/BigInteger;)Ljava/math/BigInteger;", false);
+methodVisitor.visitInsn(POP);
 Label label3 = new Label();
 methodVisitor.visitLabel(label3);
-methodVisitor.visitLineNumber(178, label3);
+methodVisitor.visitLineNumber(169, label3);
 methodVisitor.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
 methodVisitor.visitVarInsn(ALOAD, 1);
 methodVisitor.visitInvokeDynamicInsn("makeConcatWithConstants", "(Ljava/math/BigInteger;)Ljava/lang/String;", new Handle(Opcodes.H_INVOKESTATIC, "java/lang/invoke/StringConcatFactory", "makeConcatWithConstants", "(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite;", false), new Object[]{"result := \u0001"});
 methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
 Label label4 = new Label();
 methodVisitor.visitLabel(label4);
-methodVisitor.visitLineNumber(179, label4);
+methodVisitor.visitLineNumber(170, label4);
 methodVisitor.visitFieldInsn(GETSTATIC, "de/hfu/Example", "in", "Ljava/util/Scanner;");
 methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "java/util/Scanner", "close", "()V", false);
 Label label5 = new Label();
 methodVisitor.visitLabel(label5);
-methodVisitor.visitLineNumber(180, label5);
+methodVisitor.visitLineNumber(171, label5);
 methodVisitor.visitInsn(RETURN);
-methodVisitor.visitMaxs(3, 4);
+methodVisitor.visitMaxs(3, 3);
 methodVisitor.visitEnd();
 }
 {

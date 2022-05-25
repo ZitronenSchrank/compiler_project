@@ -1,13 +1,13 @@
-def hallo(r0) begin:
-    var b0 := 2;
-    write(b0);
-    return b0;
+def hallo(param, arg, p) begin:
+    write(param, arg, p);
+    succ(param);
+    return param;
 end
 
 var lol := 3247283947829;
 var hello := 2;
 var kek := lol;
 var r0 := read();
-var r1 := hallo(4);
+var r1 := hallo(99, r0, 2);
 write(lol, hello, kek);
 write(r0, r1);

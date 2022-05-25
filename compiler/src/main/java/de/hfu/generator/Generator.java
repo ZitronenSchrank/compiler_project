@@ -234,7 +234,10 @@ public class Generator {
                 function.getId(), getFunctionDescriptor(function.getParameterCount()), null, null);
         currentFunctionVisitor.visitCode();
 
-        // TODO Einlesen von Parametern
+        for (var name : function.getParameterNames()) {
+            nameToIdMap.put(name, varCounter);
+            varCounter++;
+        }
 
         for (Statement statement : function.getStatements()) {
             this.generateStatementCode(currentFunctionVisitor, statement);

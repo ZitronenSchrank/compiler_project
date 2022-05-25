@@ -156,25 +156,16 @@ public class Example {
         return retVal;
     }
 
-    public static void write(Value... a) {
-        System.out.println(a[0].name);
-    }
-
-    class Value {
-        public String name;
-        public BigInteger value;
-
-        public Value(String name, BigInteger value) {
-            this.name = name;
-            this.value = value;
-        }
+    public static BigInteger test(BigInteger r0, BigInteger r1) {
+        System.out.println(r0);
+        return r1;
     }
 
     // Jedes Statemant ausserhalb von Funktionen landet in der Main-Methode
     public static void main(String[] args) {
         BigInteger r = new BigInteger("10");
-        BigInteger result = read("d");
-        BigInteger d = read("d");
+        BigInteger b = new BigInteger("10");
+        test(r, b);
         System.out.println("result := " + r);
         in.close();
     }
