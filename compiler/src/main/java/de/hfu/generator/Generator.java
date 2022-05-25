@@ -91,6 +91,18 @@ public class Generator {
         out.close();
     }
 
+    private String getFunctionDescriptor(DefFunction function) {
+        StringBuilder builder = new StringBuilder();
+        String type = "Ljava/math/BigInteger;";
+        builder.append("(");
+        for (int i = 0; i < function.getParameterCount(); i++) {
+            builder.append(type);
+        }
+        builder.append(")");
+        builder.append(type);
+        return builder.toString();
+    }
+
     private void generateStaticScannerInit() {
         FieldVisitor fieldVisitor = classWriter.visitField(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC, "in",
                 "Ljava/util/Scanner;", null, null);
@@ -216,7 +228,7 @@ public class Generator {
 
     private void generateFunctionCode(DefFunction function) {
         MethodVisitor currentFunctionVisitor = classWriter.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC,
-                function.getId(), "(Ljava/lang/String;)Ljava/math/BigInteger;", null, null);
+                function.getId(), getFunctionDescriptor(function), null, null);
         currentFunctionVisitor.visitCode();
 
         // TODO Einlesen von Parametern
@@ -224,6 +236,7 @@ public class Generator {
         for (Statement statement : function.getStatements()) {
             this.generateStatementCode(currentFunctionVisitor, statement);
         }
+
         currentFunctionVisitor.visitInsn(Opcodes.ARETURN); // TODO Return muss noch getestet werden und verbindung mit
                                                            // Statements muss hergestellt werden (Laden vom
                                                            // Rückgabewert)
