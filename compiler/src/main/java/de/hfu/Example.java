@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 public class Example {
 
+    public static Scanner in = new Scanner(System.in);
+
     // Implementierung von Pred()
     public static BigInteger pred(BigInteger s1) {
         BigInteger retVal = s1.add(BigInteger.ZERO); // Copy S1
@@ -24,10 +26,9 @@ public class Example {
 
     // Implementierung von read()
     public static BigInteger read(String name) {
-        Scanner in = new Scanner(System.in);
         System.out.print(name + " := ");
         String input = in.nextLine();
-        in.close();
+
         return new BigInteger(input);
     }
 
@@ -172,8 +173,10 @@ public class Example {
     // Jedes Statemant ausserhalb von Funktionen landet in der Main-Methode
     public static void main(String[] args) {
         BigInteger r = new BigInteger("10");
-        BigInteger result = isZero(r);
+        BigInteger result = read("d");
+        BigInteger d = read("d");
         System.out.println("result := " + r);
+        in.close();
     }
 
 }

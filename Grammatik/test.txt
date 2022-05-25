@@ -1,4 +1,7 @@
 var lol := 3247283947829;
 var hello := 2;
 var kek := lol;
+var r0 := read();
+var r1 := read();
 write(lol, hello, kek);
+write(r0, r1);

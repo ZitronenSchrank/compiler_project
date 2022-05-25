@@ -13,6 +13,7 @@ import java.util.Map;
 import static java.nio.file.StandardOpenOption.*;
 
 import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.Handle;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
@@ -58,6 +59,7 @@ public class Generator {
                 null // interface names
         );
 
+        this.generateStaticScannerInit();
         this.generateLanguageFunctionalityCode();
 
         for (DefFunction function : whileProgram.getDefFunctions().values()) {
@@ -75,6 +77,8 @@ public class Generator {
             this.generateStatementCode(mainMethodVisitor, statement);
         }
 
+        generateStaticScannerClose(mainMethodVisitor);
+
         mainMethodVisitor.visitInsn(Opcodes.RETURN);
         mainMethodVisitor.visitEnd();
         mainMethodVisitor.visitMaxs(-1, -1);
@@ -85,6 +89,32 @@ public class Generator {
         out.write(classWriter.toByteArray());
         out.flush();
         out.close();
+    }
+
+    private void generateStaticScannerInit() {
+        FieldVisitor fieldVisitor = classWriter.visitField(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC, "in",
+                "Ljava/util/Scanner;", null, null);
+        fieldVisitor.visitEnd();
+
+        MethodVisitor methodVisitor = classWriter.visitMethod(Opcodes.ACC_STATIC, "<clinit>", "()V", null, null);
+        methodVisitor.visitCode();
+        Label label0 = new Label();
+        methodVisitor.visitLabel(label0);
+        methodVisitor.visitLineNumber(8, label0);
+        methodVisitor.visitTypeInsn(Opcodes.NEW, "java/util/Scanner");
+        methodVisitor.visitInsn(Opcodes.DUP);
+        methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "in", "Ljava/io/InputStream;");
+        methodVisitor.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/util/Scanner", "<init>", "(Ljava/io/InputStream;)V",
+                false);
+        methodVisitor.visitFieldInsn(Opcodes.PUTSTATIC, "GG", "in", "Ljava/util/Scanner;");
+        methodVisitor.visitInsn(Opcodes.RETURN);
+        methodVisitor.visitMaxs(3, 0);
+        methodVisitor.visitEnd();
+    }
+
+    private void generateStaticScannerClose(MethodVisitor methodVisitor) {
+        methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, "GG", "in", "Ljava/util/Scanner;");
+        methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/util/Scanner", "close", "()V", false);
     }
 
     private void generateLanguageFunctionalityCode() {
@@ -149,14 +179,9 @@ public class Generator {
             methodVisitor = classWriter.visitMethod(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC, "read",
                     "(Ljava/lang/String;)Ljava/math/BigInteger;", null, null);
             methodVisitor.visitCode();
-
-            methodVisitor.visitTypeInsn(Opcodes.NEW, "java/util/Scanner");
-            methodVisitor.visitInsn(Opcodes.DUP);
-            methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "in", "Ljava/io/InputStream;");
-            methodVisitor.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/util/Scanner", "<init>",
-                    "(Ljava/io/InputStream;)V", false);
-            methodVisitor.visitVarInsn(Opcodes.ASTORE, 1);
-
+            Label label0 = new Label();
+            methodVisitor.visitLabel(label0);
+            methodVisitor.visitLineNumber(29, label0);
             methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
             methodVisitor.visitVarInsn(Opcodes.ALOAD, 0);
             methodVisitor.visitInvokeDynamicInsn("makeConcatWithConstants", "(Ljava/lang/String;)Ljava/lang/String;",
@@ -167,22 +192,23 @@ public class Generator {
                     new Object[] { "\u0001 := " });
             methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "print",
                     "(Ljava/lang/String;)V", false);
-
-            methodVisitor.visitVarInsn(Opcodes.ALOAD, 1);
+            Label label1 = new Label();
+            methodVisitor.visitLabel(label1);
+            methodVisitor.visitLineNumber(30, label1);
+            methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, "GG", "in", "Ljava/util/Scanner;");
             methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/util/Scanner", "nextLine",
                     "()Ljava/lang/String;", false);
-            methodVisitor.visitVarInsn(Opcodes.ASTORE, 2);
-
-            methodVisitor.visitVarInsn(Opcodes.ALOAD, 1);
-            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/util/Scanner", "close", "()V", false);
-
+            methodVisitor.visitVarInsn(Opcodes.ASTORE, 1);
+            Label label2 = new Label();
+            methodVisitor.visitLabel(label2);
+            methodVisitor.visitLineNumber(32, label2);
             methodVisitor.visitTypeInsn(Opcodes.NEW, "java/math/BigInteger");
             methodVisitor.visitInsn(Opcodes.DUP);
-            methodVisitor.visitVarInsn(Opcodes.ALOAD, 2);
+            methodVisitor.visitVarInsn(Opcodes.ALOAD, 1);
             methodVisitor.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/math/BigInteger", "<init>",
                     "(Ljava/lang/String;)V", false);
             methodVisitor.visitInsn(Opcodes.ARETURN);
-            methodVisitor.visitMaxs(3, 3);
+            methodVisitor.visitMaxs(3, 2);
             methodVisitor.visitEnd();
         } // !READ
 
