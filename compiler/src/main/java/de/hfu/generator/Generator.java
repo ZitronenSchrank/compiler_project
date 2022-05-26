@@ -335,7 +335,6 @@ public class Generator {
     }
 
     private void generateWhileCode(MethodVisitor methodVisitor, While statement) {
-        // TODO
         int varId = nameToIdMap.get(statement.getVarName());
         Label whileEnd = new Label();
         Label whileBegin = new Label();

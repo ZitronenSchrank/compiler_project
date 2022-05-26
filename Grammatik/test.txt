@@ -38,7 +38,20 @@ def isZero(s1) begin:
     return retVal;
 end
 
+
+
 var r0 := read();
-var r1 := read();
+
+while(r0) begin:
+    write(r0);
+
+    var r1 := 3;
+    while(r1) begin:
+        write(r1);
+        pred(r1);
+    end
+    pred(r0);
+end
+
 var erg := isZero(r0);
-write(r0, r1, erg);
+write(erg);
