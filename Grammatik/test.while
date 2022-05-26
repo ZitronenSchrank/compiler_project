@@ -49,11 +49,10 @@ loop(r0) begin:
     end
 end
 
-loop(r0) begin:
-    asd
-    assd
+def hello(r0) begin:
+   return r0;
 end
 
-read();
+var lel := read();
 var erg := isZero(r0);
 write(erg);

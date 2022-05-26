@@ -21,10 +21,29 @@ import {
 	TextDocument
 } from 'vscode-languageserver-textdocument';
 
+import { WhileLexer } from './grammar/WhileLexer';
+import { CharStreams, CommonTokenStream, Recognizer, RecognitionException, ANTLRErrorListener } from 'antlr4ts';
+import { WhileParser } from './grammar/WhileParser';
+
+class LspParserErrorListener implements ANTLRErrorListener<any> {
+	private line = -1;
+	private message = "";
+	syntaxError<T>(recognizer: Recognizer<T, any>, offendingSymbol: T, line: number, charPositionInLine: number, msg: string, e: RecognitionException | undefined): void {
+		this.line = line;
+		this.message = msg;
+		return;
+	}
+	getLine = () => {
+		return this.line;
+	};
+	getMsg = () => {
+		return this.message;
+	};
+}
+
 // Create a connection for the server, using Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
 const connection = createConnection(ProposedFeatures.all);
-
 // Create a simple text document manager.
 const documents: TextDocuments<TextDocument> = new TextDocuments(TextDocument);
 
@@ -34,7 +53,6 @@ let hasDiagnosticRelatedInformationCapability = false;
 
 connection.onInitialize((params: InitializeParams) => {
 	const capabilities = params.capabilities;
-
 	// Does the client support the `workspace/configuration` request?
 	// If not, we fall back using global settings.
 	hasConfigurationCapability = !!(
@@ -139,12 +157,44 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
 	const settings = await getDocumentSettings(textDocument.uri);
 
 	// The validator creates diagnostics for all uppercase words length 2 and more
-	const text = textDocument.getText();
-	const pattern = /\b[A-Z]{2,}\b/g;
-	let m: RegExpExecArray | null;
 
-	let problems = 0;
+	const inputStream = CharStreams.fromString(textDocument.getText());
+	const lexer = new WhileLexer(inputStream);
+	const tokenStream = new CommonTokenStream(lexer);
+	const parser = new WhileParser(tokenStream);
+	const errorListener = new LspParserErrorListener();
+
+	parser.addErrorListener(errorListener);
+	const tree = parser.prog();
+	let errorLineNum = errorListener.getLine();
+	console.log(errorLineNum);
+
 	const diagnostics: Diagnostic[] = [];
+
+	if (errorLineNum != -1) {
+		let counter = 0;
+		textDocument.getText().split("\n").forEach(element => {
+			errorLineNum--;
+			if (errorLineNum > 1) {
+				counter += element.length + 1;
+			}
+		});
+
+		const diagnostic: Diagnostic = {
+			severity: DiagnosticSeverity.Error,
+			range: {
+				start: textDocument.positionAt(counter),
+				end: textDocument.positionAt(counter + 5)
+			},
+			message: `Syntax Error: ${errorListener.getMsg()}`,
+			source: 'While Parser'
+		};
+		diagnostics.push(diagnostic);
+
+	}
+
+
+	/*let problems = 0;
 	while ((m = pattern.exec(text)) && problems < settings.maxNumberOfProblems) {
 		problems++;
 		const diagnostic: Diagnostic = {
@@ -175,7 +225,7 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
 			];
 		}
 		diagnostics.push(diagnostic);
-	}
+	}*/
 
 	// Send the computed diagnostics to VSCode.
 	connection.sendDiagnostics({ uri: textDocument.uri, diagnostics });
@@ -194,15 +244,10 @@ connection.onCompletion(
 		// info and always provide the same completion items.
 		return [
 			{
-				label: 'TypeScript',
-				kind: CompletionItemKind.Text,
+				label: 'write',
+				kind: CompletionItemKind.Keyword,
 				data: 1
 			},
-			{
-				label: 'JavaScript',
-				kind: CompletionItemKind.Text,
-				data: 2
-			}
 		];
 	}
 );
@@ -212,11 +257,8 @@ connection.onCompletion(
 connection.onCompletionResolve(
 	(item: CompletionItem): CompletionItem => {
 		if (item.data === 1) {
-			item.detail = 'TypeScript details';
-			item.documentation = 'TypeScript documentation';
-		} else if (item.data === 2) {
-			item.detail = 'JavaScript details';
-			item.documentation = 'JavaScript documentation';
+			item.detail = 'A Write Statement';
+			item.documentation = 'Outputs Data On The Console';
 		}
 		return item;
 	}
