@@ -1,0 +1,30 @@
+{
+    "name": "While Programming Language",
+    "scopeName": "source.while",
+    "patterns": [
+        {
+            "include": "#comments"
+        },
+        {
+            "include": "#keywords"
+        }
+    ],
+    "repository": {
+        "comments": {
+            "patterns": [
+                {
+                    "match": "(//).*$\\n?",
+                    "name": "comment.line.double-slash.js"
+                }
+            ]
+        },
+        "keywords": {
+            "patterns": [
+                {
+                    "match": "(def|var|begin|end|while|loop|read|write|succ|pred)",
+                    "name": "keyword.def"
+                }
+            ]
+        }
+    }
+}

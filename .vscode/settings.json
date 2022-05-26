@@ -14,5 +14,13 @@
         "visitors": true,
         "outputDir": "../compiler/src/main/java/de/hfu/grammar/",
         "package": "de.hfu.grammar"
-    }
+    },
+    "[typescript]": {
+        "editor.insertSpaces": false,
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": true
+        }
+    },
+    "typescript.tsc.autoDetect": "off",
+    "typescript.preferences.quoteStyle": "single",
 }
