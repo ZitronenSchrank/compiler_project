@@ -164,9 +164,11 @@ public class Example {
     // Jedes Statemant ausserhalb von Funktionen landet in der Main-Methode
     public static void main(String[] args) {
         BigInteger r = new BigInteger("10");
-        BigInteger b = new BigInteger("10");
-        test(r, b);
-        System.out.println("result := " + r);
+        BigInteger i = r;
+        while (i.compareTo(BigInteger.ZERO) != 0) {
+            System.out.println("Hello");
+            i = pred(i);
+        }
         in.close();
     }
 

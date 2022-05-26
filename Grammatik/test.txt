@@ -4,10 +4,41 @@ def hallo(param, arg, p) begin:
     return param;
 end
 
-var lol := 3247283947829;
-var hello := 2;
-var kek := lol;
+def add(s1, s2) begin:
+    var retVal := s1;
+
+    while(s2) begin:
+        succ(retVal);
+        pred(s2);
+    end
+
+    return retVal;
+end
+
+def mul(s1, s2) begin:
+    var retVal := s1;
+    pred(s2);
+
+    while(s2) begin:
+        retVal := add(retVal, s1);
+        pred(s2);
+    end
+
+    return retVal;
+end
+
+def isZero(s1) begin:
+    var retVal := 1;
+
+    while(s1) begin:
+        retVal := 0;
+        s1 := 0;
+    end
+
+    return retVal;
+end
+
 var r0 := read();
-var r1 := hallo(99, r0, 2);
-write(lol, hello, kek);
-write(r0, r1);
+var r1 := read();
+var erg := isZero(r0);
+write(r0, r1, erg);

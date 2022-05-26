@@ -278,14 +278,6 @@ public class Generator {
                 System.err.println("Statement: " + statement.getClass().getSimpleName() + "not found!");
                 break;
         }
-
-        // TODO
-        System.out.println(statement.getClass().toString());
-        methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
-        methodVisitor.visitLdcInsn(statement.getClass().toString());
-        methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V",
-                false);
-
     }
 
     private void generateExpressionCode(MethodVisitor methodVisitor, Expression expression) {
@@ -344,6 +336,28 @@ public class Generator {
 
     private void generateWhileCode(MethodVisitor methodVisitor, While statement) {
         // TODO
+        int varId = nameToIdMap.get(statement.getVarName());
+        Label whileEnd = new Label();
+        Label whileBegin = new Label();
+
+        methodVisitor.visitFrame(Opcodes.F_APPEND, varId,
+                new Object[] { "java/math/BigInteger", "java/math/BigInteger" },
+                0, null);
+        methodVisitor.visitLabel(whileBegin);
+        methodVisitor.visitVarInsn(Opcodes.ALOAD, varId);
+        methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, "java/math/BigInteger", "ZERO", "Ljava/math/BigInteger;");
+        methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/math/BigInteger", "compareTo",
+                "(Ljava/math/BigInteger;)I", false);
+
+        methodVisitor.visitJumpInsn(Opcodes.IFEQ, whileEnd);
+
+        for (var stmt : statement.getStatements()) {
+            generateStatementCode(methodVisitor, stmt);
+        }
+        methodVisitor.visitJumpInsn(Opcodes.GOTO, whileBegin);
+
+        methodVisitor.visitLabel(whileEnd);
+        methodVisitor.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
     }
 
     private void generateWriteCode(MethodVisitor methodVisitor, Write statement) {
