@@ -6,7 +6,13 @@
             "include": "#comments"
         },
         {
-            "include": "#keywords"
+            "include": "#languageFunctions"
+        },
+        {
+            "include": "#controls"
+        },
+        {
+            "include": "#fundef"
         }
     ],
     "repository": {
@@ -18,13 +24,56 @@
                 }
             ]
         },
-        "keywords": {
+        "languageFunctions": {
             "patterns": [
                 {
-                    "match": "(def|var|begin|end|while|loop|read|write|succ|pred)",
-                    "name": "keyword.def"
+                    "match": "(read|write|succ|pred)",
+                    "name": "support.function"
                 }
             ]
+        },
+        "controls": {
+            "patterns": [
+                {
+                    "match": "(loop|while)",
+                    "name": "keyword.control"
+                }
+            ]
+        },
+        "fundef": {
+            "begin": "def",
+            "beginCaptures": {
+                "0": {
+                    "name": "storage.type"
+                }
+            },
+            "end": "(begin:|;)",
+            "endCaptures": {
+                "0": {
+                    "name": "storage.type"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#parameters"
+                }
+            ],
+            "name": "entity.name.function"
+        },
+        "parameters": {
+            "begin": "\\(",
+            "beginCaptures": {
+                "0": {
+                    "name": "storage.type"
+                }
+            },
+            "end": "\\)",
+            "endCaptures": {
+                "0": {
+                    "name": "storage.type"
+                }
+            },
+            "name": "variable.parameter"
         }
     }
 }
