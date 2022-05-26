@@ -244,9 +244,7 @@ public class Generator {
         }
 
         currentFunctionVisitor.visitVarInsn(Opcodes.ALOAD, nameToIdMap.get(function.getReturnVariable()));
-        currentFunctionVisitor.visitInsn(Opcodes.ARETURN); // TODO Return muss noch getestet werden und verbindung mit
-                                                           // Statements muss hergestellt werden (Laden vom
-                                                           // Rückgabewert)
+        currentFunctionVisitor.visitInsn(Opcodes.ARETURN);
         currentFunctionVisitor.visitEnd();
         currentFunctionVisitor.visitMaxs(-1, -1);
     }
@@ -307,15 +305,36 @@ public class Generator {
     }
 
     private void generateDefVarCode(MethodVisitor methodVisitor, DefVar defVar) {
-        // TODO
-        generateExpressionCode(methodVisitor, defVar.getInitValue());
         varCounter++;
+        generateExpressionCode(methodVisitor, defVar.getInitValue());
         nameToIdMap.put(defVar.getVarName(), varCounter);
         methodVisitor.visitVarInsn(Opcodes.ASTORE, varCounter);
     }
 
     private void generateLoopCode(MethodVisitor methodVisitor, Loop statement) {
-        // TODO
+        int varId = nameToIdMap.get(statement.getVarName());
+        Label loopEnd = new Label();
+        Label loopBegin = new Label();
+
+        methodVisitor.visitFrame(Opcodes.F_APPEND, varId,
+                new Object[] { "java/math/BigInteger", "java/math/BigInteger" },
+                0, null);
+        methodVisitor.visitLabel(loopBegin);
+        methodVisitor.visitVarInsn(Opcodes.ALOAD, varId);
+        methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, "java/math/BigInteger", "ZERO", "Ljava/math/BigInteger;");
+        methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/math/BigInteger", "compareTo",
+                "(Ljava/math/BigInteger;)I", false);
+
+        methodVisitor.visitJumpInsn(Opcodes.IFEQ, loopEnd);
+
+        for (var stmt : statement.getStatements()) {
+            generateStatementCode(methodVisitor, stmt);
+        }
+        generatePredCode(methodVisitor, new Pred(statement.getVarName()));
+        methodVisitor.visitJumpInsn(Opcodes.GOTO, loopBegin);
+
+        methodVisitor.visitLabel(loopEnd);
+        methodVisitor.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
     }
 
     private void generatePredCode(MethodVisitor methodVisitor, Pred statement) {
@@ -377,28 +396,18 @@ public class Generator {
     }
 
     private void generateCallFunctionCode(MethodVisitor methodVisitor, CallFunction expression) {
-        // TODO
-        // methodVisitor.visitVarInsn(Opcodes.ALOAD, nameToIdMap.get(expression.));
         for (var value : expression.getCallParameters()) {
-            /*
-             * if (value instanceof VarExpression) {
-             * VarExpression var = (VarExpression) value;
-             * methodVisitor.visitVarInsn(Opcodes.ALOAD, nameToIdMap.get(var.getVarName()));
-             * } else if (value instanceof NumExpression) {
-             * generateNumExpressionCode(methodVisitor, (NumExpression) value);
-             * }
-             */
+
             generateExpressionCode(methodVisitor, value);
         }
         methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, className, expression.getFunctionName(),
                 getFunctionDescriptor(expression.getCallParameters().size()),
                 false);
-        // methodVisitor.visitVarInsn(Opcodes.ASTORE,
-        // nameToIdMap.get(expression.get()));
+
     }
 
     private void generateNumExpressionCode(MethodVisitor methodVisitor, NumExpression expression) {
-        // TODO
+
         methodVisitor.visitTypeInsn(Opcodes.NEW, "java/math/BigInteger");
         methodVisitor.visitInsn(Opcodes.DUP);
         methodVisitor.visitLdcInsn(expression.getNumString());
@@ -407,7 +416,6 @@ public class Generator {
     }
 
     private void generateReadCode(MethodVisitor methodVisitor, Read expression) {
-        // TODO: Other Parameter, Change OWNER
         methodVisitor.visitLdcInsn(expression.getTargetVar());
         methodVisitor.visitMethodInsn(Opcodes.INVOKESTATIC, className, "read",
                 "(Ljava/lang/String;)Ljava/math/BigInteger;",
