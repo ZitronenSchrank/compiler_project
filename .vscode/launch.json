@@ -14,7 +14,7 @@
             "request": "launch",
             "mainClass": "de.hfu.App",
             "projectName": "while",
-            "args": "./Grammatik/test.txt"
+            "args": "./Grammatik/test.while"
         },
         {
             "name": "Debug ANTLR4 grammar",

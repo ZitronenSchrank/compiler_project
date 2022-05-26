@@ -1,3 +1,5 @@
+def asdas(a,b,c);
+
 def hallo(param, arg, p) begin:
     write(param, arg, p);
     succ(param);
@@ -37,7 +39,7 @@ def isZero(s1) begin:
 
     return retVal;
 end
-
+ 
 var r0 := read();
 
 loop(r0) begin:
@@ -47,6 +49,11 @@ loop(r0) begin:
     loop(r1) begin:
         write(r1);
     end
+end
+
+loop(r0) begin:
+    asd
+    assd
 end
 
 var erg := isZero(r0);

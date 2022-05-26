@@ -12,7 +12,19 @@
             "include": "#controls"
         },
         {
-            "include": "#fundef"
+            "include": "#blocElements"
+        },
+        {
+            "include": "#functionDefinition"
+        },
+        {
+            "include": "#variable"
+        },
+        {
+            "include": "#constantNumbers"
+        },
+        {
+            "include": "#operator"
         }
     ],
     "repository": {
@@ -20,45 +32,55 @@
             "patterns": [
                 {
                     "match": "(//).*$\\n?",
-                    "name": "comment.line.double-slash.js"
+                    "name": "comment.line.double-slash"
                 }
             ]
+        },
+        "blocElements": {
+            "match": "(begin|end)",
+            "name": "keyword.other"
         },
         "languageFunctions": {
             "patterns": [
                 {
                     "match": "(read|write|succ|pred)",
                     "name": "support.function"
+                },
+                {
+                    "include": "#parameters"
                 }
             ]
         },
         "controls": {
             "patterns": [
                 {
-                    "match": "(loop|while)",
+                    "match": "(loop|while|return|var)",
                     "name": "keyword.control"
+                },
+                {
+                    "include": "#parameters"
                 }
             ]
         },
-        "fundef": {
+        "functionDefinition": {
             "begin": "def",
             "beginCaptures": {
                 "0": {
                     "name": "storage.type"
                 }
             },
-            "end": "(begin:|;)",
+            "end": "(begin|;)",
             "endCaptures": {
                 "0": {
-                    "name": "storage.type"
+                    "name": "keyword.other"
                 }
             },
+            "name": "entity.name.function",
             "patterns": [
                 {
                     "include": "#parameters"
                 }
-            ],
-            "name": "entity.name.function"
+            ]
         },
         "parameters": {
             "begin": "\\(",
@@ -74,6 +96,18 @@
                 }
             },
             "name": "variable.parameter"
+        },
+        "variable": {
+            "match": "[a-zA-Z][a-zA-Z0-9]*",
+            "name": "variable.other"
+        },
+        "constantNumbers": {
+            "match": "(\\0 | [1-9][0-9]*)",
+            "name": "support.constant"
+        },
+        "operator": {
+            "match": "(:=|;|:)",
+            "name": "keyword.operator"
         }
     }
 }

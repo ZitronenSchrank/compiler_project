@@ -1,0 +1,71 @@
+{
+    "While Loop": {
+        "prefix": "while",
+        "body": [
+            "while($1) begin:",
+            "   $2",
+            "end"
+        ],
+        "description": "Create A While Loop"
+    },
+    "Loop": {
+        "prefix": "loop",
+        "body": [
+            "loop($1) begin:",
+            "   $2",
+            "end"
+        ],
+        "description": "Create A Loop"
+    },
+    "Define Function": {
+        "prefix": "def",
+        "body": [
+            "def $1($2) begin:",
+            "   return $3",
+            "end"
+        ],
+        "description": "Define A Function"
+    },
+    "Declare Function": {
+        "prefix": "def",
+        "body": [
+            "def $1($2);"
+        ],
+        "description": "Declare A Function"
+    },
+    "Write Statement": {
+        "prefix": "write",
+        "body": [
+            "write($1)"
+        ],
+        "description": "Create A Write Statement"
+    },
+    "Succ Statement": {
+        "prefix": "succ",
+        "body": [
+            "succ($1)"
+        ],
+        "description": "Create A Succ Statement"
+    },
+    "Pred Statement": {
+        "prefix": "pred",
+        "body": [
+            "pred($1)"
+        ],
+        "description": "Create A Pred Statement"
+    },
+    "Define Var Statement": {
+        "prefix": "var",
+        "body": [
+            "var $1 := $2"
+        ],
+        "description": "Create A Pred Statement"
+    },
+    "Read Expression": {
+        "prefix": "write",
+        "body": [
+            "read()"
+        ],
+        "description": "Create A Read Expression"
+    }
+}

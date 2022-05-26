@@ -36,6 +36,12 @@
 				"path": "./syntaxes/while.tmGrammar.json"
 			}
 		],
+		"snippets": [
+			{
+				"language": "while",
+				"path": "./syntaxes/snippets.json"
+			}
+		],
 		"configuration": {
 			"type": "object",
 			"title": "Example configuration",
