@@ -26,7 +26,8 @@
 				"id": "while",
 				"extensions": [
 					".while"
-				]
+				],
+				"configuration": "./language-configuration.json"
 			}
 		],
 		"grammars": [
