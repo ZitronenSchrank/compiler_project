@@ -22,23 +22,31 @@ import {
 } from 'vscode-languageserver-textdocument';
 
 import { WhileLexer } from './grammar/WhileLexer';
-import { CharStreams, CommonTokenStream, Recognizer, RecognitionException, ANTLRErrorListener } from 'antlr4ts';
+import { CharStreams, CommonTokenStream, Recognizer, RecognitionException, ANTLRErrorListener, CommonToken } from 'antlr4ts';
 import { WhileParser } from './grammar/WhileParser';
 
 class LspParserErrorListener implements ANTLRErrorListener<any> {
-	private line = -1;
-	private message = "";
-	syntaxError<T>(recognizer: Recognizer<T, any>, offendingSymbol: T, line: number, charPositionInLine: number, msg: string, e: RecognitionException | undefined): void {
-		this.line = line;
-		this.message = msg;
+	private _startIndex = -1;
+	private _endIndex = -1;
+	private _message = "";
+
+	public syntaxError<T>(recognizer: Recognizer<T, any>, offendingSymbol: T, line: number, charPositionInLine: number, msg: string, e: RecognitionException | undefined): void {
+		this._message = msg;
+		if (offendingSymbol instanceof CommonToken) {
+			this._startIndex = offendingSymbol.startIndex;
+			this._endIndex = offendingSymbol.stopIndex;
+		}
 		return;
 	}
-	getLine = () => {
-		return this.line;
-	};
-	getMsg = () => {
-		return this.message;
-	};
+	public get startIndex() {
+		return this._startIndex;
+	}
+	public get endIndex() {
+		return this._endIndex;
+	}
+	public get message() {
+		return this._message;
+	}
 }
 
 // Create a connection for the server, using Node's IPC as a transport.
@@ -156,8 +164,6 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
 	// In this simple example we get the settings for every validate run.
 	const settings = await getDocumentSettings(textDocument.uri);
 
-	// The validator creates diagnostics for all uppercase words length 2 and more
-
 	const inputStream = CharStreams.fromString(textDocument.getText());
 	const lexer = new WhileLexer(inputStream);
 	const tokenStream = new CommonTokenStream(lexer);
@@ -166,27 +172,19 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
 
 	parser.addErrorListener(errorListener);
 	const tree = parser.prog();
-	let errorLineNum = errorListener.getLine();
-	console.log(errorLineNum);
+	//console.log(errorLineNum);
 
 	const diagnostics: Diagnostic[] = [];
 
-	if (errorLineNum != -1) {
-		let counter = 0;
-		textDocument.getText().split("\n").forEach(element => {
-			errorLineNum--;
-			if (errorLineNum > 1) {
-				counter += element.length + 1;
-			}
-		});
+	if (errorListener.startIndex !== -1) {
 
 		const diagnostic: Diagnostic = {
 			severity: DiagnosticSeverity.Error,
 			range: {
-				start: textDocument.positionAt(counter),
-				end: textDocument.positionAt(counter + 5)
+				start: textDocument.positionAt(errorListener.startIndex),
+				end: textDocument.positionAt(errorListener.endIndex)
 			},
-			message: `Syntax Error: ${errorListener.getMsg()}`,
+			message: `Syntax Error: ${errorListener.message}`,
 			source: 'While Parser'
 		};
 		diagnostics.push(diagnostic);
@@ -242,11 +240,62 @@ connection.onCompletion(
 		// The pass parameter contains the position of the text document in
 		// which code complete got requested. For the example we ignore this
 		// info and always provide the same completion items.
+		const voc = WhileLexer.VOCABULARY;
 		return [
 			{
-				label: 'write',
+				label: voc.getSymbolicName(WhileLexer.WRITE)!.toLowerCase(),
+				kind: CompletionItemKind.Method,
+				data: WhileLexer.WRITE
+			},
+			{
+				label: voc.getSymbolicName(WhileLexer.READ)!.toLowerCase(),
+				kind: CompletionItemKind.Method,
+				data: WhileLexer.READ
+			},
+			{
+				label: voc.getSymbolicName(WhileLexer.PRED)!.toLowerCase(),
+				kind: CompletionItemKind.Method,
+				data: WhileLexer.PRED
+			},
+			{
+				label: voc.getSymbolicName(WhileLexer.SUCC)!.toLowerCase(),
+				kind: CompletionItemKind.Method,
+				data: WhileLexer.SUCC
+			},
+			{
+				label: voc.getSymbolicName(WhileLexer.LOOP)!.toLowerCase(),
+				kind: CompletionItemKind.Operator,
+				data: WhileLexer.LOOP
+			},
+			{
+				label: voc.getSymbolicName(WhileLexer.WHILE)!.toLowerCase(),
+				kind: CompletionItemKind.Operator,
+				data: WhileLexer.WHILE
+			},
+			{
+				label: voc.getSymbolicName(WhileLexer.RETURN)!.toLowerCase(),
 				kind: CompletionItemKind.Keyword,
-				data: 1
+				data: WhileLexer.RETURN
+			},
+			{
+				label: voc.getSymbolicName(WhileLexer.DEFINE)!.toLowerCase(),
+				kind: CompletionItemKind.Keyword,
+				data: WhileLexer.DEFINE
+			},
+			{
+				label: voc.getSymbolicName(WhileLexer.VARIABLE)!.toLowerCase(),
+				kind: CompletionItemKind.Keyword,
+				data: WhileLexer.VARIABLE
+			},
+			{
+				label: voc.getSymbolicName(WhileLexer.BEGIN)!.toLowerCase(),
+				kind: CompletionItemKind.Keyword,
+				data: WhileLexer.BEGIN
+			},
+			{
+				label: voc.getSymbolicName(WhileLexer.END)!.toLowerCase(),
+				kind: CompletionItemKind.Keyword,
+				data: WhileLexer.END
 			},
 		];
 	}
@@ -256,9 +305,21 @@ connection.onCompletion(
 // the completion list.
 connection.onCompletionResolve(
 	(item: CompletionItem): CompletionItem => {
-		if (item.data === 1) {
+		if (item.data === WhileLexer.WRITE) {
 			item.detail = 'A Write Statement';
 			item.documentation = 'Outputs Data On The Console';
+		}
+		if (item.data === WhileLexer.READ) {
+			item.detail = 'A Read Statement';
+			item.documentation = 'Will Read Input From The User';
+		}
+		if (item.data === WhileLexer.PRED) {
+			item.detail = 'A Pred Statement';
+			item.documentation = 'Will Decrement The Given Variable';
+		}
+		if (item.data === WhileLexer.SUCC) {
+			item.detail = 'A Succ Statement';
+			item.documentation = 'Will Increment The Given Variable';
 		}
 		return item;
 	}
