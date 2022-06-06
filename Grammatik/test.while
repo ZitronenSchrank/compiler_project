@@ -1,0 +1,58 @@
+def hallo(param, arg, p) begin:
+    write(param, arg, p);
+    succ(param);
+    return param;
+end
+
+def add(s1, s2) begin:
+    var retVal := s1;
+
+    while(s2) begin:
+        succ(retVal);
+        pred(s2);
+    end
+
+    return retVal;
+end
+
+def mul(s1, s2) begin:
+    var retVal := s1;
+    pred(s2);
+
+    while(s2) begin:
+        retVal := add(retVal, s1);
+        pred(s2);
+    end
+
+    return retVal;
+end
+
+def isZero(s1) begin:
+    var retVal := 1;
+
+    while(s1) begin:
+        retVal := 0;
+        s1 := 0;
+    end
+
+    return retVal;
+end
+ 
+var r0 := read();
+
+loop(r0) begin:
+    write(r0);
+
+    var r1 := r0;
+    loop(r1) begin:
+        write(r1);
+    end
+end
+
+def hello(r0) begin:
+   return r0;
+end
+
+var lel := read();
+var erg := isZero(r0);
+write(erg);

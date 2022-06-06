@@ -3,11 +3,18 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Example",
+            "request": "launch",
+            "mainClass": "de.hfu.Example",
+            "projectName": "while"
+        },
+        {
+            "type": "java",
             "name": "Launch App",
             "request": "launch",
             "mainClass": "de.hfu.App",
             "projectName": "while",
-            "args": "./Grammatik/test.txt"
+            "args": "./Grammatik/test.while"
         },
         {
             "name": "Debug ANTLR4 grammar",
@@ -19,6 +26,52 @@
             "startRule": "prog",
             "printParseTree": true,
             "visualParseTree": true
+        },
+        {
+            "type": "extensionHost",
+            "request": "launch",
+            "name": "Launch Client",
+            "runtimeExecutable": "${execPath}",
+            "args": [
+                "--extensionDevelopmentPath=${workspaceRoot}/lsp-sample"
+            ],
+            "outFiles": [
+                "${workspaceRoot}/lsp-sample/client/out/**/*.js"
+            ],
+            "preLaunchTask": "npm: watch - ./lsp-sample"
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Attach to Server",
+            "port": 6009,
+            "restart": true,
+            "outFiles": [
+                "${workspaceRoot}/server/out/**/*.js"
+            ]
+        },
+        {
+            "name": "Language Server E2E Test",
+            "type": "extensionHost",
+            "request": "launch",
+            "runtimeExecutable": "${execPath}",
+            "args": [
+                "--extensionDevelopmentPath=${workspaceRoot}/lsp-sample",
+                "--extensionTestsPath=${workspaceRoot}/lsp-sample/client/out/test/index",
+                "${workspaceRoot}/lsp-sample/client/testFixture"
+            ],
+            "outFiles": [
+                "${workspaceRoot}/lsp-sample/client/out/test/**/*.js"
+            ]
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Client + Server",
+            "configurations": [
+                "Launch Client",
+                "Attach to Server"
+            ]
         }
     ]
 }

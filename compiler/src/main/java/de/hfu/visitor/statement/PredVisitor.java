@@ -24,7 +24,7 @@ public class PredVisitor extends WhileBaseVisitor<Pred> {
     public Pred visitPred(PredContext ctx) {
         Token varName = ctx.ID().getSymbol();
         if (availableVariables.contains(varName.getText())) {
-            if (!availableVariables.forbiddenVariablesContains(varName.getText())) {
+            if (!availableVariables.readOnlyVariablesContains(varName.getText())) {
                 return new Pred(varName.getText());
             } else {
                 program.addError(ErrorFactory.formattedSemanticError(ErrorMessages.FORBIDDEN_VAR_WRITE, varName));

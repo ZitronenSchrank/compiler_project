@@ -28,18 +28,23 @@ public class WhlVisitor extends WhileBaseVisitor<While> {
     public While visitWhl(WhlContext ctx) {
         Token varName = ctx.ID().getSymbol();
         if (availableVariables.contains(varName.getText())) {
-            List<Statement> statements = new ArrayList<>();
-            availableVariables.pushNewContext();
+            if (!availableVariables.readOnlyVariablesContains(varName.getText())) {
+                List<Statement> statements = new ArrayList<>();
+                availableVariables.pushNewContext();
 
-            for (var statement : ctx.statement()) {
-                Statement stmt = statement.accept(new StatementVisitor(availableVariables, program));
-                if (stmt != null) {
-                    statements.add(stmt);
+                for (var statement : ctx.statement()) {
+                    Statement stmt = statement.accept(new StatementVisitor(availableVariables, program));
+                    if (stmt != null) {
+                        statements.add(stmt);
+                    }
                 }
+
+                availableVariables.pop();
+                return new While(varName.getText(), statements);
+            } else {
+                program.addError(ErrorFactory.formattedLogicError(ErrorMessages.LOOP_VAR_IN_WHILE, varName));
             }
 
-            availableVariables.pop();
-            return new While(varName.getText(), statements);
         } else {
             program.addError(ErrorFactory.formattedSemanticError(ErrorMessages.VAR_NOT_DEF, varName));
         }

@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 public class Example {
 
+    public static Scanner in = new Scanner(System.in);
+
     // Implementierung von Pred()
     public static BigInteger pred(BigInteger s1) {
         BigInteger retVal = s1.add(BigInteger.ZERO); // Copy S1
@@ -24,10 +26,9 @@ public class Example {
 
     // Implementierung von read()
     public static BigInteger read(String name) {
-        Scanner in = new Scanner(System.in);
         System.out.print(name + " := ");
         String input = in.nextLine();
-        in.close();
+
         return new BigInteger(input);
     }
 
@@ -155,36 +156,20 @@ public class Example {
         return retVal;
     }
 
-    public static void write(Value... a) {
-        System.out.println(a[0].name);
-    }
-
-    class Value {
-        public String name;
-        public BigInteger value;
-
-        public Value(String name, BigInteger value) {
-            this.name = name;
-            this.value = value;
-        }
+    public static BigInteger test(BigInteger r0, BigInteger r1) {
+        System.out.println(r0);
+        return r1;
     }
 
     // Jedes Statemant ausserhalb von Funktionen landet in der Main-Methode
     public static void main(String[] args) {
-
-        // var result := 1
-        BigInteger result = BigInteger.valueOf(1);
-
-        // var r0 = read()
-        BigInteger r0 = read("r0");
-
-        // result := r0
-        result = r0;
-        Example a = new Example();
-
-        // write(result)
-        Value b = a.new Value("String", BigInteger.ZERO);
-        write(b);
+        BigInteger r = new BigInteger("10");
+        BigInteger i = r;
+        while (i.compareTo(BigInteger.ZERO) != 0) {
+            System.out.println("Hello");
+            i = pred(i);
+        }
+        in.close();
     }
 
 }
