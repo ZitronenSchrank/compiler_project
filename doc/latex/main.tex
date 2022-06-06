@@ -1,0 +1,107 @@
+\documentclass[
+	12pt,
+	a4paper,
+	ngerman,
+	openright,
+	final,
+	listof=nochaptergap,
+	]{scrbook}
+\usepackage{cmap}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\include{preamble}
+
+\begin{document}
+
+\setcounter{secnumdepth}{3}
+
+% Titelblatt
+\include{content/framework/title}
+\cleardoubleemptypage
+
+\frontmatter
+\pagenumbering{Roman}
+  
+
+% Abstract
+\include{content/framework/abstract}
+\cleardoubleemptypage
+
+
+% Inhaltsverzeichnis
+\phantomsection
+\addcontentsline{toc}{chapter}{Inhaltsverzeichnis}
+\tableofcontents
+\cleardoubleemptypage
+
+% Abbildungsverzeichnis einbinden und ins Inhaltsverzeichnis
+% WORKAROUND: tocloft und KOMA funktionieren zusammen nicht
+% korrekt\phantomsection
+\phantomsection 
+\addcontentsline{toc}{chapter}{\listfigurename} 
+\listoffigures
+\cleardoubleemptypage
+
+% Tabellenverzeichnis einbinden und ins Inhaltsverzeichnis
+% WORKAROUND: tocloft und KOMA funktionieren zusammen nicht
+% korrekt\phantomsection
+\phantomsection
+\addcontentsline{toc}{chapter}{\listtablename}
+\listoftables
+\cleardoubleemptypage
+
+% Quellcodeverzeichnis einbinden und ins Inhaltsverzeichnis
+\phantomsection
+\addcontentsline{toc}{chapter}{Quellcodeverzeichnis}
+
+%Define listing
+\makeatletter
+\begingroup\let\newcounter\@gobble\let\setcounter\@gobbletwo
+\globaldefs\@ne \let\c@loldepth\@ne
+\newlistof{listings}{lol}{\lstlistlistingname}
+\endgroup
+\let\l@lstlisting\l@listings
+\makeatother
+\setlength{\cftlistingsindent}{0em}
+\renewcommand{\cftlistingsafterpnum}{\vskip0pt} %Spacing between entries
+\renewcommand*{\cftlistingspresnum}{\lstlistingname~}
+\settowidth{\cftlistingsnumwidth}{\cftlistingspresnum}
+\renewcommand{\lstlistlistingname}{Quellcodeverzeichnis}
+% Tabellenverzeichnis anpassen
+\renewcommand{\lstlistingname}{Codeauschnitt}
+\renewcommand{\cftlistingsaftersnum}{:}
+% Breite des Nummerierungsbereiches [Codeauschnitt 1:]
+\newlength{\codeLength}
+\settowidth{\codeLength}{\bfseries\lstlistingname\cftlistingsaftersnum}
+\addtolength{\codeLength}{5mm}
+\setlength{\cftlistingsnumwidth}{\codeLength}
+\lstlistoflistings
+\cleardoubleemptypage
+
+% Abkürzungsverzeichnis
+\include{content/framework/abbreviations}
+
+\mainmatter
+
+\include{content/chapters/Einleitung}
+
+
+% Schalgwortverzeichnis (Index)
+%\printindex
+
+% Literaturverzeichnis
+\singlespacing
+%\nocite{*}
+%\bibliographystyle{myIEEE.bst}
+%\bibliography{IEEEabrv, bibtex}
+\printbibliography[title=Literaturverzeichnis, heading=bibintoc]
+
+
+%Zurücksetzen \chaptermark
+\let\chaptermark\oldchaptermark
+
+% Hier können Anhaenge angefuegt werden
+% Appendices
+%\appendix
+\end{document} 
