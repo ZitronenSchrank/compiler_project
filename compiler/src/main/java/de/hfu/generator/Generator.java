@@ -206,13 +206,15 @@ public class Generator {
                             false),
                     new Object[] { "\u0001 := " });
             methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "print",
-                    "(Ljava/lang/String;)V", false);
+                    "(Ljava/lang/String;)V",
+                    false);
             Label label1 = new Label();
             methodVisitor.visitLabel(label1);
             methodVisitor.visitLineNumber(30, label1);
             methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, className, "in", "Ljava/util/Scanner;");
             methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/util/Scanner", "nextLine",
-                    "()Ljava/lang/String;", false);
+                    "()Ljava/lang/String;",
+                    false);
             methodVisitor.visitVarInsn(Opcodes.ASTORE, 1);
             Label label2 = new Label();
             methodVisitor.visitLabel(label2);
@@ -221,9 +223,35 @@ public class Generator {
             methodVisitor.visitInsn(Opcodes.DUP);
             methodVisitor.visitVarInsn(Opcodes.ALOAD, 1);
             methodVisitor.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/math/BigInteger", "<init>",
+                    "(Ljava/lang/String;)V",
+                    false);
+            methodVisitor.visitVarInsn(Opcodes.ASTORE, 2);
+            Label label3 = new Label();
+            methodVisitor.visitLabel(label3);
+            methodVisitor.visitLineNumber(34, label3);
+            methodVisitor.visitVarInsn(Opcodes.ALOAD, 2);
+            methodVisitor.visitFieldInsn(Opcodes.GETSTATIC, "java/math/BigInteger", "ZERO", "Ljava/math/BigInteger;");
+            methodVisitor.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/math/BigInteger", "compareTo",
+                    "(Ljava/math/BigInteger;)I", false);
+            methodVisitor.visitInsn(Opcodes.ICONST_M1);
+            Label label4 = new Label();
+            methodVisitor.visitJumpInsn(Opcodes.IF_ICMPNE, label4);
+            Label label5 = new Label();
+            methodVisitor.visitLabel(label5);
+            methodVisitor.visitLineNumber(35, label5);
+            methodVisitor.visitTypeInsn(Opcodes.NEW, "java/lang/NumberFormatException");
+            methodVisitor.visitInsn(Opcodes.DUP);
+            methodVisitor.visitLdcInsn("A Negative Value Is Not Allowed");
+            methodVisitor.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/lang/NumberFormatException", "<init>",
                     "(Ljava/lang/String;)V", false);
+            methodVisitor.visitInsn(Opcodes.ATHROW);
+            methodVisitor.visitLabel(label4);
+            methodVisitor.visitLineNumber(38, label4);
+            methodVisitor.visitFrame(Opcodes.F_APPEND, 2, new Object[] { "java/lang/String", "java/math/BigInteger" },
+                    0, null);
+            methodVisitor.visitVarInsn(Opcodes.ALOAD, 2);
             methodVisitor.visitInsn(Opcodes.ARETURN);
-            methodVisitor.visitMaxs(3, 2);
+            methodVisitor.visitMaxs(3, 3);
             methodVisitor.visitEnd();
         } // !READ
 

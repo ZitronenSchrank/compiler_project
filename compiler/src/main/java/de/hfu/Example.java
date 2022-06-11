@@ -29,7 +29,13 @@ public class Example {
         System.out.print(name + " := ");
         String input = in.nextLine();
 
-        return new BigInteger(input);
+        BigInteger retVal = new BigInteger(input);
+
+        if (retVal.compareTo(BigInteger.ZERO) == -1) {
+            throw new NumberFormatException("A Negative Value Is Not Allowed");
+        }
+
+        return retVal;
     }
 
     // Eigene Funktion add
@@ -164,7 +170,7 @@ public class Example {
     // Jedes Statemant ausserhalb von Funktionen landet in der Main-Methode
     public static void main(String[] args) {
         BigInteger r = new BigInteger("10");
-        BigInteger i = r;
+        BigInteger i = read("i");
         while (i.compareTo(BigInteger.ZERO) != 0) {
             System.out.println("Hello");
             i = pred(i);
