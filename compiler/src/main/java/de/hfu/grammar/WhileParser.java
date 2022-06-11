@@ -17,9 +17,10 @@ public class WhileParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, T__2=3, T__3=4, WRITE=5, READ=6, WHILE=7, SUCC=8, PRED=9, 
-		LOOP=10, DEFINE=11, VARIABLE=12, BEGIN=13, END=14, RETURN=15, ASSIGN=16, 
-		SEMICOLON=17, ID=18, NUM=19, COMMENT=20, WS=21;
+		T__0=1, T__1=2, WRITE=3, READ=4, WHILE=5, SUCC=6, PRED=7, LOOP=8, DEFINE=9, 
+		VARIABLE=10, BEGIN=11, END=12, RETURN=13, COLON=14, EQUAL=15, COMMA=16, 
+		ASSIGN=17, SEMICOLON=18, MINUS=19, PLUS=20, ID=21, NUM=22, COMMENT=23, 
+		WS=24;
 	public static final int
 		RULE_prog = 0, RULE_read = 1, RULE_write = 2, RULE_succ = 3, RULE_pred = 4, 
 		RULE_callFunction = 5, RULE_defFunction = 6, RULE_decFunction = 7, RULE_defVar = 8, 
@@ -36,17 +37,17 @@ public class WhileParser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'('", "')'", "':'", "','", "'write'", "'read'", "'while'", "'succ'", 
-			"'pred'", "'loop'", "'def'", "'var'", "'begin'", "'end'", "'return'", 
-			"':='", "';'"
+			null, "'('", "')'", "'write'", "'read'", "'while'", "'succ'", "'pred'", 
+			"'loop'", "'def'", "'var'", "'begin'", "'end'", "'return'", "':'", "'='", 
+			"','", null, "';'", "'-'", "'+'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, null, null, null, "WRITE", "READ", "WHILE", "SUCC", "PRED", 
-			"LOOP", "DEFINE", "VARIABLE", "BEGIN", "END", "RETURN", "ASSIGN", "SEMICOLON", 
-			"ID", "NUM", "COMMENT", "WS"
+			null, null, null, "WRITE", "READ", "WHILE", "SUCC", "PRED", "LOOP", "DEFINE", 
+			"VARIABLE", "BEGIN", "END", "RETURN", "COLON", "EQUAL", "COMMA", "ASSIGN", 
+			"SEMICOLON", "MINUS", "PLUS", "ID", "NUM", "COMMENT", "WS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -407,6 +408,7 @@ public class WhileParser extends Parser {
 			return getRuleContext(DefParametersContext.class,0);
 		}
 		public TerminalNode BEGIN() { return getToken(WhileParser.BEGIN, 0); }
+		public TerminalNode COLON() { return getToken(WhileParser.COLON, 0); }
 		public RetStatementContext retStatement() {
 			return getRuleContext(RetStatementContext.class,0);
 		}
@@ -452,7 +454,7 @@ public class WhileParser extends Parser {
 				setState(76);
 				match(BEGIN);
 				setState(77);
-				match(T__2);
+				match(COLON);
 				setState(81);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
@@ -487,7 +489,7 @@ public class WhileParser extends Parser {
 				setState(91);
 				match(BEGIN);
 				setState(92);
-				match(T__2);
+				match(COLON);
 				setState(96);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
@@ -625,6 +627,10 @@ public class WhileParser extends Parser {
 		public TerminalNode ID(int i) {
 			return getToken(WhileParser.ID, i);
 		}
+		public List<TerminalNode> COMMA() { return getTokens(WhileParser.COMMA); }
+		public TerminalNode COMMA(int i) {
+			return getToken(WhileParser.COMMA, i);
+		}
 		public DefParametersContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -648,11 +654,11 @@ public class WhileParser extends Parser {
 			setState(122);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (_la==T__3) {
+			while (_la==COMMA) {
 				{
 				{
 				setState(118);
-				match(T__3);
+				match(COMMA);
 				setState(119);
 				match(ID);
 				}
@@ -682,6 +688,10 @@ public class WhileParser extends Parser {
 		public List<TerminalNode> NUM() { return getTokens(WhileParser.NUM); }
 		public TerminalNode NUM(int i) {
 			return getToken(WhileParser.NUM, i);
+		}
+		public List<TerminalNode> COMMA() { return getTokens(WhileParser.COMMA); }
+		public TerminalNode COMMA(int i) {
+			return getToken(WhileParser.COMMA, i);
 		}
 		public CallParametersContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -714,11 +724,11 @@ public class WhileParser extends Parser {
 			setState(130);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (_la==T__3) {
+			while (_la==COMMA) {
 				{
 				{
 				setState(126);
-				match(T__3);
+				match(COMMA);
 				setState(127);
 				_la = _input.LA(1);
 				if ( !(_la==ID || _la==NUM) ) {
@@ -752,6 +762,7 @@ public class WhileParser extends Parser {
 		public TerminalNode WHILE() { return getToken(WhileParser.WHILE, 0); }
 		public TerminalNode ID() { return getToken(WhileParser.ID, 0); }
 		public TerminalNode BEGIN() { return getToken(WhileParser.BEGIN, 0); }
+		public TerminalNode COLON() { return getToken(WhileParser.COLON, 0); }
 		public TerminalNode END() { return getToken(WhileParser.END, 0); }
 		public List<StatementContext> statement() {
 			return getRuleContexts(StatementContext.class);
@@ -788,7 +799,7 @@ public class WhileParser extends Parser {
 			setState(137);
 			match(BEGIN);
 			setState(138);
-			match(T__2);
+			match(COLON);
 			setState(142);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
@@ -822,6 +833,7 @@ public class WhileParser extends Parser {
 		public TerminalNode LOOP() { return getToken(WhileParser.LOOP, 0); }
 		public TerminalNode ID() { return getToken(WhileParser.ID, 0); }
 		public TerminalNode BEGIN() { return getToken(WhileParser.BEGIN, 0); }
+		public TerminalNode COLON() { return getToken(WhileParser.COLON, 0); }
 		public TerminalNode END() { return getToken(WhileParser.END, 0); }
 		public List<StatementContext> statement() {
 			return getRuleContexts(StatementContext.class);
@@ -858,7 +870,7 @@ public class WhileParser extends Parser {
 			setState(151);
 			match(BEGIN);
 			setState(152);
-			match(T__2);
+			match(COLON);
 			setState(156);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
@@ -1146,7 +1158,7 @@ public class WhileParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\27\u00bc\4\2\t\2"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\32\u00bc\4\2\t\2"+
 		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
 		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\3\2\3\2\3\2\7\2(\n\2\f\2\16\2+\13\2\3\2\3\2\3\3\3\3\3\3\3\3\3\4\3\4\3"+
@@ -1160,46 +1172,46 @@ public class WhileParser extends Parser {
 		"\16\16\u00a0\13\16\3\16\3\16\3\17\3\17\3\17\3\17\3\17\3\20\3\20\3\20\3"+
 		"\20\5\20\u00ad\n\20\3\21\3\21\3\21\3\21\3\21\3\21\3\21\5\21\u00b6\n\21"+
 		"\3\22\3\22\3\22\3\22\3\22\2\2\23\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36"+
-		" \"\2\3\3\2\24\25\2\u00bd\2)\3\2\2\2\4.\3\2\2\2\6\62\3\2\2\2\b8\3\2\2"+
+		" \"\2\3\3\2\27\30\2\u00bd\2)\3\2\2\2\4.\3\2\2\2\6\62\3\2\2\2\b8\3\2\2"+
 		"\2\n>\3\2\2\2\fD\3\2\2\2\16h\3\2\2\2\20j\3\2\2\2\22q\3\2\2\2\24w\3\2\2"+
 		"\2\26\177\3\2\2\2\30\u0087\3\2\2\2\32\u0095\3\2\2\2\34\u00a3\3\2\2\2\36"+
 		"\u00ac\3\2\2\2 \u00b5\3\2\2\2\"\u00b7\3\2\2\2$(\5\20\t\2%(\5\16\b\2&("+
 		"\5 \21\2\'$\3\2\2\2\'%\3\2\2\2\'&\3\2\2\2(+\3\2\2\2)\'\3\2\2\2)*\3\2\2"+
-		"\2*,\3\2\2\2+)\3\2\2\2,-\7\2\2\3-\3\3\2\2\2./\7\b\2\2/\60\7\3\2\2\60\61"+
-		"\7\4\2\2\61\5\3\2\2\2\62\63\7\7\2\2\63\64\7\3\2\2\64\65\5\24\13\2\65\66"+
-		"\7\4\2\2\66\67\7\23\2\2\67\7\3\2\2\289\7\n\2\29:\7\3\2\2:;\7\24\2\2;<"+
-		"\7\4\2\2<=\7\23\2\2=\t\3\2\2\2>?\7\13\2\2?@\7\3\2\2@A\7\24\2\2AB\7\4\2"+
-		"\2BC\7\23\2\2C\13\3\2\2\2DE\7\24\2\2EF\7\3\2\2FG\5\26\f\2GH\7\4\2\2H\r"+
-		"\3\2\2\2IJ\7\r\2\2JK\7\24\2\2KL\7\3\2\2LM\5\24\13\2MN\7\4\2\2NO\7\17\2"+
-		"\2OS\7\5\2\2PR\5 \21\2QP\3\2\2\2RU\3\2\2\2SQ\3\2\2\2ST\3\2\2\2TV\3\2\2"+
-		"\2US\3\2\2\2VW\5\"\22\2WX\7\20\2\2Xi\3\2\2\2YZ\7\24\2\2Z[\7\3\2\2[\\\5"+
-		"\24\13\2\\]\7\4\2\2]^\7\17\2\2^b\7\5\2\2_a\5 \21\2`_\3\2\2\2ad\3\2\2\2"+
-		"b`\3\2\2\2bc\3\2\2\2ce\3\2\2\2db\3\2\2\2ef\5\"\22\2fg\7\20\2\2gi\3\2\2"+
-		"\2hI\3\2\2\2hY\3\2\2\2i\17\3\2\2\2jk\7\r\2\2kl\7\24\2\2lm\7\3\2\2mn\5"+
-		"\24\13\2no\7\4\2\2op\7\23\2\2p\21\3\2\2\2qr\7\16\2\2rs\7\24\2\2st\7\22"+
-		"\2\2tu\5\36\20\2uv\7\23\2\2v\23\3\2\2\2w|\7\24\2\2xy\7\6\2\2y{\7\24\2"+
-		"\2zx\3\2\2\2{~\3\2\2\2|z\3\2\2\2|}\3\2\2\2}\25\3\2\2\2~|\3\2\2\2\177\u0084"+
-		"\t\2\2\2\u0080\u0081\7\6\2\2\u0081\u0083\t\2\2\2\u0082\u0080\3\2\2\2\u0083"+
-		"\u0086\3\2\2\2\u0084\u0082\3\2\2\2\u0084\u0085\3\2\2\2\u0085\27\3\2\2"+
-		"\2\u0086\u0084\3\2\2\2\u0087\u0088\7\t\2\2\u0088\u0089\7\3\2\2\u0089\u008a"+
-		"\7\24\2\2\u008a\u008b\7\4\2\2\u008b\u008c\7\17\2\2\u008c\u0090\7\5\2\2"+
-		"\u008d\u008f\5 \21\2\u008e\u008d\3\2\2\2\u008f\u0092\3\2\2\2\u0090\u008e"+
-		"\3\2\2\2\u0090\u0091\3\2\2\2\u0091\u0093\3\2\2\2\u0092\u0090\3\2\2\2\u0093"+
-		"\u0094\7\20\2\2\u0094\31\3\2\2\2\u0095\u0096\7\f\2\2\u0096\u0097\7\3\2"+
-		"\2\u0097\u0098\7\24\2\2\u0098\u0099\7\4\2\2\u0099\u009a\7\17\2\2\u009a"+
-		"\u009e\7\5\2\2\u009b\u009d\5 \21\2\u009c\u009b\3\2\2\2\u009d\u00a0\3\2"+
-		"\2\2\u009e\u009c\3\2\2\2\u009e\u009f\3\2\2\2\u009f\u00a1\3\2\2\2\u00a0"+
-		"\u009e\3\2\2\2\u00a1\u00a2\7\20\2\2\u00a2\33\3\2\2\2\u00a3\u00a4\7\24"+
-		"\2\2\u00a4\u00a5\7\22\2\2\u00a5\u00a6\5\36\20\2\u00a6\u00a7\7\23\2\2\u00a7"+
-		"\35\3\2\2\2\u00a8\u00ad\5\f\7\2\u00a9\u00ad\5\4\3\2\u00aa\u00ad\7\24\2"+
-		"\2\u00ab\u00ad\7\25\2\2\u00ac\u00a8\3\2\2\2\u00ac\u00a9\3\2\2\2\u00ac"+
-		"\u00aa\3\2\2\2\u00ac\u00ab\3\2\2\2\u00ad\37\3\2\2\2\u00ae\u00b6\5\b\5"+
-		"\2\u00af\u00b6\5\n\6\2\u00b0\u00b6\5\30\r\2\u00b1\u00b6\5\32\16\2\u00b2"+
-		"\u00b6\5\22\n\2\u00b3\u00b6\5\6\4\2\u00b4\u00b6\5\34\17\2\u00b5\u00ae"+
-		"\3\2\2\2\u00b5\u00af\3\2\2\2\u00b5\u00b0\3\2\2\2\u00b5\u00b1\3\2\2\2\u00b5"+
-		"\u00b2\3\2\2\2\u00b5\u00b3\3\2\2\2\u00b5\u00b4\3\2\2\2\u00b6!\3\2\2\2"+
-		"\u00b7\u00b8\7\21\2\2\u00b8\u00b9\7\24\2\2\u00b9\u00ba\7\23\2\2\u00ba"+
-		"#\3\2\2\2\r\')Sbh|\u0084\u0090\u009e\u00ac\u00b5";
+		"\2*,\3\2\2\2+)\3\2\2\2,-\7\2\2\3-\3\3\2\2\2./\7\6\2\2/\60\7\3\2\2\60\61"+
+		"\7\4\2\2\61\5\3\2\2\2\62\63\7\5\2\2\63\64\7\3\2\2\64\65\5\24\13\2\65\66"+
+		"\7\4\2\2\66\67\7\24\2\2\67\7\3\2\2\289\7\b\2\29:\7\3\2\2:;\7\27\2\2;<"+
+		"\7\4\2\2<=\7\24\2\2=\t\3\2\2\2>?\7\t\2\2?@\7\3\2\2@A\7\27\2\2AB\7\4\2"+
+		"\2BC\7\24\2\2C\13\3\2\2\2DE\7\27\2\2EF\7\3\2\2FG\5\26\f\2GH\7\4\2\2H\r"+
+		"\3\2\2\2IJ\7\13\2\2JK\7\27\2\2KL\7\3\2\2LM\5\24\13\2MN\7\4\2\2NO\7\r\2"+
+		"\2OS\7\20\2\2PR\5 \21\2QP\3\2\2\2RU\3\2\2\2SQ\3\2\2\2ST\3\2\2\2TV\3\2"+
+		"\2\2US\3\2\2\2VW\5\"\22\2WX\7\16\2\2Xi\3\2\2\2YZ\7\27\2\2Z[\7\3\2\2[\\"+
+		"\5\24\13\2\\]\7\4\2\2]^\7\r\2\2^b\7\20\2\2_a\5 \21\2`_\3\2\2\2ad\3\2\2"+
+		"\2b`\3\2\2\2bc\3\2\2\2ce\3\2\2\2db\3\2\2\2ef\5\"\22\2fg\7\16\2\2gi\3\2"+
+		"\2\2hI\3\2\2\2hY\3\2\2\2i\17\3\2\2\2jk\7\13\2\2kl\7\27\2\2lm\7\3\2\2m"+
+		"n\5\24\13\2no\7\4\2\2op\7\24\2\2p\21\3\2\2\2qr\7\f\2\2rs\7\27\2\2st\7"+
+		"\23\2\2tu\5\36\20\2uv\7\24\2\2v\23\3\2\2\2w|\7\27\2\2xy\7\22\2\2y{\7\27"+
+		"\2\2zx\3\2\2\2{~\3\2\2\2|z\3\2\2\2|}\3\2\2\2}\25\3\2\2\2~|\3\2\2\2\177"+
+		"\u0084\t\2\2\2\u0080\u0081\7\22\2\2\u0081\u0083\t\2\2\2\u0082\u0080\3"+
+		"\2\2\2\u0083\u0086\3\2\2\2\u0084\u0082\3\2\2\2\u0084\u0085\3\2\2\2\u0085"+
+		"\27\3\2\2\2\u0086\u0084\3\2\2\2\u0087\u0088\7\7\2\2\u0088\u0089\7\3\2"+
+		"\2\u0089\u008a\7\27\2\2\u008a\u008b\7\4\2\2\u008b\u008c\7\r\2\2\u008c"+
+		"\u0090\7\20\2\2\u008d\u008f\5 \21\2\u008e\u008d\3\2\2\2\u008f\u0092\3"+
+		"\2\2\2\u0090\u008e\3\2\2\2\u0090\u0091\3\2\2\2\u0091\u0093\3\2\2\2\u0092"+
+		"\u0090\3\2\2\2\u0093\u0094\7\16\2\2\u0094\31\3\2\2\2\u0095\u0096\7\n\2"+
+		"\2\u0096\u0097\7\3\2\2\u0097\u0098\7\27\2\2\u0098\u0099\7\4\2\2\u0099"+
+		"\u009a\7\r\2\2\u009a\u009e\7\20\2\2\u009b\u009d\5 \21\2\u009c\u009b\3"+
+		"\2\2\2\u009d\u00a0\3\2\2\2\u009e\u009c\3\2\2\2\u009e\u009f\3\2\2\2\u009f"+
+		"\u00a1\3\2\2\2\u00a0\u009e\3\2\2\2\u00a1\u00a2\7\16\2\2\u00a2\33\3\2\2"+
+		"\2\u00a3\u00a4\7\27\2\2\u00a4\u00a5\7\23\2\2\u00a5\u00a6\5\36\20\2\u00a6"+
+		"\u00a7\7\24\2\2\u00a7\35\3\2\2\2\u00a8\u00ad\5\f\7\2\u00a9\u00ad\5\4\3"+
+		"\2\u00aa\u00ad\7\27\2\2\u00ab\u00ad\7\30\2\2\u00ac\u00a8\3\2\2\2\u00ac"+
+		"\u00a9\3\2\2\2\u00ac\u00aa\3\2\2\2\u00ac\u00ab\3\2\2\2\u00ad\37\3\2\2"+
+		"\2\u00ae\u00b6\5\b\5\2\u00af\u00b6\5\n\6\2\u00b0\u00b6\5\30\r\2\u00b1"+
+		"\u00b6\5\32\16\2\u00b2\u00b6\5\22\n\2\u00b3\u00b6\5\6\4\2\u00b4\u00b6"+
+		"\5\34\17\2\u00b5\u00ae\3\2\2\2\u00b5\u00af\3\2\2\2\u00b5\u00b0\3\2\2\2"+
+		"\u00b5\u00b1\3\2\2\2\u00b5\u00b2\3\2\2\2\u00b5\u00b3\3\2\2\2\u00b5\u00b4"+
+		"\3\2\2\2\u00b6!\3\2\2\2\u00b7\u00b8\7\17\2\2\u00b8\u00b9\7\27\2\2\u00b9"+
+		"\u00ba\7\24\2\2\u00ba#\3\2\2\2\r\')Sbh|\u0084\u0090\u009e\u00ac\u00b5";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

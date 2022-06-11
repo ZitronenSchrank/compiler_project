@@ -35,17 +35,17 @@ def isZero(s1) begin:
 end
 
 def isNotZero(s1) begin:
-    var retVal := 0;
+    var _retVal := 0;
 
     while(s1) begin:
-        retVal := 1;
+        _retVal := 1;
         s1 := 0;
     end
 
-    return retVal;
+    return _retVal;
 end
  
-var r0 := read();
+var r_0 := read();
 var r1 := read();
-var erg := isZero(r0);
+var erg := isZero(r_0);
 write(erg);

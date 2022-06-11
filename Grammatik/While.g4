@@ -17,8 +17,8 @@ pred            : PRED '(' ID ')' SEMICOLON
 callFunction    : ID '(' callParameters ')'
                 ; 
 
-defFunction     : DEFINE ID '(' defParameters ')' BEGIN ':' (statement)* retStatement END
-                | ID '(' defParameters ')' BEGIN ':' (statement)* retStatement END
+defFunction     : DEFINE ID '(' defParameters ')' BEGIN COLON (statement)* retStatement END
+                | ID '(' defParameters ')' BEGIN COLON (statement)* retStatement END
                 ;
 
 decFunction     : DEFINE ID '(' defParameters ')' SEMICOLON
@@ -33,10 +33,10 @@ defParameters   : ID (',' ID)*
 callParameters  : (ID | NUM) (',' (ID | NUM))*
                 ;
 
-whl             : WHILE '(' ID ')' BEGIN ':' (statement)* END
+whl             : WHILE '(' ID ')' BEGIN COLON (statement)* END
                 ;
 
-loop            : LOOP '(' ID ')' BEGIN ':' (statement)* END
+loop            : LOOP '(' ID ')' BEGIN COLON (statement)* END
                 ;
 
 assign          : ID ASSIGN expr SEMICOLON
@@ -56,7 +56,7 @@ statement       : succ
                 | write
                 | assign;
 
-retStatement    : 'return' ID SEMICOLON;
+retStatement    : RETURN ID SEMICOLON;
 
 WRITE: 'write';
 READ: 'read';
@@ -69,10 +69,15 @@ VARIABLE: 'var';
 BEGIN: 'begin';
 END: 'end';
 RETURN: 'return';
-ASSIGN: ':=';
+COLON: ':';
+EQUAL: '=';
+COMMA: ',';
+ASSIGN: COLON EQUAL;
 SEMICOLON: ';';
+MINUS: '-';
+PLUS: '+';
 
-ID: [a-zA-Z][a-zA-Z0-9]*;
+ID: [a-zA-Z_][a-zA-Z0-9_-]*;
 NUM: '0' | [1-9][0-9]*;
 
 COMMENT: '//' ~[\r\n]* -> skip;
