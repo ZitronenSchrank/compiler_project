@@ -83,38 +83,24 @@ public class App {
     }
 
     public static void main(String[] args) {
-        new App();
+        // new App();
+        Compiler compiler;
+        if (args.length == 1) {
+            compiler = new Compiler(new File(args[0]));
+        } else if (args.length == 2) {
+            compiler = new Compiler(new File(args[0]), new File(args[1]));
+        } else {
+            System.out.println("No Input File");
+            System.exit(1);
+            return;
+        }
 
-        try {
-            ErrorListener errorListener = new ErrorListener();
-            System.out.println(args[0]);
-            // System.out.println(args[1]);
-            WhileLexer lexer = new WhileLexer(CharStreams.fromFileName(args[0]));
-            lexer.addErrorListener(errorListener);
-
-            WhileParser parser = new WhileParser(new CommonTokenStream(lexer));
-            parser.addErrorListener(errorListener);
-
-            ParseTree ast = parser.prog();
-
-            if (errorListener.getErrorCount() != 0) {
-                System.exit(1);
-            }
-
-            Program program = new ProgramVisitor().visit(ast);
-
-            if (program.containsErrors()) {
-                for (var error : program.getErrors()) {
-                    System.err.println(error);
-                }
-            } else {
-                System.out.println("Keine Fehler gefunden.");
-                Generator generator = new Generator(program, Paths.get("./GG.class"));
-                generator.generateCode();
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (compiler.compile()) {
+            System.exit(0);
+            return;
+        } else {
+            System.exit(1);
+            return;
         }
 
     }

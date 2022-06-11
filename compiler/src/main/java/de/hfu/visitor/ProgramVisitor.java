@@ -23,7 +23,6 @@ public class ProgramVisitor extends WhileBaseVisitor<Program> {
 
     @Override
     public Program visitProg(ProgContext ctx) {
-        System.out.println("Programm");
 
         AvailableVariables availableVariables = new AvailableVariables();
         DecFunctionVisitor decFunctionVisitor = new DecFunctionVisitor(program);
