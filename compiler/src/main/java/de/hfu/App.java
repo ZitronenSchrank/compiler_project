@@ -23,6 +23,7 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 
+import de.hfu.error.ErrorListener;
 import de.hfu.generator.Generator;
 import de.hfu.grammar.WhileLexer;
 import de.hfu.grammar.WhileParser;
@@ -85,20 +86,22 @@ public class App {
         new App();
 
         try {
+            ErrorListener errorListener = new ErrorListener();
             System.out.println(args[0]);
             // System.out.println(args[1]);
             WhileLexer lexer = new WhileLexer(CharStreams.fromFileName(args[0]));
+            lexer.addErrorListener(errorListener);
+
             WhileParser parser = new WhileParser(new CommonTokenStream(lexer));
+            parser.addErrorListener(errorListener);
 
             ParseTree ast = parser.prog();
 
-            if (parser.getNumberOfSyntaxErrors() != 0) {
+            if (errorListener.getErrorCount() != 0) {
                 System.exit(1);
             }
 
             Program program = new ProgramVisitor().visit(ast);
-
-            System.out.println("Size0: " + program.getDefFunctions().size());
 
             if (program.containsErrors()) {
                 for (var error : program.getErrors()) {
