@@ -48,7 +48,7 @@ public class DefFunction {
     }
 
     public boolean isImplemented() {
-        return !returnVariable.isBlank();
+        return returnVariable != null && !returnVariable.isBlank();
     }
 
     public Token getToken() {
