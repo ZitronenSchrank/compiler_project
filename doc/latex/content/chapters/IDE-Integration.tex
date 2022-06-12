@@ -1,3 +1,33 @@
 \chapter{IDE-Integration}
+Um die Verwendung unserer Programmiersprache angenehmer zu gestalten und den zu unterstützen wurde eine Erweiterung für die quelloffene \acs{ide} \ac{vsc} entwickelt.
+Auf der offiziellen \href{https://github.com/microsoft/vscode-extension-samples}{Github-Seite von Microsoft} sind viele Beispiele zur Entwicklung von Erweiterungen zu finden. \cite{MicrosoftCorporation2022}
+In diesem Kapitel wird auf die wichtigsten Aspekte unserer Erweiterung und deren Implementierung eingegangen und diese erläutert. 
 
-VS-Code Language Server\\
+
+\section{Metadaten}
+Eine Erweiterung für \ac{vsc} wird in der Programmiersprache TypeScript geschrieben, dementsprechend kommt der \ac{npm} zum Einsatz und wird für die Entwicklung vorausgesetzt.
+Viele Aspekte der Erweiterung lassen sich durch unterschiedliche \ac{json} Dateien konfigurieren. 
+Die sogenannte \enquote{package.json} die wichtigste Datei zur Konfiguration.
+Darin sind neben den Abhängigkeiten der Erweiterung viele wichtige Metadaten, wie beispielsweise der Name oder Beschreibung der Erweiterung, festgelegt.
+Für die \ac{vsc} Erweiterung, welche für diese Arbeit entwickelt wurde, sind die Felder \enquote{contributes} und \enquote{activationEvents} von besonders großer Bedeutung. 
+
+\subsection{Feld: contributes}
+Mithilfe von diesem Feld wird der Erweiterung mitgeteilt, welche neuen Funktionen sie mit sich bringt.
+Im Fall der hier beschreibenden Erweiterung sind das: \enquote{languages}, \enquote{grammars} und \enquote{snippets}. 
+
+Mit \enquote{languages} wird eine Programmiersprache definiert, welche \ac{vsc} beigebracht werden soll.
+Eine Programmiersprache besteht aus einem eindeutigen Namen, hier \enquote{while}, einer Konfigurationsdatei und Dateiendungen (\enquote{.while} und \enquote{.loop}) mit welchen \ac{vsc} erkennen kann, welche Dateien der neu eingeführten Programmiersprache zugehören.
+
+Die Konfigurationsdatei ist wiederum eine eigenes \ac{json} Dokument, welche Informationen beinhaltet welche Zeichen Umklammerungen definieren. \ac{vsc} nutzt diese Information zur Laufzeit dazu, Umklammerung automatisch zu schließen oder eingeklammerte Codeabschnitte einzuklappen.
+
+Die Felder \enquote{grammars} und \enquote{snippets} enthalten beide einen Pfad zu weiteren \ac{json} Dokumenten. Diese werden in den folgenden Unterkapitel \ref{sec:SyntaxHighlight} und \ref{sec:code-snippet} erläutert. 
+
+
+\subsection{Feld: activationEvents}
+
+\section{Syntax Highlight}\label{sec:SyntaxHighlight}
+
+\section{Code-Snippets}\label{sec:code-snippet}
+
+\section{Language Server}
+\subsection{Markierung von syntaktischen Fehlern}
