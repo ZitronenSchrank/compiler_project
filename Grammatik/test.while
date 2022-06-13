@@ -12,12 +12,10 @@ add(s1, s2) begin:
 end
 
 def mul(s1, s2) begin:
-    var retVal := s1;
-    pred(s2);
+    var retVal := 0;
 
-    while(s2) begin:
+    loop(s2) begin:
         retVal := add(retVal, s1);
-        pred(s2);
     end
 
     return retVal;
@@ -47,5 +45,7 @@ end
  
 var r_0 := read();
 var r1 := read();
-var erg := isZero(r_0);
-write(erg);
+var erg := mul(r_0, r1);
+var zero := isZero(r1);
+var notZero := isNotZero(r1);
+write(erg, zero, notZero);

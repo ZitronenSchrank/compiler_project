@@ -26,14 +26,23 @@ public class Example {
 
     // Implementierung von read()
     public static BigInteger read(String name) {
-        System.out.print(name + " := ");
-        String input = in.nextLine();
+        BigInteger retVal = null;
 
-        BigInteger retVal = new BigInteger(input);
+        do {
+            System.out.print("> " + name + " := ");
+            String input = in.nextLine();
 
-        if (retVal.compareTo(BigInteger.ZERO) == -1) {
-            throw new NumberFormatException("A Negative Value Is Not Allowed");
-        }
+            try {
+                retVal = new BigInteger(input);
+                if (retVal.compareTo(BigInteger.ZERO) == -1) {
+                    throw new NumberFormatException("A Negative Value Is Not Allowed");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid Input. Only positive integers and 0 are allowed. Try again.");
+                retVal = null;
+            }
+
+        } while (retVal == null);
 
         return retVal;
     }
@@ -171,6 +180,7 @@ public class Example {
     public static void main(String[] args) {
         BigInteger r = new BigInteger("10");
         BigInteger i = read("i");
+        BigInteger y = read("y");
         while (i.compareTo(BigInteger.ZERO) != 0) {
             System.out.println("Hello");
             i = pred(i);
