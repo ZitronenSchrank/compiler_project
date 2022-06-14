@@ -1,4 +1,26 @@
 def add(s1,s2);
+def isNotZero(s1);
+def isZero(s1);
+def mul(s1, s2);
+def addRec(s1, s2);
+
+// Addition But Recursive
+addRec(s1, s2) begin:
+    var retVal := 0;
+
+    var isZero := isZero(s2);
+    var isNotZero := isNotZero(s2);
+    loop(isZero) begin:
+        retVal := s1;
+    end
+    loop(isNotZero) begin:
+        pred(s2);
+        succ(s1);
+        retVal := addRec(s1, s2);
+    end
+
+    return retVal;
+end
 
 add(s1, s2) begin:
     var retVal := s1;
@@ -11,7 +33,7 @@ add(s1, s2) begin:
     return retVal;
 end
 
-def mul(s1, s2) begin:
+mul(s1, s2) begin:
     var retVal := 0;
 
     loop(s2) begin:
@@ -21,7 +43,7 @@ def mul(s1, s2) begin:
     return retVal;
 end
 
-def isZero(s1) begin:
+isZero(s1) begin:
     var retVal := 1;
 
     while(s1) begin:
@@ -32,7 +54,7 @@ def isZero(s1) begin:
     return retVal;
 end
 
-def isNotZero(s1) begin:
+isNotZero(s1) begin:
     var _retVal := 0;
 
     while(s1) begin:
@@ -45,7 +67,9 @@ end
  
 var r_0 := read();
 var r1 := read();
-var erg := mul(r_0, r1);
+
+var erg := addRec(r_0, r1);
 var zero := isZero(r1);
 var notZero := isNotZero(r1);
+
 write(erg, zero, notZero);

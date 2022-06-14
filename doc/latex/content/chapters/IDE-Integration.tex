@@ -7,9 +7,9 @@ In diesem Kapitel wird auf die wichtigsten Aspekte unserer Erweiterung und deren
 \section{Metadaten}
 Eine Erweiterung für \ac{vsc} wird in der Programmiersprache TypeScript geschrieben, dementsprechend kommt der \ac{npm} zum Einsatz und wird für die Entwicklung vorausgesetzt.
 Viele Aspekte der Erweiterung lassen sich durch unterschiedliche \ac{json} Dateien konfigurieren. 
-Die sogenannte \enquote{package.json} die wichtigste Datei zur Konfiguration.
+Die sogenannte \enquote{package.json} im Hauptordner die wichtigste Datei zur Konfiguration.
 Darin sind neben den Abhängigkeiten der Erweiterung viele wichtige Metadaten, wie beispielsweise der Name oder Beschreibung der Erweiterung, festgelegt.
-Für die \ac{vsc} Erweiterung, welche für diese Arbeit entwickelt wurde, sind die Felder \enquote{contributes} und \enquote{activationEvents} von besonders großer Bedeutung. 
+Für die \ac{vsc} Erweiterung, welche im Rahmen dieser Arbeit entwickelt wurde, sind die Felder \enquote{contributes} und \enquote{activationEvents} in der \enquote{package.json} von besonders großer Bedeutung. 
 
 \subsection{Feld: contributes}
 Mithilfe von diesem Feld wird der Erweiterung mitgeteilt, welche neuen Funktionen sie mit sich bringt.
@@ -20,14 +20,30 @@ Eine Programmiersprache besteht aus einem eindeutigen Namen, hier \enquote{while
 
 Die Konfigurationsdatei ist wiederum eine eigenes \ac{json} Dokument, welche Informationen beinhaltet welche Zeichen Umklammerungen definieren. \ac{vsc} nutzt diese Information zur Laufzeit dazu, Umklammerung automatisch zu schließen oder eingeklammerte Codeabschnitte einzuklappen.
 
-Die Felder \enquote{grammars} und \enquote{snippets} enthalten beide einen Pfad zu weiteren \ac{json} Dokumenten. Diese werden in den folgenden Unterkapitel \ref{sec:SyntaxHighlight} und \ref{sec:code-snippet} erläutert. 
+Die Felder \enquote{grammars} und \enquote{snippets} enthalten beide einen Pfad zu weiteren \ac{json} Dokumenten, welche in den folgenden Unterkapitel \ref{sec:SyntaxHighlight} und \ref{sec:code-snippet} erläutert werden. 
 
 
 \subsection{Feld: activationEvents}
+Mit diesem Feld wird \ac{vsc} mitgeteilt wann die Erweiterung aktiviert werden soll. In diesem Fall soll sie aktiviert werden, sobald eine Datei mit einer \enquote{.while} oder \enquote{.loop} Endung geöffnet wird. Es sind theoretisch noch viele weitere Ereignisse möglich mit welchen eine Erweiterung aktiviert werden kann, beispielsweise durch Starten einer Debug-Ansicht, diese kommen in dieser Erweiterung jedoch nicht zum Einsatz.
 
 \section{Syntax Highlight}\label{sec:SyntaxHighlight}
+Das Hauptfeature der Erweiterung ist das Syntax Highlight für while-Programme. Das ist für einen Programmierer eine sehr nützliche Funktion, welche Schlüsselwörter farblich markiert um die korrekte Schreibweise zu bestätigen und sie in unterschiedliche Kategorien einordnen zu können.
+
+Bringt eine Erweiterung Syntax-Highlight mit sich, muss dies als \enquote{grammars} in der \enquote{package.json} im Abschnitt \enquote{contributes} angegeben werden, indem ein Pfad zu einer Datei angegeben wird, die mithilfe von regulären Ausdrücken den Aufbau von Schlüsselwörtern beschreibt und zu welcher Kategorie sie gehören. Informationen wie dieses Dokument genau aufgebaut werden muss und welche Kategorien existieren können auf \url{https://macromates.com/manual/en/language_grammars} gefunden werden.
 
 \section{Code-Snippets}\label{sec:code-snippet}
+Mithilfe von Code-Snippets kann der Entwickler viele Konstrukte der Programmiersprache mit wenig Aufwand generieren lassen. Beispielsweise wird dem Entwickler beim Tippen einer while-Schleife angeboten eine komplette while-Schleife zu erzeugen. Der Entwickler kann anschließend mithilfe der Tab-Taste an die wichtigsten Positionen der neuen Schleife springen um dort Anpassungen für seinen konkreten Anwendungsfall vorzunehmen.
+
+Die Snippets, welche eine Erweiterung mit sich bringt, werden in einem \ac{json} Dokument hinterlegt. Ein einzelnes Snippet besteht aus dem Codefragment, welches erzeugt werden soll, einem Prefix, den der Entwickler tippen muss und einer optionalen Beschreibung, was genau das Snippet erzeugt. Dieses \ac{json} Dokument muss in der \enquote{package.json} im Feld \enquote{contributes/snippets} vermerkt werden.
 
 \section{Language Server}
+Ein weitere Funktion der Erweiterung ist es dem Entwickler beim Schreiben Fehler anzuzeigen, damit diese sofort behoben werden können, oder den Code beim Tippen zu vervollständigen. Da diese Funktionalitäten viel Rechenzeit in Anspruch nehmen können, lagert \ac{vsc} sie auf einen sogenannten Language Server aus um nicht die \ac{ide} auszubremsen. Microsoft hat für diesen Zweck das \ac{lsp} spezifiziert um die Kommunikation zwischen \ac{ide} und Language Server zu standartisieren so, dass eine große Anzahl von unterschiedlichen \ac{ide}s den selben Language Server nutzen könnte. \cite{MicrosoftCorporation2022a} Der Language Server der für diese Arbeit entwickelt wurde, basiert auf dem \enquote{lsp-sample} von der \href{https://github.com/microsoft/vscode-extension-samples}{Github-Seite von Microsoft}.
+
 \subsection{Markierung von syntaktischen Fehlern}
+Damit der Language Server syntaktische Fehler erkennen kann, benötigt er einen Lexer und Parser, welcher auch in diesem Fall von ANTLR generiert wurde. Wenn der Language Server eine Änderung des Quelltextes erhält, wird der gesamte Code an den generierten Lexer und Parser übergeben, welche das Programm auf syntaktische Fehler überprüfen. Mithilfe von einem Error-Listener werden Fehlermeldungen, welche der Parser erzeugt, empfangen und in einer Liste gespeichert, da es möglich ist, dass das Programm mehrere Fehler beinhaltet.
+
+Anschließend wird geprüft ob die Liste Fehlermeldungen enthält und gegeben falls Fehlermeldungen erzeugt und an den Client gesendet. Eine Fehlermeldung besteht aus einem Typ (Error, Warning, Info, ...), einer Nachricht und zwei Positionen. Die erste Position sagt aus, in welcher Zeile und ab welchem Zeichen die Fehlermeldung beginnt, die zweite Position gibt an, wo die Fehlermeldung endet.
+
+Falls auch semantische Fehler markiert werden sollten, wäre es nötig erneut eine semantische Überprüfung in Typescript zu implementieren.
+
+
