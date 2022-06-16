@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="robots" content="nofollow" />
+<meta name="google" content="notranslate" />
+<meta name="description" content="FELIX - Deine Lernplattform" />
+<meta name="keywords" content="FELIX, eLearning, Lernplattform, LMS, Learning Management System, LCMS, Learning Content Management System, Open Source, elearning, JAVA, IMS, QTI, SCORM, Content package, Kollaboration, Usability, Performanz, Skalierbarkeit" /> 
+<meta name="generator" content="OpenOlat 16.2.4 - https://www.openolat.org" />
+<meta name="dcterms.type" content="Interactive Resource" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<script>
+var o_info = new Object();
+o_info.initialPageLoadFinished = false;
+o_info.version = '16.2.4';
+o_info.o_winid = '1172602529';
+window.name  = '1172602529';
+o_info.uriprefix="/dmz/";
+o_info.bc="";
+o_info.businessPath="";
+o_info.startBusinessPath="";
+o_info.serverUri="https://felix.hs-furtwangen.de"
+o_info.dirty_form = "Achtung! Sie haben Ihre Eingabe/Antwort noch nicht gespeichert. Klicken Sie auf &quot;Abbrechen&quot; und speichern Sie Ihre Eingabe/Antwort.";
+o_info.locale = "de";
+o_info.lastClickTime = new Date().getTime();
+o_info.drop = true;
+o_info.o_baseURI = "/raw/ec6374b:ec6374b019e8f0a88f33f00e459ccdbc6521ba1a:1/";
+o_info.i18n_noresponse_title = "Kommunikationsfehler";
+o_info.i18n_noresponse = "Die Aktion konnte nicht ausgeführt werden da der Server nicht antwortet oder überlastet ist. Versuchen Sie die Aktion erneut durchzuführen oder laden Sie die Seite neu.";
+o_info.i18n_topnav_more = "Mehr";
+o_info.oo_noresponse_title = "Sitzung abgelaufen";
+o_info.oo_noresponse = "Ihre Sitzung ist abgelaufen oder der Server wurde neu gestartet. Um sich erneut anzumelden, w\u00E4hlen Sie diesen <b><a href=\'reload.html\'>Link<\/a><\/b> oder laden Sie die Seite neu.<br><br>Bitte beachten Sie, dass alle ungespeicherten \u00C4nderungen in Ihrem Browserfenster beim erneuten Anmelden verloren gehen. Schliessen Sie diesen Dialog um ungespeicherte Forenbeitr\u00E4ge oder \u00E4hnliches jetzt in die Zwischenablage Ihres Browsers zu kopieren und anschliessend die Seite neu zu laden.";
+o_info.zseed = 0;
+o_info.newWindow=null;
+o_info.submit=null;
+o_info.latexit=false;
+if (top!=self){top.location=self.location+"?o_winrndo=1";}
+function o_start() {
+	o_init();
+		
+				o_info.initialPageLoadFinished = true;
+}
+
+
+var _paq = window._paq || [];
+_paq.push(['trackPageView']);
+_paq.push(['enableLinkTracking']);
+  (function() {
+    var u='https://webstatistik.hs-furtwangen.de/';
+   _paq.push(['setTrackerUrl', u+'matomo.php']);
+   _paq.push(['setSiteId', '29']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+
+
+try{
+	if(o_info.startBusinessPath != null && o_info.startBusinessPath.length > 0
+			&& window.history && !(typeof window.history === "undefined") && window.history.pushState) {
+		window.history.pushState('', document.title, o_info.startBusinessPath);
+		o_info.startBusinessPath = null;
+	}
+	if (document.location.href.indexOf('oow') != -1) {
+		window.history.replaceState(window.history.state, document.title, window.location.href.split("?")[0]);
+	}
+} catch(e) { }
+</script>
+
+<script>
+function o_mathjax(fct_success) {
+	if(window.MathJax === undefined) {
+		window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  },
+  options: {
+    enableMenu: false,
+    processHtmlClass: 'tex2jax_process',
+    renderActions: {
+      findScripts: [11, function (doc) {
+        var nodes = document.querySelectorAll('.math');
+        for (var i=0; i<nodes.length; i++) {
+          var node = nodes[i];
+          var math = new doc.options.MathItem(node.textContent, doc.inputJax[0], (node.tagName !== 'SPAN'));
+          var text = document.createTextNode('');
+          node.parentNode.replaceChild(text, node);
+          math.start = {node: text, delim: '', n: 0};
+          math.end = {node: text, delim: '', n: 0};
+          doc.math.push(math);
+        }
+      }, '']
+    }
+  }
+};
+;
+		jQuery.ajax("//mathjax.openolat.org/mathjax/3.2-latest/tex-mml-chtml.js", {
+			cache: true,
+			dataType: "script",
+			crossDomain: true,
+			success: function() {
+		    	if(typeof fct_success !== "undefined") {
+		    		fct_success();
+		    	}
+				o_info.latexit = false;
+			}
+		});
+	}
+}
+</script>
+
+<script src='/raw/ec6374b:ec6374b019e8f0a88f33f00e459ccdbc6521ba1a:1/js/jquery/jquery-3.6.0.min.js'></script>
+	<script src='/raw/ec6374b:ec6374b019e8f0a88f33f00e459ccdbc6521ba1a:1/js/js.plugins.min.js'></script>
+	<script src='/raw/ec6374b:ec6374b019e8f0a88f33f00e459ccdbc6521ba1a:1/movie/player.min.js'></script>
+	<script src='/raw/ec6374b:ec6374b019e8f0a88f33f00e459ccdbc6521ba1a:1/js/iframeResizer/iframeResizer.min.js'></script>
+
+	<link href='/raw/ec6374b:ec6374b019e8f0a88f33f00e459ccdbc6521ba1a:1/js/js.plugins.min.css' rel="stylesheet" />
+<script>
+	jQuery.noConflict();
+	
+		jQuery(document).ooTranslator().initialize("/g/openolat1624-devorg.olat.core.commons.chiefcontrollers.JSTranslatorMapper");
+	o_info.oo_translator = jQuery(document).ooTranslator();
+		jQuery(window).on("popstate", function(e) {
+		if(e.originalEvent.state && e.originalEvent.state.businessPath) {
+			if (e.originalEvent.state.businessPath.indexOf('oow') == -1) {
+				var windowedPath = e.originalEvent.state.businessPath + '?oow=' + window.name;
+				window.history.replaceState(e.originalEvent.state, document.title, windowedPath);
+				window.location.reload();
+			} else {
+				window.location.href = e.originalEvent.state.businessPath;
+			}
+		}
+	});
+	
+	var closing = function(e) {
+		if(navigator.sendBeacon) {
+			var beaconUrl = '/dmz/1%3A1%3A1172602531%3A2%3A0%3Acid%3Aclose-window%3A_csrf%3A2740e0af-64b0-42fb-9d29-439cbf46c658/';
+			if(beaconUrl.indexOf("/dmz/") == -1) {
+				navigator.sendBeacon(beaconUrl, null);
+			}
+		}
+	};
+	window.onbeforeunload = closing;
+	window.onunload = closing;
+jQuery(function() {
+	if ((window.unsafeWindow == null ? window : unsafeWindow).MathJax == null) {
+		var count = jQuery('div.math,span.math,math,div.mathEntryInteraction').length;
+		if (count > 0) {
+		    o_mathjax();
+		}
+	}
+});
+</script>
+
+<!-- empty -->
+<link id='o_theme_css' href='/raw/ec6374b:ec6374b019e8f0a88f33f00e459ccdbc6521ba1a:1/themes/hfu2021/theme.css' rel='stylesheet' />
+<link id='o_email_css' href='/raw/ec6374b:ec6374b019e8f0a88f33f00e459ccdbc6521ba1a:1/themes/hfu2021/email.css' rel='stylesheet' />
+<script src='/raw/ec6374b:ec6374b019e8f0a88f33f00e459ccdbc6521ba1a:1/themes/hfu2021/theme.js'></script>
+<link rel='icon' href='/raw/ec6374b:ec6374b019e8f0a88f33f00e459ccdbc6521ba1a:1/themes/hfu2021/favicon.ico' type='image/x-icon' />
+<link rel='icon' href='/raw/ec6374b:ec6374b019e8f0a88f33f00e459ccdbc6521ba1a:1/themes/hfu2021/meta/favicon16.png' type='image/png' sizes='16x16' />
+<link rel='icon' href='/raw/ec6374b:ec6374b019e8f0a88f33f00e459ccdbc6521ba1a:1/themes/hfu2021/meta/favicon32.png' type='image/png' sizes='32x32' />
+<link rel='icon' href='/raw/ec6374b:ec6374b019e8f0a88f33f00e459ccdbc6521ba1a:1/themes/hfu2021/meta/favicon64.png' type='image/png' sizes='64x64' />
+<link rel='apple-touch-icon' href='/raw/ec6374b:ec6374b019e8f0a88f33f00e459ccdbc6521ba1a:1/themes/hfu2021/meta/appicon180.png' type='image/png' sizes='180x180' />
+<link rel='manifest' href='/raw/ec6374b:ec6374b019e8f0a88f33f00e459ccdbc6521ba1a:1/themes/hfu2021/meta/manifest.json' />
+<meta name='msapplication-TileColor' content='#ffffff' />
+<meta name='msapplication-square70x70logo' content='/raw/ec6374b:ec6374b019e8f0a88f33f00e459ccdbc6521ba1a:1/themes/hfu2021/meta/tileicon70.png' />
+<meta name='msapplication-square150x150logo' content='/raw/ec6374b:ec6374b019e8f0a88f33f00e459ccdbc6521ba1a:1/themes/hfu2021/meta/tileicon150.png' />
+<meta name='msapplication-square310x310logo' content='/raw/ec6374b:ec6374b019e8f0a88f33f00e459ccdbc6521ba1a:1/themes/hfu2021/meta/tileicon310.png' />
+
+	<script>
+        jQuery(document).ready(function() {
+            /* Detect IE below version 11 */
+            if (window.navigator.userAgent.indexOf('MSIE ') > 0) {
+                jQuery('body').addClass('o_browser_ie10');
+            } else if (!!navigator.userAgent.match(/Trident\/7\./)) {
+            	jQuery('body').addClass('o_browser_ie11');
+            }
+        });
+	</script>
+<!-- empty -->
+<style id="o_fontSize_css"></style>
+<style>
+		.o_custom_navbar-brand { background-image: none; }
+</style>
+
+
+
+
+<title>FELIX - Deine Lernplattform</title>
+</head>
+
+<body onload="o_start();" id="o_body" class="o_dmz  o_lang_de ">
+<div id="o_bg"></div>
+<!-- START guiDebug -->
+
+<!-- END guiDebug -->
+<!-- START jsServer -->
+<!-- empty -->
+<!-- END jsServer -->
+
+<!-- START olatContentPanel -->
+
+<a href="#o_main_container" class="sr-only">Zum Hauptbereich springen</a>
+	<div id="o_beta_logo"></div>
+
+<div id="o_messages" class="hidden-print"><!-- empty --></div>
+<a id='o_top' aria-hidden="true"></a>	
+<div id="o_header_wrapper"> 
+	<div id="o_header_container" class="o_container_offcanvas container-fluid"> 
+		<div id="o_logo" aria-hidden="true"></div>
+		<div id="o_right_logo" aria-hidden="true"></div>
+		
+			</div>
+</div>
+
+<div id="o_offcanvas_right" class="o_navbar o_navbar-offcanvas " role="navigation" aria-label="Persönlich Werkzeuge, Einstellungen und Logout">
+	<a href="javascript:;" class="o_offcanvas_close" title="Schliessen"><i class='o_icon o_icon_close o_icon-lg'> </i> </a>
+	<div id="o_offcanvas_right_container" class="o_navbar-collapse">
+			<ul id="o_c1172602551" class="nav o_navbar-nav o_navbar-right o_sel_menu_tools">
+		<li role="presentation" class="divider"></li>
+</ul>
+	</div>
+</div>
+<div id="o_navbar_wrapper" class="o_navbar" role="navigation" aria-label="Hauptnavigation">
+	<div id="o_navbar_container" class="o_container_offcanvas container-fluid">
+		<a class="o_navbar-brand " href="/dmz/" title="OpenOlat - infinite learning"  rel="noopener noreferrer"></a>
+		
+		<div class="o_collapse o_navbar-collapse">
+						<ul id="o_c1172602532" class="o_navbar_sites nav o_navbar-nav">
+</ul>
+<script>
+jQuery(document).trigger("oo.nav.sites.modified");
+</script>
+
+			<ul id="o_c1172602533"  class="o_navbar_tabs nav o_navbar-nav">
+</ul>
+<script>jQuery(document).trigger("oo.nav.tabs.modified");</script>
+
+							<div class="o_navbar_tools">
+	<ul class="nav o_navbar-nav o_navbar-right">
+		<li id="o_navbar_my_menu" class="dropdown o_navbar_dmz_help_menu">
+			<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" title='Hilfe'>
+				<i class="o_icon o_icon_help o_icon-lg"></i> Hilfe
+			</a>
+			<ul class="dropdown-menu dropdown-menu-right">
+			 		<li><a class=""  href="https://howto.hs-furtwangen.de/felix" target="ooCustom1" title="howto" rel="noopener noreferrer"><i class="o_icon o_icon-fw o_icon_external_link"> </i> <span>howto</span></a></li>
+			 		<li><a class="" id="o_c1172602540"  href="/dmz/1%3A1%3A1172602540%3A2%3A0%3Acid%3Ahelp.support%3A_csrf%3A2740e0af-64b0-42fb-9d29-439cbf46c658/" onclick="return o2cl();" ><i class='o_icon o_icon-fw o_icon_mail'></i> <span>E-Mail Support</span></a></li>
+				<li id="o_navbar_about">
+					<a class="" id="o_cotop_menu_about"  href="/dmz/1%3A1%3Aotop_menu_about%3A1%3A0%3Acid%3Aabout%3A_csrf%3A2740e0af-64b0-42fb-9d29-439cbf46c658/" onclick="" ><i class='o_icon o_icon_openolat o_icon-fw'></i> <span>Über FELIX</span></a>
+				</li>
+			</ul>
+		</li>
+		<li id="o_navbar_langchooser"><form  method="post" id="ofo_o_top_nav_dmz_lang_chooser" name="ofo_o_top_nav_dmz_lang_chooser" action="/dmz/1%3A1%3Ao_top_nav_dmz_lang_chooser%3A1%3A0%3Aofo_%3Afid/"  onsubmit="if(o_info.linkbusy) return false; else o_beforeserver(); return true;"  onkeydown="o_submitByEnter(event)" ><input type="hidden" id="ofo_o_top_nav_dmz_lang_chooser_dispatchuri" name="dispatchuri" value="undefined" /><input type="hidden" id="ofo_o_top_nav_dmz_lang_chooser_eventval" name="dispatchevent" value="undefined" /><input type="hidden" name="_csrf" value="2740e0af-64b0-42fb-9d29-439cbf46c658" /><label for='o_fioo_top_nav_dmz_lang_chooser_select_SELBOX' aria-label='Bitte wählen Sie Ihre Sprache'><select id="o_fioo_top_nav_dmz_lang_chooser_select_SELBOX" name="select.language_SELBOX" onchange="o_ffEvent('ofo_o_top_nav_dmz_lang_chooser','ofo_o_top_nav_dmz_lang_chooser_dispatchuri','o_fioo_top_nav_dmz_lang_chooser_select_SELBOX','ofo_o_top_nav_dmz_lang_chooser_eventval','4')" onfocus="o_info.lastFormFocusEl='o_fioo_top_nav_dmz_lang_chooser_select_SELBOX'; " class='form-control'><option value="de" selected="selected" >Deutsch</option><option value="en" >English</option></select><script>(function() { jQuery('#o_fioo_top_nav_dmz_lang_chooser_select_SELBOX').on('change keypress', {formId:"ofo_o_top_nav_dmz_lang_chooser_dispatchuri", hideMessage:false}, setFlexiFormDirtyByListener);})();</script></label>
+</form> <script>
+ /* <![CDATA[ */ 
+ (function() {jQuery('#ofo_o_top_nav_dmz_lang_chooser').keypress(function(event) {
+ if (13 == event.keyCode) {
+  event.preventDefault();
+  if (this.onsubmit()) { this.submit(); }
+ }
+});
+})();
+ /* ]]> */ 
+</script></li>
+	</ul>	
+</div>	
+		</div>
+		
+	</div>
+</div>
+<div id="o_container_page_width_toggler" aria-hidden="true">
+	<div id="o_go_standard_width" title="Standard Breite f&uuml;r Inhalt verwenden, optimiert f&uuml;r Lesen" class="btn btn-primary btn-xs o_noprint" role="button"><i class="o_icon o_icon_width_collapse o_icon-fw"> </i></div>
+	<div id="o_go_full_width" title="Standard Breite f&uuml;r Inhalt verwenden, optimiert f&uuml;r Lesen" class="btn btn-default btn-xs o_noprint" role="button"><i class="o_icon o_icon_width_expand o_icon-fw"> </i></div>
+</div>
+<div><script>
+jQuery(document).ready(function() {
+	jQuery("#o_go_standard_width").click(function() { OPOL.setContainerFullWidth(0); o_XHRNFEvent('/dmz/1:1:1172602531:2:1/','cid','width.standard','_csrf','2740e0af-64b0-42fb-9d29-439cbf46c658','no-response','oo-no-response'); });
+	jQuery("#o_go_full_width").click(function() { OPOL.setContainerFullWidth(1); o_XHRNFEvent('/dmz/1:1:1172602531:2:1/','cid','width.full','_csrf','2740e0af-64b0-42fb-9d29-439cbf46c658','no-response','oo-no-response'); });
+});
+</script></div>
+<!-- empty -->
+
+<div id="o_main_wrapper">
+	<div id="o_main_container" class="o_container_offcanvas container-fluid">
+		<div id='o_main' class='row o_loginscreen'>
+<div id='o_main_center' class='split-pane'>
+<div id='o_main_center_content' class='clearfix'>
+<a id='o_content' aria-hidden='true'></a>
+<div id='o_main_center_content_inner'>
+<div class="o_login clearfix">
+	<div class="o_login_intro">
+		<h1>FELIX - Deine Lernplattform</h1>
+	</div>
+
+
+	<div class="o_login_box_wrapper">
+		<div class="o_old_browser o_warning">Ihre Browserversion wird nicht mehr unterstützt. Bitte aktualisieren Sie Ihren Browser, damit OpenOlat einwandfrei genutzt werden kann. Weitere Informationen finden Sie im <a href="https://docs.openolat.org/de/manual_user/login/Login_Page/#browsercheck" target="_blank" rel="noopener noreferrer">Handbuch</a>.</div>
+		<div class="o_login_box">
+			<div class="o_login_providers" role="navigation" aria-label="Loginverfahren">
+				<div class="btn-group btn-group-lg btn-group-justified">
+					<a  href="/dmz/1%3A1%3Aomain_loging%3A1%3A0%3Acid%3Alogin%3Alp%3AOLAT%3A_csrf%3A2740e0af-64b0-42fb-9d29-439cbf46c658/" onclick="return o2cl();"  title="Geh&ouml;ren Sie keiner der oben aufgelisteten Institutionen an oder haben ein lokales Nutzerkonto?" class="btn btn-default ">
+						<i class="o_icon o_icon-2x o_icon_provider_olat" aria-hidden="true"></i><span>Learning Services Account</span>
+					</a>
+					<a  href="/dmz/1%3A1%3Aomain_loging%3A1%3A0%3Acid%3Alogin%3Alp%3AShibGeneric%3A_csrf%3A2740e0af-64b0-42fb-9d29-439cbf46c658/" onclick="return o2cl();"  title="Sind Sie Mitglied einer Institution mit Shibboleth Loginverfahren?" class="btn btn-default  btn-primary ">
+						<i class="o_icon o_icon-2x o_icon_provider_shibboleth" aria-hidden="true"></i><span>HFU-Account</span>
+					</a>
+					<a  href="/dmz/1%3A1%3Aomain_loging%3A1%3A0%3Acid%3Alogin%3Alp%3Aguest%3A_csrf%3A2740e0af-64b0-42fb-9d29-439cbf46c658/" onclick="return o2cl();"  title="Melden Sie sich als Gast an" class="btn btn-default" role="button">
+						<i class="o_icon o_icon-2x o_icon_provider_guest" aria-hidden="true"></i><span>Gastzugang</span>
+					</a>
+				</div>
+			</div>
+			<div class="o_login_provider">
+				<div class="o_login_form o_login_shibboleth">
+	<fieldset>
+		<legend>FELIX Anmeldung</legend>
+		<p>
+			Sie werden zur Authentifizierung weitergeleitet. 
+		</p>		
+		
+		<div class="o_block">
+			<a class="btn btn-primary" id="o_c1172602564"  href="/dmz/1%3A1%3A1172602564%3A2%3A0%3Acid%3Ashib.redirect%3A_csrf%3A2740e0af-64b0-42fb-9d29-439cbf46c658/" onclick="return o2cl();"  role="button"><span>Anmelden</span> <i class='o_icon o_icon_start'></i> </a>
+		</div>
+	</fieldset>
+</div>
+
+			</div>
+		</div>	
+	</div>	
+
+
+</div>
+<script>
+if ((window.self != window.parent) && window.parent.OPOL) {
+	// Page is loaded in an iframe within OpenOLAT because a session timeout occurred or 
+	// system has been restartet in the meantime. 
+	// Show error on main window
+	var title = "Sitzung abgelaufen";
+	var message = "Ihre Sitzung ist abgelaufen oder der Server wurde neu gestartet. Um sich erneut anzumelden, w\u00E4hlen Sie diesen <b><a href=\'reload.html\'>Link<\/a><\/b> oder laden Sie die Seite neu.<br><br>Bitte beachten Sie, dass alle ungespeicherten \u00C4nderungen in Ihrem Browserfenster beim erneuten Anmelden verloren gehen. Schliessen Sie diesen Dialog um ungespeicherte Forenbeitr\u00E4ge oder \u00E4hnliches jetzt in die Zwischenablage Ihres Browsers zu kopieren und anschliessend die Seite neu zu laden.";
+	window.parent.o_afterserver();
+	window.parent.showMessageBox('error', title, message);
+}
+</script>
+</div>
+</div>
+</div>
+</div>
+
+		<a id="o_toplink" href="#o_top" onclick="o_scrollTop();" title="Zum Anfang der Seite" aria-hidden="true">
+			<i class="o_icon o_icon_top"></i> 
+			nach oben
+		</a>	
+	</div>
+</div>
+
+<div id="o_footer_wrapper">
+	<div id="o_footer_container" class="o_container_offcanvas container-fluid">
+		<div id="o_footer_user" class="clearfix">
+	<span id="o_counter">(273 Personen sind online)</span>
+		<script>
+function o_shareSocialUrl() {
+	if(o_info.businessPath && o_info.businessPath.length > 0) return o_info.businessPath;
+	return 'https://felix.hs-furtwangen.de';
+} 
+function o_shareSocialTitle() {
+	return document.title;
+}
+function o_shareCallout() {
+	return '<p><input id="callout_share_link_in" type="text" name="cl_share_link" value="' + o_shareSocialUrl() + '" size="64" /></p>';
+}
+</script>
+
+<div id="o_share">
+
+	<a id="o_share_social" href="javascript:;" title="Link auf diese Seite teilen" aria-label="Link auf diese Seite teilen">
+		<i class="o_icon o_icon_share_social o_icon-lg"></i>
+	</a>
+	<div id="o_share_social_wrapper" class="hide"><div id="o_share_social_container">
+			<a id="o_mail" href="javascript: window.location.href='mailto:?subject=' + encodeURIComponent(o_shareSocialTitle()) + '&body=' + encodeURIComponent(o_shareSocialUrl());" title="Link per Mail versenden" aria-label="Link per Mail versenden">
+ 				<i class="o_icon o_icon_mailto o_icon-lg"></i>
+ 			</a>
+	</div></div>
+	<script>
+	jQuery(function() {
+		o_shareLinkPopup('o_share_social', jQuery('#o_share_social_wrapper').html());
+	});
+	</script>
+		<a id="o_link" href="javascript:;" title="Link kopieren" aria-label="Link kopieren">
+			<i class="o_icon o_icon_link o_icon-lg"></i>
+		</a>
+		<a id="o_qrcode" href="javascript:;" title="QR-Code kopieren" aria-label="QR-Code kopieren">
+			<i class="o_icon o_icon_qrcode o_icon-lg"></i>
+		</a>
+		<script>
+		jQuery(function() {
+			o_shareLinkPopup('o_link', o_shareCallout);
+			o_QRCodePopup('o_qrcode', o_shareSocialUrl);
+		});
+		</script>
+	</div>
+
+</div>
+	<div id="o_footer_textline">
+		Hochschule Furtwangen
+	</div>
+<div id="o_footer_powered" class="clearfix" aria-hidden="true">
+	<a href="https://www.openolat.org" target="_blank" title="OpenOlat - infinite learning" rel="noopener noreferrer">
+		<img src="/raw/ec6374b:ec6374b019e8f0a88f33f00e459ccdbc6521ba1a:1/images/openolat/openolat_powerd_by_120x30.png" alt="powered by OpenOlat" width="120" height="30" />
+	</a>
+</div>
+<div id="o_footer_version" class="clearfix" aria-hidden="true">
+	<a class="" id="o_comenu_about"  href="/dmz/1%3A1%3Aomenu_about%3A1%3A0%3Acid%3Aabout%3A_csrf%3A2740e0af-64b0-42fb-9d29-439cbf46c658/" onclick="return o2cl();"  title="Informationen zu FELIX Build (ec6374b:ec6374b019e8f0a88f33f00e459ccdbc6521ba1a)"><span>OpenOlat&nbsp;16.2.4</span></a>
+</div>	
+
+	</div>
+</div>
+
+<!-- empty -->
+<!-- empty -->
+<div id='o_c1172602586'></div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="o_so_md_1172602531" id="o_form_dirty_message">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="o_so_md_1172602531">Ungespeicherte Formulardaten</h4>
+      </div>
+      <div class="modal-body">
+      	<p class="o_warning">
+			Achtung! Sie haben noch ungespeicherte Formulardaten
+		</p>
+      	<p>
+			Wenn Sie die Schaltfläche <strong>Daten nicht speichern</strong> drücken verlassen Sie das Formular ohne zu speichern. <strong>Die enthaltenen Änderungen gehen damit verloren</strong>.
+		</p>
+      	<p>
+			Wenn Sie die Schaltfläche <strong>Zurück zum Formular</strong> drücken gelangen Sie zurück zum Formular und können dieses abspeichern. 
+		</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary pull-left o_form_dirty_back" data-dismiss="modal"><i class="o_icon o_icon-fw o_icon_back"> </i>Zurück zum Formular</button>
+        <button type="button" class="btn btn btn-danger o_form_dirty_ignore"><i class="o_icon o_icon-fw o_icon_clear_all"> </i>Daten nicht speichern</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="o_ajax_busy">
+	<i class="o_icon o_icon_busy o_icon-5x o_icon-spin"></i>	
+	<div id="o_ajax_progress">
+		<div class="o_label">Daten werden übertragen...</div>
+		<div class="progress"><div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div></div>
+		<div class="o_progress_info text-muted small"> </div>
+	</div>
+</div>
+
+<div id="o_width_1em" style="width:1em; position: absolute; left: -1000px;" aria-hidden="true"></div>
+<div><script>
+// init size and listen to text resize events
+jQuery(function() {
+	o_initEmPxFactor(); 
+});
+</script></div></body></html>
