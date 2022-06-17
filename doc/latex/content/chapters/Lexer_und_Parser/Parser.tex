@@ -1,3 +1,6 @@
 \section{Parser}
-Aufgabe //
-Funktionsweise //
+Ein Parser hat die Aufgabe zu überprüfen ob ein Programmcode einer vorgegebenen Grammatik entspricht. Der Parser erhält dazu vom Lexer der Reihe nach alle Token und prüft, ob die Token in der von der Grammatik vorgegebenen Reihenfolge auftauchen. Der Parser erkennt dabei Fehler wie beispielsweise ein fehlendes Semikolon oder ein fehlender Variablenname in in einem Schleifenkopf. 
+
+Ist ein Programmcode fehlerfrei, erzeugt der Parser einen \ac{ast}. Dabei handelt es sich um eine Datenstruktur, welche den Aufbau eines Programmcodes entsprechend einer Grammatik darstellt und ist damit die Grundlage für den Bytecode, welcher ein Compiler schlussendlich generiert. 
+
+Wie bereits in \cref{sec:while-grammar} genauer erläutert, kann ein Programmcode, welches einer Grammatik entspricht immer noch Fehler beinhalten. In \cref{chap:semantic} wird der erzeugte \ac{ast} auf weitere Fehler überprüft.
