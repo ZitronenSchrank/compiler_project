@@ -1,4 +1,3 @@
-def add(s1,s2);
 def isNotZero(s1);
 def isZero(s1);
 def mul(s1, s2);
@@ -22,7 +21,8 @@ addRec(s1, s2) begin:
     return retVal;
 end
 
-add(s1, s2) begin:
+// Addition
+def add(s1, s2) begin:
     var retVal := s1;
 
     while(s2) begin:
@@ -33,6 +33,7 @@ add(s1, s2) begin:
     return retVal;
 end
 
+// Multiplication
 mul(s1, s2) begin:
     var retVal := 0;
 
@@ -43,6 +44,7 @@ mul(s1, s2) begin:
     return retVal;
 end
 
+// isZero
 isZero(s1) begin:
     var retVal := 1;
 
@@ -54,6 +56,7 @@ isZero(s1) begin:
     return retVal;
 end
 
+// isNotZero
 isNotZero(s1) begin:
     var _retVal := 0;
 
@@ -68,7 +71,7 @@ end
 var r_0 := read();
 var r1 := read();
 
-var erg := addRec(r_0, r1);
+var erg := mul(r_0, r1);
 var zero := isZero(r1);
 var notZero := isNotZero(r1);
 

@@ -15,4 +15,5 @@
         "outputDir": "../compiler/src/main/java/de/hfu/grammar/",
         "package": "de.hfu.grammar"
     },
+    "java.configuration.updateBuildConfiguration": "interactive",
 }
