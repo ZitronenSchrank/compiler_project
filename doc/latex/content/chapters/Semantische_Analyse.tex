@@ -1,3 +1,18 @@
 \chapter{Semantische Analyse} \label{chap:semantic}
 
-Funktionsweise der Prüfungen (Ort und wie geprüft wird)\\
+Die semantische Analyse ist notwendig, da ein syntaktisch korrektes Programm logische Fehler beinhalten kann. Ein Beispiel dafür ist in \cref{lst:semantic-error} zu sehen. Darin wird eine Variable gelesen, bevor diese definiert wurde. Ein weiterer Fehler wäre es beispielsweise eine Funktion mit zu wenigen Parametern aufzurufen. Die Aufgabe der semantischen Analyse ist es, den erzeugten \ac{ast} zu durchlaufen und dabei die einzelnen Knoten auf solche Fehler zu prüfen.
+
+\begin{lstlisting}[language=c, caption=Inhalt der generierten BaseVisitor-Klasse, label={lst:semantic-error}]
+	var r0 := r1;
+	var r1 := 2;
+\end{lstlisting}
+
+\ac{antlr} erzeugt beim Visitor-Ansatz eine \enquote{BaseVisitor}-Klasse, welche für jeden Knoten eine Visit-Methode mit einem Parameter implementiert, welcher Informationen zum entsprechenden Knoten beinhaltet. In dieser Arbeit wurde für jeden Knoten eine Visitor-Klasse erstellt, welche von dieser Baseklasse erbt und die entsprechende Visit-Methode implementiert. Mithilfe der Informationen aus dem Parameter können wiederum die Unterknoten durchlaufenen werden. Jede Visit-Methode gibt zum Schluss eine 
+
+\begin{lstlisting}[language=java, caption=Inhalt der generierten BaseVisitor-Klasse, label={lst:parser-basevisitor}]
+	public class WhileBaseVisitor<T> extends ... {
+		@Override public T visitProg(WhileParser.ProgContext ctx) { return visitChildren(ctx); }
+		@Override public T visitRead(WhileParser.ReadContext ctx) { return visitChildren(ctx); }
+		...
+	}
+\end{lstlisting}

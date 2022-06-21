@@ -11,7 +11,3 @@ In dieser Arbeit wurde der Parsergenerator \ac{antlr} verwendet. Dabei handelt e
 
 In dieser Arbeit wurde sich für den Visitor-Ansatz entschieden, da dieser es ermöglicht selbst zu bestimmen wie der \ac{ast} durchlaufen werden soll. Beispielsweise werden erst alle Funktionen durchlaufen und anschließend alle Statements außerhalb einer Funktion auch dann, wenn die Funktionen am Ende des Programmcodes stehen, da dieses Vorgehen die semantische Überprüfung (\cref{chap:semantic}) simplifiziert.
 
-\ac{antlr} erzeugt beim Visitor-Ansatz eine \enquote{BaseVisitor}-Klasse, welche für jeden Knoten eine leere Visit-Methode mit einem Parameter implementiert, welcher Informationen zum entsprechenden Knoten beinhaltet. In dieser Arbeit wurde für jeden Knoten eine Visitor-Klasse erstellt, welche von dieser Baseklasse erbt und die entsprechende Visit-Methode implementiert. Mithilfe der Informationen aus dem Parameter können wiederum die Unterknoten durchlaufenen werden.
-
-
-

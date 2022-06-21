@@ -1,8 +1,11 @@
 \section{Konzepte der Sprache} \label{sec:while-konzepte}
-in den folgenden Unterkapitel werden alle verfügbaren Konzepte der entwickelten Sprache vorgestellt und deren Funktion erläutert.
+In den folgenden Unterkapitel werden alle verfügbaren Konzepte der entwickelten Sprache vorgestellt und deren Funktion erläutert.
 
 \subsection{Kommentare}
 Wie aus vielen anderen Programmiersprachen bekannt, kann der Programmcode mithilfe von zwei führenden Schrägstrichen  kommentiert werden. Mehrzeilige Kommentare, wie aus einigen anderen Sprachen bekannt, werden nicht unterstützt.
+
+\subsection{Programm}
+Ein Programm in der Programmiersprache While darf aus beliebig vielen Funktionsdefinitionen, Funktionsdeklerationen und Anweisungen außerhalb einer Funktion bestehen. Anweisungen werden immer von oben nach unten abgearbeitet. Anweisungen innerhalb einer Funktion werden nur ausgeführt wenn die Funktion aufgerufen wird. 
 
 \begin{lstlisting}[language=c, caption=Kommentare in While, label={lst:while-comment}]
 	// Das ist ein Kommentar
@@ -18,23 +21,27 @@ r0 := 5; // r0 bekommt einen neuen Wert
 \end{lstlisting}
 
 \subsection{Pred und Succ} \label{subsec:while-konzepte-pred}
-\textbf{pred} und \textbf{succ} sind zwei Funktionen, welche die Sprache zur Verfügung stellt und den Wert von einer Variable direkt manipulieren können. Nach dem jeweiligen Schlüsselwort folgt der Name einer Variable innerhalb von zwei runden Klammern. \textbf{pred} steht für \enquote{predecessor} und wird genutzt um den Wert einer Variable um eine Stelle zu verringern. Analog dazu wird \textbf{succ} (\enquote{successor}) genutzt um den Wert einer Variable zu erhöhen. Der Wert einer Variable kann beliebig oft erhöht werden, der kleinste Wert einer Variable ist jedoch immer null.
+\textbf{pred} und \textbf{succ} sind zwei Funktionen, welche die Sprache zur Verfügung stellt und den Wert von einer Variable direkt manipulieren können. Nach dem jeweiligen Schlüsselwort folgt der Name einer Variable innerhalb von zwei runden Klammern. \textbf{pred} steht für \enquote{predecessor} und wird genutzt um den Wert einer Variable um eine Stelle zu verringern. Ist der Wert der verringert werden soll null, so bleibt der Wert der Variable null. Analog dazu wird \textbf{succ} (\enquote{successor}) genutzt um den Wert einer Variable zu erhöhen. Der Wert einer Variable kann beliebig oft erhöht werden.
 
 \begin{lstlisting}[language=c, caption=pred und succ in While, label={lst:while-pred-succ}]
 	var r0 := 1; // Erzeugt eine Variable mit dem Namen 'r0' und dem Wert 1
 	pred(r0); // Der Wert ist nun 0
+	pred(r0); // Der Wert bleibt 0
 	succ(r0); // Der Wert ist nun 1
 \end{lstlisting}
 
 \subsection{Loop und While}
-\textbf{loop} und \textbf{while} sidn zwei unterschiedliche Schleifenarten, welche in der Programmiersprache while genutzt werden können. Der Schleifenkörper befindet sich in beiden Fällen einem \textbf{begin:} und \textbf{end}. Innerhalb eines Schleifenkörpers können beliebig viele Anweisungen oder auch andere Schleifen stehen. Variablen, welche innerhalb eines Schleifenkörpers definiert werden, existieren nur innerhalb vom Schleifenkörper.
+\textbf{loop} und \textbf{while} sind zwei unterschiedliche Schleifenarten, welche in der Programmiersprache while genutzt werden können. Der Schleifenkörper befindet sich in beiden Fällen einem \textbf{begin:} und \textbf{end}. Innerhalb eines Schleifenkörpers können beliebig viele Anweisungen oder auch andere Schleifen stehen. Variablen, welche innerhalb eines Schleifenkörpers definiert werden, existieren nur innerhalb vom Schleifenkörper.
 
 Die \textbf{while} Schleife verhält sich, wie man es aus anderen Sprachen gewohnt ist: der Körper der Schleife wird wiederholt, solange der Wert der Variable im Schleifenkopf ungleich null ist. Mithilfe einer \textbf{while}-Schleife ist es möglich Endlosschleifen zu erzeugen.
 
 \begin{lstlisting}[language=c, caption=while-Schleife in While, label={lst:while-while}]
-	var r0 := 3; // Erzeugt eine Variable mit dem Namen 'r0' und dem Wert 3
+	var r0 := 5; // Erzeugt eine Variable mit dem Namen 'r0' und dem Wert 3
+	var r1 := 0;
 	while(r0) begin: // Die Schleife laeuft solange r0 != 0
-		pred(r0); // Veraender den Wert von r0
+		succ(r1); // Erhoehe den Wert von r1
+		pred(r0); // Veraender den Wert von r0 zwei Mal
+		pred(r0);
 	end
 \end{lstlisting}
 
@@ -44,7 +51,7 @@ Die \textbf{loop} Schleife hingegen verhält sich ähnlich zu einer for-Schleife
 	var r0 := 3; // Erzeugt eine Variable mit dem Namen 'r0' und dem Wert 3
 	loop(r0) begin: // r0 wird bei jedem Durchlauf automatisch verringert
 		var r1 := r0; // Der Wert von r0 darf gelesen werden.
-		pred(r0); // Es ist innerhalb der Schleife verboten den Wert zu aendern!
+		succ(r0); // Es ist innerhalb der Schleife verboten den Wert zu aendern!
 	end
 \end{lstlisting}
 
@@ -76,3 +83,21 @@ Um den Programmcode besser zu organisieren existieren Funktionen. Eine Funktions
 	var r0 := 3; // Erzeugt eine Variable mit dem Namen 'r0' und dem Wert 3
 	var r1 := addTwo(r0); // Erzeugt eine Variable mit dem Namen 'r1' und dem Wert von addTwo(r0)
 \end{lstlisting}
+
+Es ist auch möglich Vorwärtsdeklarationen zu nutzen, ähnlich wie in den Sprachen C oder C++. Damit wird versprochen, dass eine Funktion an einer Stelle definiert wird, wodurch sich die Deklaration und Definition einer Funktion aufteilen lässt. Die Vorwärtsdeklaration muss den selben Namen, die selbe Anzahl an Parameter und die selben Parameternamen verwenden, wie die Funktionsdefinition.
+
+\begin{lstlisting}[language=c, caption=Vorwärtsdekleration in While, label={lst:while-decfunction}]
+	def addTwo(s0); // Vorwawrtsdeklarationen von 'addTwo'
+	
+	var r0 := 3; // Erzeugt eine Variable mit dem Namen 'r0' und dem Wert 3
+	var r1 := addTwo(r0); // Erzeugt eine Variable mit dem Namen 'r1' und dem Wert von addTwo(r0)
+	
+	addTwo(s0) begin:
+		succ(s0);
+		succ(s0);
+		return s0; // Gebe einen Wert zurueck
+	end
+
+\end{lstlisting}
+
+Eine Funktion, wo Deklaration und Definition voneinander getrennt sind ist es möglich rekursiv zu verwenden.
