@@ -22,7 +22,9 @@ In \cref{pic:Semantic-Struct} ist zu sehen, wie ein While-Programm auf eine Java
 \end{figure}
 
 \section{Durchlaufen des \acl{ast}}
-\ac{antlr} erzeugt beim Visitor-Ansatz, für welchen sich bei dieser Arbeit entschieden wurde, eine \enquote{BaseVisitor}-Klasse, welche für jeden Knoten eine Visit-Methode mit einem Parameter implementiert, welcher Informationen zum entsprechenden Knoten beinhaltet. In dieser Arbeit wurde für jeden Knoten eine Visitor-Klasse erstellt, welche von dieser Baseklasse erbt und die entsprechende Visit-Methode implementiert. Mithilfe der Informationen aus dem Parameter können wiederum die Unterknoten durchlaufenen werden. Jede Visit-Methode gibt zum Schluss eine 
+\ac{antlr} erzeugt beim Visitor-Ansatz, für welchen sich bei dieser Arbeit entschieden wurde, eine \enquote{BaseVisitor}-Klasse. Diese beinhaltet für jeden Knoten eine Visit-Methode mit einem Parameter, welcher Informationen zum entsprechenden Knoten beinhaltet. Zusätzlich dazu ist die Methode in der Lage einen beliebigen Datentypen zurück zu geben.
+
+In dieser Arbeit wurde für jeden Knoten eine Visitor-Klasse erstellt, welche von dieser Baseklasse erbt und die entsprechende Visit-Methode implementiert. Mithilfe der Informationen aus dem Parameter können wiederum die Unterknoten durchlaufenen werden. Jede Visit-Methode gibt zum Schluss eine 
 
 \begin{lstlisting}[language=java, caption=Inhalt der generierten BaseVisitor-Klasse, label={lst:parser-basevisitor}]
 	public class WhileBaseVisitor<T> extends ... {
