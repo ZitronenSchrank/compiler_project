@@ -1,4 +1,4 @@
-\section{Parser}
+\section{Parser} \label{sec:parser}
 Ein Parser hat die Aufgabe zu überprüfen ob ein Programmcode einer vorgegebenen Grammatik entspricht. Der Parser erhält dazu vom Lexer der Reihe nach alle Token und prüft, ob die Token in der von der Grammatik vorgegebenen Reihenfolge auftauchen. Der Parser erkennt dabei Fehler wie beispielsweise ein fehlendes Semikolon oder ein fehlenden Variablenname in in einem Schleifenkopf. ANTLR ist in der Lage für syntaktische Fehler Fehlermeldungen für den Benutzer zu erzeugen. Diese erzeugten Fehlermeldungen werden bisher ohne Änderungen oder einer Übersetzung in die deutsche Sprache auf die Konsole ausgegeben, ähnlich wie es beim Lexer der Fall ist.  
 
 Ist ein Programmcode fehlerfrei, erzeugt der Parser einen \ac{ast}. Dabei handelt es sich um eine Datenstruktur, welche den Aufbau eines Programmcodes entsprechend einer Grammatik darstellt und ist damit die Grundlage für den Bytecode, welchen ein Compiler schlussendlich generiert. In \cref{pic:isZeroAST} ist exemplarisch eine grafische Darstellung eines \ac{ast} zu sehen, welcher das Programm in \cref{lst:while-isZero} darstellt. 

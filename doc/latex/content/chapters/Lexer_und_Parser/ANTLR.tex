@@ -1,3 +1,6 @@
-\section{ANTLR}
-Generelle Info //
-Funktionsweise //
+\section{Parsergenerator}
+Der Lexer und Parser müssen stets der selben Grammatik entsprechen, damit die beiden Bausteine zusammenarbeiten können. Das hat die Konsequenz, dass bei jeder Änderung der Grammatik auch der Lexer und Parser angepasst werden müssen, was einfache Anpassungen an der Grammatik sehr aufwendig macht.
+
+Aus diesem Grund ist es üblich den Lexer und Parser anhand einer Grammatik von einem sogenannten Parsergenerator generieren zu lassen. Dadurch kann immer davon ausgegangen werden, dass Lexer und Parser immer derselben aktuellen Grammatik entsprechen. Ein weiterer Vorteil der Nutzung eines Parsergenerators ist es, dass Lexer und Parser für unterschiedliche Zielprogrammiersprachen generiert werden können. Beispielsweise wird für den in dieser Arbeit entwickelten Compiler ein Lexer und Parser als Java-Klassen generiert und für die IDE-Integration (\cref{chap:ide})  wurden TypeScript Klassen erzeugt.  
+
+In dieser Arbeit wurde der Parsergenerator \ac{antlr} verwendet. Dabei handelt es sich um einen offenen Parsergenerator, welcher seit dem Jahr 1989 von Terence Parr entwickelt wird. \ac{antlr} wird in vielen großen Projekten eingesetzt, wie beispielsweise bei Twitter oder der Netbeans IDE. \cite{TerenceParr2022}
