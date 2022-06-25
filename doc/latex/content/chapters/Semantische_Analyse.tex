@@ -80,4 +80,96 @@ In \cref{lst:semantic-deffunction} ist exemplarisch dargestellt, wie die Visitor
 \end{lstlisting}
 
 \section{Prüfungen}
-Wie in \cref{lst:semantic-deffunction} zu sehen ist, werden innerhalb der Visitor-Klassen, das heißt während des durchlaufen des Baums, auch die eigentlichen semantischen Prüfungen durchgeführt. Dabei handelt es sich um eine Menge von (verschachtelten) If-Abfragen. Die größte Menge an Prüfungen befindet sich im \enquote{DefFunctionVisitor} 
+Wie in \cref{lst:semantic-deffunction} zu sehen ist, werden innerhalb der Visitor-Klassen, das heißt während des durchlaufen des Baums, auch die eigentlichen semantischen Prüfungen durchgeführt. Dabei handelt es sich um eine Menge von (verschachtelten) If-Abfragen. Durch den Zugriff auf Unterknoten werden Informationen gewonnen, welche beispielsweise mit Informationen aus dem bisher geprüften Programm verglichen werden um semantische Fehler zu finden. In \cref{lst:semantic-deffunction-mul} ist zu sehen wie auf diese weise bereits definierte Funktionen erkannt werden können. Mit einem ähnlichen Ansatz kann auch beispielsweise geprüft werden ob bei einem Funktionsaufruf eine korrekte Menge von Parametern verwendet wurde. Es ist ebenfalls zu sehen, dass in einem Fehlerfall \enquote{null} zurück gegeben wird. Darauf muss die aufrufende Klasse achten und nur mit Objekten weiter arbeiten, welche nicht null sind.
+
+\begin{lstlisting}[language=java, caption=Erkenne bereits definierte Funktionen, label={lst:semantic-deffunction-mul}]
+	public class DefFunctionVisitor extends WhileBaseVisitor<DefFunction> {
+		// ...
+		@Override
+		public DefFunction visitDefFunction(DefFunctionContext ctx) {
+			// Greife auf den Knoten ID zu
+			Token nodeId = ctx.ID().getSymbol();
+			// ...
+			// Greife auf bereits existierende Funktionen zu
+			Map<String,DefFunction> def = program.getDefFunctions();
+			
+			// Ist eine Funktion mit selben Namen bereits definiert?
+			if (def.get(nodeId.getText()) != null) {
+				// Ja, fuege Progamm Fehler hinzu
+				program.addError(...);
+				return null;
+			} else {
+				// Nein
+				return DefFunction(...);
+			}
+			// ...
+		}
+\end{lstlisting}
+
+Die Prüfung ob eine Variable, welche beispielsweise als Parameter verwendet werden soll, existiert ist etwas komplexer. Das liegt daran, dass, im Vergleich zu Funktionen kein globaler Namensraum existiert in welchen alle Variablen eingetragen werden können. Stattdessen besitzt jede Funktion, jede Schleife und alle Variablen außerhalb einer Funktion einen eigenen Namensraum. Ein Beispiel dafür ist in \cref{lst:semantic-scope-expl} zu sehen.
+
+\begin{lstlisting}[language=c, caption=Scope Beispiel, label={lst:semantic-scope-expl}]
+var r0 := 5; // Erstelle Variable r0
+var r1 := read(); // Erstelle Variable r1
+loop(r1) begin: 
+	// r1 und r0 existieren auch hier
+	var s0 := r0; // Ist erlaubt
+	// ... 
+end
+// r1 und r0 existieren immer noch
+// s0 existiert nicht mehr
+r0 := s0; // Ist ein semantischer Fehler
+\end{lstlisting}
+
+Um mit verschiedenen Namensräumen umzugehen wurde eine neue Datenstruktur entworfen, welche in \cref{pic:Semantic-Scope} zu sehen ist. Eine Instanz dieser Datenstruktur wird jedem Statement-Visitor zusammen mit einer Referenz zum Programm mitgegeben. Herz der Datenstruktur sind zwei Stacks, welche jeweils ein String-Set beinhalten. In \enquote{availableVariables} werden alle verfügbaren Variablen gespeichert, während in \enquote{readOnlyVariables} ausschließlich Variablen landen, welche sich im Kopf einer Loop-Schleife befinden, da diese ausschließlich gelesen werden sollen.
+
+\begin{figure}[h!]
+	%\includegraphics[width=1\textwidth]{content/pictures/LoRaWAN-OSI.JPG}
+	\centering
+	\includegraphics[width=9cm]{content/pictures/AvailableVar.pdf}
+	\caption{Datenstruktur eines Namensraums}
+	%	\source{\cite[S. 5]{SemtechCorporation.2020}}
+	\label{pic:Semantic-Scope}
+\end{figure}
+
+Jedes Mal wenn ein neuer Namensraums eröffnet wird, werden mit \enquote{pushNewContext} beide Sets in eine neue Schicht des Stacks kopiert und beim Verlassen des Namensraums mit \enquote{pop} wieder entfernt. Die \enquote{add}-, und \enquote{Contains}-Methoden arbeiten ausschließlich auf der obersten Schicht des Stacks so, dass nach einem \enquote{pop} alle hinzugefügten Variablen wieder verschwinden und der alte Stand wiederhergestellt ist. In \cref{lst:semantic-scope-loop} ist zu sehen, wie man mithilfe dieser Datenstruktur weitere Überprüfungen anstellen kann. 
+
+\begin{lstlisting}[language=java, caption=Umgang mit Namensräumen, label={lst:semantic-scope-loop}]
+	public class LoopVisitor extends WhileBaseVisitor<Loop> {
+		
+		AvailableVariables availableVariables;
+		Program program;
+		
+		public LoopVisitor(AvailableVariables availableVariables, Program program) {
+			this.program = program;
+			this.availableVariables = availableVariables;
+		}
+		
+		@Override
+		public Loop visitLoop(LoopContext ctx) {
+			// Greife auf Knoten ID zu (Name der Variable im Schleifenkopf)
+			Token varName = ctx.ID().getSymbol();
+			// Pruefe ob Name ueberhaupt existiert
+			if (availableVariables.contains(varName.getText())) {
+				// Name existiert, pruefe ob Variable geschrieben werden darf
+				if (!availableVariables.readOnlyVariablesContains(varName.getText())) {
+					// Darf geschrieben werden, erzeuge einen neuen Namensraum
+					availableVariables.pushNewContext();
+					// Verbiete Schreiben der Variable im neuen Namensraum
+					availableVariables.addReadOnlyVariable(varName.getText());
+					// Durchlaufe alle Statements...
+					// Schliese Namensraum
+					availableVariables.pop();
+					// Gib Loop zurueck
+					return new Loop(...);
+				} else {
+					// Fuege Fehler hinzu...
+				}
+			} else {
+				// Fuege Fehler hinzu 
+				programm.addError(...)
+				return null;
+			}
+		}
+	}
+\end{lstlisting}
