@@ -4,10 +4,10 @@ Der Lexer und Parser müssen stets der selben Grammatik entsprechen, damit die b
 
 Aus diesem Grund ist es üblich den Lexer und Parser anhand einer Grammatik von einem sogenannten Parsergenerator generieren zu lassen. Dadurch kann immer davon ausgegangen werden, dass Lexer und Parser immer derselben aktuellen Grammatik entsprechen. Ein weiterer Vorteil der Nutzung eines Parsergenerators ist es, dass Lexer und Parser für unterschiedliche Zielprogrammiersprachen generiert werden können. Beispielsweise wird für den in dieser Arbeit entwickelten Compiler ein Lexer und Parser als Java-Klassen generiert und für die IDE-Integration (\cref{chap:ide})  wurden TypeScript Klassen erzeugt.  
 
-\subsection{ANTLR}
+\subsection{ANTLR} \label{subsec:antlr}
 In dieser Arbeit wurde der Parsergenerator \ac{antlr} verwendet. Dabei handelt es sich um einen offenen Parsergenerator, welcher seit dem Jahr 1989 von Terence Parr entwickelt wird. \ac{antlr} wird in vielen großen Projekten eingesetzt, wie beispielsweise bei Twitter oder der Netbeans IDE. \cite{TerenceParr2022} Auf der \href{}{offiziellen Website} von \ac{antlr} ist eine Anleitung zum herunterladen und Installieren des Programms zu finden. 
 
 \ac{antlr} generiert neben dem Lexer und Parser für eine Grammatik zusätzlich noch Klassen um den \ac{ast}, welcher vom Parser erzeugt wird, zu durchlaufen. Dafür werden zwei Möglichkeiten angeboten, welche jeweils einem Design-Pattern entsprechen: Listener und Visitor.
 
-In dieser Arbeit wurde sich für den Visitor-Ansatz entschieden, da dieser es ermöglicht selbst zu bestimmen wie der \ac{ast} durchlaufen werden soll. Beispielsweise werden erst alle Funktionen durchlaufen und anschließend alle Statements außerhalb einer Funktion auch dann, wenn die Funktionen am Ende des Programmcodes stehen, da dieses Vorgehen die semantische Überprüfung (\cref{chap:semantic}) simplifiziert.
+In dieser Arbeit wurde sich für den Visitor-Ansatz entschieden, da dieser es ermöglicht selbst zu bestimmen wie der \ac{ast} durchlaufen werden soll. Beispielsweise werden erst alle Funktionen durchlaufen und anschließend alle Statements außerhalb einer Funktion auch dann, wenn die Funktionen am Ende des Programmcodes stehen, da dieses Vorgehen die semantische Überprüfung (\cref{chap:semantic}) simplifiziert. Beim Listener-Ansatz hingegen wird von \ac{antlr} vorgegeben wie der Baum abgelaufen wird.
 
