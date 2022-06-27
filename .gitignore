@@ -11,6 +11,10 @@ Grammatik/.antlr
 Grammatik/*.interp
 Grammatik/*.tokens
 
+doc/Poster/Links/ttf/*
+doc/Poster/Links/*.eps
+doc/Poster/~*
+
 compiler/target/
 compiler/pom.xml.tag
 compiler/pom.xml.releaseBackup
