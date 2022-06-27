@@ -3,7 +3,40 @@ package de.hfu;
 import java.math.BigInteger;
 import java.util.Scanner;
 
+/*import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import static java.nio.file.StandardOpenOption.*;
+
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.util.ASMifier;
+import org.objectweb.asm.util.TraceClassVisitor;*/
+
 public class Example {
+
+    Example() {
+        /*
+         * try {
+         * // How to read Example.class and write its content into ASMOutput.java
+         * InputStream input = new FileInputStream(new File("./Example.class"));
+         * 
+         * ClassReader classReader = new ClassReader(input);
+         * TraceClassVisitor cv = new TraceClassVisitor(null, new ASMifier(), new
+         * PrintWriter(new BufferedOutputStream(
+         * Files.newOutputStream(Paths.get("ASMOutput.java"), CREATE, WRITE,
+         * TRUNCATE_EXISTING))));
+         * 
+         * classReader.accept(cv, 0);
+         * } catch (IOException e) {
+         * e.printStackTrace();
+         * }
+         */
+    }
 
     public static Scanner in = new Scanner(System.in);
 
@@ -178,6 +211,7 @@ public class Example {
 
     // Jedes Statemant ausserhalb von Funktionen landet in der Main-Methode
     public static void main(String[] args) {
+        // new Example();
         BigInteger r = new BigInteger("10");
         BigInteger i = read("i");
         BigInteger y = read("y");

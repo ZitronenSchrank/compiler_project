@@ -5,11 +5,11 @@
 
   <groupId>de.hfu</groupId>
   <artifactId>while</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
 
   <name>While</name>
   <!-- FIXME change it to the project's website -->
-  <url>https://www.hs-furtwangen.de/</url>
+  <url>https://github.com/ZitronenSchrank/compiler_project/</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -33,6 +33,20 @@
       <artifactId>asm</artifactId>
       <version>9.3</version>
     </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.ow2.asm/asm-commons 
+    <dependency>
+      <groupId>org.ow2.asm</groupId>
+      <artifactId>asm-commons</artifactId>
+      <version>9.3</version>
+    </dependency> -->
+
+    <!-- https://mvnrepository.com/artifact/org.ow2.asm/asm-util 
+    <dependency>
+      <groupId>org.ow2.asm</groupId>
+      <artifactId>asm-util</artifactId>
+      <version>9.3</version>
+    </dependency> -->
 
   </dependencies>
 
