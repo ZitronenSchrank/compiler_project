@@ -1,18 +1,18 @@
 \section{Konzepte der Sprache} \label{sec:while-konzepte}
-In den folgenden Unterkapitel werden alle verfügbaren Konzepte der entwickelten Sprache vorgestellt und deren Funktion erläutert.
+In den folgenden Unterkapiteln werden alle verfügbaren Konzepte der entwickelten Sprache vorgestellt und deren Funktion erläutert.
 
 \subsection{Kommentare}
-Wie aus vielen anderen Programmiersprachen bekannt, kann der Programmcode mithilfe von zwei führenden Schrägstrichen  kommentiert werden. Mehrzeilige Kommentare, wie aus einigen anderen Sprachen bekannt, werden nicht unterstützt.
+Wie aus vielen anderen Programmiersprachen bekannt, kann der Programmcode mithilfe von zwei führenden Schrägstrichen kommentiert werden. Mehrzeilige Kommentare, wie aus einigen anderen Sprachen bekannt, werden nicht unterstützt.
 
 \subsection{Programm}
-Ein Programm in der Programmiersprache While darf aus beliebig vielen Funktionsdefinitionen, Funktionsdeklerationen und Anweisungen außerhalb einer Funktion bestehen. Anweisungen werden immer von oben nach unten abgearbeitet. Anweisungen innerhalb einer Funktion werden nur ausgeführt wenn die Funktion aufgerufen wird. 
+Ein Programm in der Programmiersprache While darf aus beliebig vielen Funktionsdefinitionen, Funktionsdeklarationen und Anweisungen außerhalb einer Funktion bestehen. Anweisungen werden immer von oben nach unten abgearbeitet. Anweisungen innerhalb einer Funktion werden nur ausgeführt, wenn die Funktion aufgerufen wird.
 
 \begin{lstlisting}[language=c, caption=Kommentare in While, label={lst:while-comment}]
 	// Das ist ein Kommentar
 \end{lstlisting}
 
 \subsection{Variablen}
-Variablendeklarationen werden mit dem Schlüsselwort \textbf{var} gekennzeichnet. Darauf folgt der Name der Variable. Anders als in anderen Programmiersprachen ist es hier notwendig der Variable bei der Deklaration auch einen Wert zuzuweisen. Eine Zuweisung erfolgt mit einem Doppelpunkt gefolgt von einem Gleichheitszeichen (:=). Einer Variable können Konstanten, Variablen oder Funktionsaufrufe zugewiesen werden. Nachdem eine Variable erzeugt wurde kann ihr ein neuer Wert zugewiesen werden oder sie in Funktionsaufrufen genutzt werden.
+Variablendeklarationen werden mit dem Schlüsselwort \textbf{var} gekennzeichnet. Darauf folgt der Name der Variable. Anders als in anderen Programmiersprachen ist es hier notwendig, der Variable bei der Deklaration auch einen Wert zuzuweisen. Eine Zuweisung erfolgt mit einem Doppelpunkt, gefolgt von einem Gleichheitszeichen (:=). Einer Variable können Konstanten, Variablen oder Funktionsaufrufe zugewiesen werden. Nachdem eine Variable erzeugt wurde, kann ihr ein neuer Wert zugewiesen werden oder sie in Funktionsaufrufen genutzt werden.
 
 \begin{lstlisting}[language=c, caption=Variablennutzung in While, label={lst:while-var-defdec}]
 var r0 := 0; // Erzeugt eine Variable mit dem Namen 'r0' und dem Wert 0
@@ -21,7 +21,7 @@ r0 := 5; // r0 bekommt einen neuen Wert
 \end{lstlisting}
 
 \subsection{Pred und Succ} \label{subsec:while-konzepte-pred}
-\textbf{pred} und \textbf{succ} sind zwei Funktionen, welche die Sprache zur Verfügung stellt und den Wert von einer Variable direkt manipulieren können. Nach dem jeweiligen Schlüsselwort folgt der Name einer Variable innerhalb von zwei runden Klammern. \textbf{pred} steht für \enquote{predecessor} und wird genutzt um den Wert einer Variable um eine Stelle zu verringern. Ist der Wert der verringert werden soll null, so bleibt der Wert der Variable null. Analog dazu wird \textbf{succ} (\enquote{successor}) genutzt um den Wert einer Variable zu erhöhen. Der Wert einer Variable kann beliebig oft erhöht werden.
+\textbf{pred} und \textbf{succ} sind zwei Funktionen, welche die Sprache zur Verfügung stellt und den Wert von einer Variable direkt manipulieren können. Nach dem jeweiligen Schlüsselwort folgt der Name einer Variable innerhalb von zwei runden Klammern. \textbf{pred} steht für \enquote{predecessor} und wird genutzt, um den Wert einer Variable um eine Stelle zu verringern. Ist der Wert, der verringert werden soll, null, so bleibt der Wert der Variable null. Analog dazu wird \textbf{succ} (\enquote{successor}) genutzt, um den Wert einer Variable zu erhöhen. Der Wert einer Variable kann beliebig oft erhöht werden.
 
 \begin{lstlisting}[language=c, caption=pred und succ in While, label={lst:while-pred-succ}]
 	var r0 := 1; // Erzeugt eine Variable mit dem Namen 'r0' und dem Wert 1
@@ -33,7 +33,7 @@ r0 := 5; // r0 bekommt einen neuen Wert
 \subsection{Loop und While}
 \textbf{loop} und \textbf{while} sind zwei unterschiedliche Schleifenarten, welche in der Programmiersprache while genutzt werden können. Der Schleifenkörper befindet sich in beiden Fällen einem \textbf{begin:} und \textbf{end}. Innerhalb eines Schleifenkörpers können beliebig viele Anweisungen oder auch andere Schleifen stehen. Variablen, welche innerhalb eines Schleifenkörpers definiert werden, existieren nur innerhalb vom Schleifenkörper.
 
-Die \textbf{while} Schleife verhält sich, wie man es aus anderen Sprachen gewohnt ist: der Körper der Schleife wird wiederholt, solange der Wert der Variable im Schleifenkopf ungleich null ist. Mithilfe einer \textbf{while}-Schleife ist es möglich Endlosschleifen zu erzeugen.
+Die \textbf{while} Schleife verhält sich, wie man es aus anderen Sprachen gewohnt ist: Der Körper der Schleife wird wiederholt, solange der Wert der Variable im Schleifenkopf ungleich null ist. Mithilfe einer \textbf{while}-Schleife ist es möglich, Endlosschleifen zu erzeugen.
 
 \begin{lstlisting}[language=c, caption=while-Schleife in While, label={lst:while-while}]
 	var r0 := 5; // Erzeugt eine Variable mit dem Namen 'r0' und dem Wert 3
@@ -45,7 +45,7 @@ Die \textbf{while} Schleife verhält sich, wie man es aus anderen Sprachen gewoh
 	end
 \end{lstlisting}
 
-Die \textbf{loop} Schleife hingegen verhält sich ähnlich zu einer for-Schleife aus anderen Programmiersprache. Die Variable im Schleifenkopf wird automatisch verringert bis der Wert gleich null ist. Aus diesem Grund kann davon ausgegangen werden, dass die Schleife terminiert. Um das sicher zu stellen, ist es bei einer \textbf{loop}-Schleife nicht möglich die Variable, welche im Schleifenkopf steht, schreibend zu verwenden. 
+Die \textbf{loop} Schleife hingegen verhält sich ähnlich zu einer for-Schleife aus anderen Programmiersprache. Die Variable im Schleifenkopf wird automatisch verringert, bis der Wert gleich null ist. Aus diesem Grund kann davon ausgegangen werden, dass die Schleife terminiert. Um das sicher zu stellen, ist es bei einer \textbf{loop}-Schleife nicht möglich, die Variable, welche im Schleifenkopf steht, schreibend zu verwenden.
 
 \begin{lstlisting}[language=c, caption=loop-Schleife in While, label={lst:while-loop}]
 	var r0 := 3; // Erzeugt eine Variable mit dem Namen 'r0' und dem Wert 3
@@ -56,13 +56,13 @@ Die \textbf{loop} Schleife hingegen verhält sich ähnlich zu einer for-Schleife
 \end{lstlisting}
 
 \subsection{Read und Write}
-\textbf{read} und \textbf{write} sind zwei Funktionen, welche genutzt werden können um zur Laufzeit mit dem Benutzer des Programms zu interagieren. Mithilfe von \textbf{read} wird der Nutzer aufgefordert der angegeben Variable über eine Tastatureingabe einen Wert zuzuweisen. 
+\textbf{read} und \textbf{write} sind zwei Funktionen, welche genutzt werden können, um zur Laufzeit mit dem Benutzer des Programms zu interagieren. Mithilfe von \textbf{read} wird der Nutzer aufgefordert, der angegeben Variable über eine Tastatureingabe einen Wert zuzuweise
 
 \begin{lstlisting}[language=c, caption=read in While, label={lst:while-var-read}]
 	var r0 := read(); // Bitten den Nutzer einen Wert fuer r0 anzugeben
 \end{lstlisting}
 
-Mithilfe von \textbf{write} kann der Wert von einer Variable, welche in runden Klammern angegeben wird, auf die Konsole ausgegeben werden, um dem Nutzer beispielsweise ein Rechenergebnis anzuzeigen. Es ist möglich mehrere Variablen gleichzeitig auszugeben, dazu können mehrere Klammern innerhalb der runden Klammern angegeben werden, die Variablen jeweils mit einem Komma voneinander getrennt. 
+Mithilfe von \textbf{write} kann der Wert von einer Variable, welche in runden Klammern angegeben wird, auf die Konsole ausgegeben werden, um dem Nutzer beispielsweise ein Rechenergebnis anzuzeigen. Es ist möglich, mehrere Variablen gleichzeitig auszugeben, indem innerhalb der runden Klammern mehrere Variablennamen angegeben werden, welche jeweils von einem Komma getrennt werden.
 
 \begin{lstlisting}[language=c, caption=write in While, label={lst:while-write}]
 	var r0 := 3; // Erzeugt eine Variable mit dem Namen 'r0' und dem Wert 3
@@ -72,7 +72,7 @@ Mithilfe von \textbf{write} kann der Wert von einer Variable, welche in runden K
 \end{lstlisting}
 
 \subsection{Funktionen}
-Um den Programmcode besser zu organisieren existieren Funktionen. Eine Funktionsdefinition beginnt mit \textbf{def} und kann beliebig viele Parameter haben und muss immer einen Wert zurück geben. Parameter stehen in runden Klammern und werden mit Kommata voneinander getrennt, sie werden als Kopie vom original Wert übergeben. Der Funktionskörper steht, ähnlich wie bei Schleifen, zwischen \textbf{begin:} und \textbf{end}. Ein \textbf{return} um einen Wert zurück zu geben darf immer nur am Schluss einer Funktion stehen. 
+Um den Programmcode besser zu organisieren, existieren Funktionen. Eine Funktionsdefinition beginnt mit \textbf{def} und kann beliebig viele Parameter haben und muss immer einen Wert zurückgeben. Parameter stehen in runden Klammern und werden mit Kommata voneinander getrennt, sie werden als Kopie vom original Wert übergeben. Der Funktionskörper steht ähnlich wie bei Schleifen zwischen \textbf{begin:} und \textbf{end}. Ein \textbf{return}, um einen Wert zurückzugeben darf immer nur am Schluss einer Funktion stehen.
 
 \begin{lstlisting}[language=c, caption=Funktionen in While, label={lst:while-function}]
 	def addTwo(s0) begin: // Definiere eine Funktion
@@ -100,4 +100,4 @@ Es ist auch möglich Vorwärtsdeklarationen zu nutzen, ähnlich wie in den Sprac
 
 \end{lstlisting}
 
-Eine Funktion, wo Deklaration und Definition voneinander getrennt sind ist es möglich rekursiv zu verwenden.
+Eine Funktion, wo Deklaration und Definition voneinander getrennt sind, ist es möglich, rekursiv zu verwenden.
