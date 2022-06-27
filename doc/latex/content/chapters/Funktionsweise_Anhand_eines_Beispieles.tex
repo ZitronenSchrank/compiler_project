@@ -1,10 +1,35 @@
 \chapter{Anleitungen}
+Im folgenden Kapitel soll erklärt werden wie die Ergebnisse dieser Arbeit, der Compiler und die \ac{vsc} Erweiterung, verwendet werden.
 
 \section{Die \acs{vsc} Erweiterung installieren}
+Es gibt zwei unterschiedliche Möglichkeiten die \ac{vsc} Erweiterung runter zu laden und zu installieren.
+
+\subsection{In der \acs{ide}} 
+Der einfachste Weg ist die Installation, direkt aus der \ac{ide} heraus. Dazu muss zunächst das Erweiterungsfenester geöffnet werden, dies geschiet mit einem Klick auf die vier Quadrate an der Sidebar. Alternativ lässt sich das Fenster auch über \enquote{Anzeige} -> \enquote{Erweiterungen} öffnen.
+
+Ist dies geschehen, wird dem Nutzer angeboten eine Erweiterung zu suchen. Es ist ausreichend \enquote{while} in die Suchleiste zu tippen um die Erweiterung zu finden. Die richtige Erweiterung kann an dem dunkelblauen Logo mit einem großen gelben \enquote{W} erkannt werden. Alternativ lässt sich auch nach \enquote{@id:ZitronenSchrank.while-language-extension} suchen, wobei die richtige Erweiterung die einzige sein wird, welche als Ergebnis aufgelistet wird. 
+
+Nach der Auswahl des korrekten Suchergebnisses ist es dem Benutzer möglich die Erweiterung zu installieren. Eventuell muss die \ac{ide} anschließend neugestartet werden, darauf wird der Nutzer jedoch gegebenenfalls hingewiesen.
+
+Falls der Nutzer nach der Installation der Erweiterung eine Datei mit der Endung \enquote{while} oder \enquote{loop} in \ac{vsc} öffnet, wird die Erweiterung automatisch aktiviert und der Programmcode entsprechend eingefärbt und der Nutzer beim Schreiben unterstützt.
+
+\subsection{Mithilfe einer VSIX-Datei}
+Eine andere und verständlichere Möglichkeit die Erweiterung zu installieren ist mithilfe einer \enquote{VSIX}-Datei. 
+
 
 \section{Den Compiler verwenden}
+java -jar while-1.0.jar
+
+
+java -jar while-1.0.jar ./test.while
+
+
+java -jar while-1.0.jar ./test.while ./hallo
+
+java -cp . test
 
 \section{Den Compiler kompilieren}
+mvn clean compile assembly:single
 
 \section{Den Compiler erweitern} 
 \subsection{Grammatik anpassen}
