@@ -16,22 +16,42 @@ Falls der Nutzer nach der Installation der Erweiterung eine Datei mit der Endung
 \subsection{Mithilfe einer VSIX-Datei}
 Eine andere und umständliche Möglichkeit die Erweiterung zu installieren ist mithilfe einer \enquote{VSIX}-Datei. Diese muss manuell heruntergeladen und installiert werden. Ein Ort, an welchem die \enquote{VSIX}-Datei heruntergeladen werden kann, ist das \href{https://github.com/ZitronenSchrank/While-Extension-VsCode}{Github-Reposity} der Erweiterung. Eine andere Möglichkeit ist der Download über den \href{https://marketplace.visualstudio.com/items?itemName=ZitronenSchrank.while-language-extension}{Visual Studio Marketplace}
 
-Nachdem die Datei runter geladen wurde, lässt sie sich in \ac{vsc} installieren. Dazu muss zunächst das Erweiterungsfenster geöffnet werden und anschließend mit einem Klick auf das $\cdots$-Symbol die Option "Install From VSIX" ausgewählt und anschließend die heruntergeladene Datei ausgesucht werden. 
+Nachdem die Datei runter geladen wurde, lässt sie sich in \ac{vsc} installieren. Dazu muss zunächst das Erweiterungsfenster geöffnet werden und anschließend mit einem Klick auf das $\cdots$-Symbol die Option \enquote{Install From VSIX} ausgewählt und anschließend die heruntergeladene Datei ausgesucht werden. 
 
 
 \section{Den Compiler verwenden}
-java -jar while-1.0.jar
+Beim Compiler handelt es sich um eine Java-Jar-Datei, welche über die Kommandozeile ausgeführt werden muss, da keine \ac{gui} existiert. Dazu muss eine Eingabebauforderung im selben Ordner gestartet werden, in welchem sich auch der Compiler befindet. In \cref{lst:howto-basiccall} ist zu sehen wie der Compiler grundsätzlich aufgerufen wird.
 
+\begin{lstlisting}[language=java, caption=Grundlegenes Aufrufen des Compilers, label={lst:howto-basiccall}]
+	java -jar while-1.0.jar
+\end{lstlisting}
 
-java -jar while-1.0.jar ./test.while
+Damit der Compiler eine ausführbare Datei erzeugen kann, muss als erster Parameter ein Pfad zu einer Quelltext-Datei angegeben werden, wie in \cref{lst:howto-basiccompile} exemplarisch dargestellt. 
 
+\begin{lstlisting}[language=java, caption=Kompelieren einer Datei, label={lst:howto-basiccompile}]
+	java -jar while-1.0.jar ./test.while
+\end{lstlisting}
 
-java -jar while-1.0.jar ./test.while ./hallo
+Nach dem Ausführen werden eventuelle Fehlermeldungen auf der Konsole angezeigt und bei Erfolg eine Class-Datei mit dem selben Namen im selben Ordner erzeugt, in welchem sich auch die Eingabedatei befindet. 
 
-java -cp . test
+Es ist auch möglich den Compiler mit zwei Parametern aufzurufen, wie in \cref{lst:howto-compilewithoutput} zu sehen ist. Der erste Parameter ist wieder der zu kompilierende Quelltext und der zweite Parameter gibt an, welchen Namen das Kompilat tragen soll. 
+
+\begin{lstlisting}[language=java, caption=Kompelieren einer Datei mit vorgegebener Ausgabe, label={lst:howto-compilewithoutput}]
+	java -jar while-1.0.jar ./test.while ./hallo
+\end{lstlisting}
+
+Ein Kompilat lässt sich ausführen, wie man es bereits von Class-Dateien gewöhnt ist, in \cref{lst:howto-runCompile} ist zu sehen, wie eine test.class-Datei ausgeführt werden kann. 
+
+\begin{lstlisting}[language=java, caption=Ein programm ausführen, label={lst:howto-runCompile}]
+	java -cp . test
+\end{lstlisting}
 
 \section{Den Compiler kompilieren}
-mvn clean compile assembly:single
+
+\begin{lstlisting}[language=java, caption=Mit Maven den Compiler compilieren, label={lst:howto-compileCompiler}]
+	mvn clean compile assembly:single
+\end{lstlisting}
+
 
 \section{Den Compiler erweitern} 
 \subsection{Grammatik anpassen}
