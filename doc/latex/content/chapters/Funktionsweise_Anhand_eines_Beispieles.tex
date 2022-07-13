@@ -19,7 +19,7 @@ Eine andere und umständliche Möglichkeit die Erweiterung zu installieren ist m
 Nachdem die Datei runter geladen wurde, lässt sie sich in \ac{vsc} installieren. Dazu muss zunächst das Erweiterungsfenster geöffnet werden und anschließend mit einem Klick auf das $\cdots$-Symbol die Option \enquote{Install From VSIX} ausgewählt und anschließend die heruntergeladene Datei ausgesucht werden. 
 
 
-\section{Den Compiler verwenden}
+\section{Den Compiler verwenden} \label{sec:kompiler-verwenden}
 Beim Compiler handelt es sich um eine Java-Jar-Datei, welche über die Kommandozeile ausgeführt werden muss, da keine \ac{gui} existiert. Dazu muss eine Eingabebauforderung im selben Ordner gestartet werden, in welchem sich auch der Compiler befindet. In \cref{lst:howto-basiccall} ist zu sehen wie der Compiler grundsätzlich aufgerufen wird.
 
 \begin{lstlisting}[language=java, caption=Grundlegenes Aufrufen des Compilers, label={lst:howto-basiccall}]
@@ -46,15 +46,30 @@ Ein Kompilat lässt sich ausführen, wie man es bereits von Class-Dateien gewöh
 	java -cp . test
 \end{lstlisting}
 
-\section{Den Compiler kompilieren}
+\section{Den Compiler kompilieren} \label{sec:compileCompiler}
+
+Um den Compiler zu compilieren muss zunächst der Quellcode für das Programm von Gifthub heruntergeladen werden. Dieser lässt sich unter folgender URL finden \url{https://github.com/ZitronenSchrank/compiler_project}. Entweder kann der Quellcode direkt von der Weboberfläche als ZIP-Datei herunterladen oder mit dem Befehl in \cref{lst:howto-clone} geklont werden.
+
+\begin{lstlisting}[language=java, caption=Das Repository klonen, label={lst:howto-clone}]
+git clone https://github.com/ZitronenSchrank/compiler_project
+\end{lstlisting}
+
+Anschließend kann in den Ordner \enquote{compiler} navigiert werden. Hier befindet sich die POM.XML für Maven und der Quellcode für den Compiler. Der Compiler lässt sich nun mit dem Konsolenkommando, welcher in \cref{lst:howto-compileCompiler} zu sehen ist, letztendlich kompilieren. Das Kompilat wird im Ordner \enquote{target} gespeichert. 
 
 \begin{lstlisting}[language=java, caption=Mit Maven den Compiler compilieren, label={lst:howto-compileCompiler}]
 	mvn clean compile assembly:single
 \end{lstlisting}
 
+Der Compiler hat eine größe von etwa 14MB. Es wurde leider kein Weg gefunden diese Dateigröße automatisiert zu verringern. Um die größe der erzeugten Jar-Datei auf etwa 2MB zu verringern, kann die Jar-Datei auf die selbe Weise geöffnet werden, wie eine ZIP-Datei. Darin befindet sich anschließend an erster Stelle ein Ordner mit dem Namen \enquote{com/IBM}, welcher entfernt werden kann, ohne die Funktionalität des Compilers zu beeinflussen.
+
+Die Jar-Datei kann anschließend genutzt werden, wie es in \cref{sec:kompiler-verwenden} bereits erläutert wurde.
 
 \section{Den Compiler erweitern} 
+
+Im folgenden werden die grundsätzlichen Schritte erläutert, welche nötig sind um den Compiler um eigene Sprachkonstrukte zu erweitern. Wie der Quellcode für den Compiler heruntergeladen werden kann, wird in \cref{sec:compileCompiler} gezeigt.
+
 \subsection{Grammatik anpassen}
+Der erste Schritt ist es, die Grammatik-Datei mit dem Namen \enquote{Grammatik/While.g4} zu modifizieren und so die neuen Grammatikregeln zu definieren.
 
 \subsection{Semantische Überprüfung implementieren}
 
