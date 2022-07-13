@@ -69,8 +69,20 @@ Die Jar-Datei kann anschließend genutzt werden, wie es in \cref{sec:kompiler-ve
 Im folgenden werden die grundsätzlichen Schritte erläutert, welche nötig sind um den Compiler um eigene Sprachkonstrukte zu erweitern. Wie der Quellcode für den Compiler heruntergeladen werden kann, wird in \cref{sec:compileCompiler} gezeigt.
 
 \subsection{Grammatik anpassen}
-Der erste Schritt ist es, die Grammatik-Datei mit dem Namen \enquote{Grammatik/While.g4} zu modifizieren und so die neuen Grammatikregeln zu definieren.
+Der erste Schritt ist es, die Grammatik-Datei mit dem Namen \enquote{Grammatik/While.g4} zu modifizieren und so die neuen Grammatikregeln zu definieren. Wie Grammatikregeln zu definieren sind und was genau sie bewirken wurde bereits in \cref{sec:while-grammar} erläutert.  
+
+\begin{lstlisting}[language=java, caption=Grammatikregel für ein IF, label={lst:howto-grammar-if}]
+ifStmt : 'if' '(' ID ')' BEGIN statement* END;
+\end{lstlisting}
+
+Anschließend muss der Lexer und Parser neu generiert werden, für den Compiler selber und auch für die \ac{vsc}-Erweiterung. Im nächsten Schritt muss für das neue Sprachelement eine semantische Analyse implementiert werden. Die syntaktischen Überprüfungen werden weiterhin vom Lexer und Parser übernommen.
+
 
 \subsection{Semantische Überprüfung implementieren}
+Nachdem die Grammatik angepasst wurde und ein neuer Lexer und Parser generiert wurde, muss als nächstes eine semantische Überprüfung für das neue Sprachelement hinzugefügt werden und gegebenenfalls die semantische Analyse für modifizierte Regeln angepasst werden. Wie die semantische Analyse grundlegend implementiert wird, wurde in \cref{chap:semantic} erklärt.  
+
+Wenn beispielsweise eine neue Regel \enquote{ifStmt} hinzugefügt wurde, muss zunächst eine Klasse erstellt werden, welche alle Informationen zum IF beinhaltet und von der Klasse \enquote{Statement} erbt, da es sich um ein Statement handelt. Anschließend muss eine \enquote{ifStmtVisitor}-Klasse erzeugt werden, welche von \enquote{WhileBaseVisitor} erbt und die Methode \enquote{visitIfStmt} implementiert. Darin findet die eigentliche semantische Überprüfung statt. Zuletzt muss im Fall von \enquote{ifStmt} noch die Klasse \enquote{StatementVisitor} entsprechend angepasst werden.
+
+Als letztes muss für das neue Sprachelement eine entsprechende Codegenerierung geschrieben werden.
 
 \subsection{Codegenerierung}
