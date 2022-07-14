@@ -4,7 +4,7 @@ Bevor Bytecode erzeugt werden kann, muss überlegt werden, wie die Konzepte aus 
 \subsection{Funktionen}
 WHILE erlaubt es Statements innerhalb aber auch außerhalb von Funktionen zu schreiben, während in Java jede Anweisung innerhalb einer Methode stehen muss. Die Anweisungen in der Main-Methode werden beim Programmstart von oben nach unten ausgeführt. Um nun ein WHILE Programm auf Java abzubilden, wurde entschieden jedes Statement, welches sich außerhalb einer Funktion befindet, in der Java Main-Methode umzusetzen. 
 
-Funktionen in WHILE und Java sind sich sehr ähnlich, weshalb While-Funktionen direkt auf Java-Methoden abgebildet werden können. Jeder Parameter einer Funktion und auch die Rückgabe ist immer vom Typ \enquote{BigInteger} Es wurde entschieden jede Methode als \enquote{STATIC} zu deklarieren, da dies Funktionsaufrufe in der Main-Methode simplifiziert. In \cref{lst:asm-whileAufJava} ist zu sehen, wie eine solche Abbildung exemplarisch aussieht.
+Funktionen in WHILE und Java sind sich sehr ähnlich, weshalb While-Funktionen direkt auf Java-Methoden abgebildet werden können. Jeder Parameter einer Funktion und auch die Rückgabe ist immer vom Typ \enquote{BigInteger} Es wurde entschieden, jede Methode als \enquote{STATIC} zu deklarieren, da dies Funktionsaufrufe in der Main-Methode simplifiziert. In \cref{lst:asm-whileAufJava} ist zu sehen, wie eine solche Abbildung exemplarisch aussieht.
 
 \begin{lstlisting}[language=Java, caption=Abbildung von While Funktionen auf Java Funktionen, label={lst:asm-whileAufJava}]
 // Programm in WHILE
@@ -41,11 +41,9 @@ class Programm{
 \end{lstlisting}
 
 \subsection{Schleifen und Variablen Definitionen}
-Schleifen und Variablen sind beides Konzepte, welche in WHILE und auch in Java existieren, weshalb die Abbildung sehr einfach ohne große Überlegungen erfolgt. In \cref{subsec:asm-insn} ist zu sehen wie eine Variable definiert werden und genutzt werden kann. 
-
-In der Programmiersprache WHILE existieren neben den bekannten while-Schleifen auch loop-Schleifen, für die es kein Java-Äquivalent gibt. Da der Unterschied zwischen while-Schleife und loop-Schleife nur sehr gering ist, wird die loop-Schleife als eine while-Schleife umgesetzt, welche die Variable im Schleifenkopf automatisch bei jedem Durchgang erniedrigt. In der Welt von ASM existieren keine Unterschiede zwischen while-, loop-, oder do-While-Schleifen. Sie werden alle durch Vergleiche und GOTO-Anweisungen umgesetzt.
+In der Programmiersprache WHILE existieren neben den bekannten While-Schleifen auch Loop-Schleifen, für die es kein Java-Äquivalent gibt. Da der Unterschied zwischen While-Schleife und Loop-Schleife nur sehr gering ist, wird die Loop-Schleife als eine While-Schleife umgesetzt, welche die Variable im Schleifenkopf automatisch bei jedem Durchgang erniedrigt. In der Welt von ASM existieren keine Unterschiede zwischen while-, loop-, oder Do-While-Schleifen. Sie werden alle durch Vergleiche und GOTO-Anweisungen umgesetzt.
 
 \subsection{PRED, SUCC, READ, WRITE}
-Die WHILE Sprachkonzepte \enquote{PRED}, \enquote{SUCC} und \enquote{READ} verhalten sich wie in die Sprache eingebaute Funktionen. Sie sind fest definiert und die Implementation besteht aus mehreren Zeilen Java-Code, da Überprüfungen stattfinden. Es bietet sich daher an, diese Operationen tatsächlich als Methoden umzusetzen. Dazu wurde zunächst jede der genannten Funktionen als Java Programm geschrieben und anschließend mithilfe von ASMifer (\cref{subsec:asmifer}) der erzeugte ASM Code generiert, welcher zuletzt in den Codegenerator eingesetzt wurde. Diese Methoden werden bei jedem Kompeliervorgang dem Programm hinzugefügt, wie in \cref{lst:asm-whileAufJava} zu sehen ist.
+Die WHILE Sprachkonzepte \enquote{PRED}, \enquote{SUCC} und \enquote{READ} verhalten sich wie in die Sprache eingebaute Funktionen. Sie sind fest definiert und die Implementation besteht aus mehreren Zeilen Java-Code, da Überprüfungen stattfinden. Es bietet sich daher an, diese Operationen tatsächlich als Methoden umzusetzen. Dazu wurde zunächst jede der genannten Funktionen als Java Programm geschrieben und anschließend mithilfe von ASMifer (\cref{subsec:asmifer}) der erzeugte ASM Code generiert, welcher zuletzt in den Codegenerator eingesetzt wurde. Diese Methoden werden bei jedem Kompiliervorgang dem Programm hinzugefügt, wie in \cref{lst:asm-whileAufJava} zu sehen ist.
 
 Ausschließlich das Sprachkonstrukt \enquote{WRITE} wurde anders umgesetzt. Ein WRITE wird direkt in ein System.out.println() abgebildet.

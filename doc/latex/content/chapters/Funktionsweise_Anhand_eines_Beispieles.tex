@@ -32,9 +32,9 @@ Damit der Compiler eine ausführbare Datei erzeugen kann, muss als erster Parame
 	java -jar while-1.0.jar ./test.while
 \end{lstlisting}
 
-Nach dem Ausführen werden eventuelle Fehlermeldungen auf der Konsole angezeigt und bei Erfolg eine Class-Datei mit dem selben Namen im selben Ordner erzeugt, in welchem sich auch die Eingabedatei befindet. 
+Nach dem Ausführen werden eventuelle Fehlermeldungen auf der Konsole angezeigt und bei Erfolg eine Class-Datei mit demselben Namen im selben Ordner erzeugt, in welchem sich auch die Eingabedatei befindet. 
 
-Es ist auch möglich den Compiler mit zwei Parametern aufzurufen, wie in \cref{lst:howto-compilewithoutput} zu sehen ist. Der erste Parameter ist wieder der zu kompilierende Quelltext und der zweite Parameter gibt an, welchen Namen das Kompilat tragen soll. 
+Es ist auch möglich, den Compiler mit zwei Parametern aufzurufen, wie in \cref{lst:howto-compilewithoutput} zu sehen ist. Der erste Parameter ist wieder der zu kompilierende Quelltext und der zweite Parameter gibt an, welchen Namen das Kompilat tragen soll.
 
 \begin{lstlisting}[language=java, caption=Kompelieren einer Datei mit vorgegebener Ausgabe, label={lst:howto-compilewithoutput}]
 	java -jar while-1.0.jar ./test.while ./hallo
@@ -48,25 +48,25 @@ Ein Kompilat lässt sich ausführen, wie man es bereits von Class-Dateien gewöh
 
 \section{Den Compiler kompilieren} \label{sec:compileCompiler}
 
-Um den Compiler zu compilieren muss zunächst der Quellcode für das Programm von Gifthub heruntergeladen werden. Dieser lässt sich unter folgender URL finden \url{https://github.com/ZitronenSchrank/compiler_project}. Entweder kann der Quellcode direkt von der Weboberfläche als ZIP-Datei herunterladen oder mit dem Befehl in \cref{lst:howto-clone} geklont werden.
+Um den Compiler zu kompilieren muss zunächst der Quellcode für das Programm von Gifthub heruntergeladen werden. Dieser lässt sich unter folgender URL finden \url{https://github.com/ZitronenSchrank/compiler_project}. Entweder kann der Quellcode direkt von der Weboberfläche als ZIP-Datei herunterladen oder mit dem Befehl in \cref{lst:howto-clone} geklont werden.
 
 \begin{lstlisting}[language=java, caption=Das Repository klonen, label={lst:howto-clone}]
 git clone https://github.com/ZitronenSchrank/compiler_project
 \end{lstlisting}
 
-Anschließend kann in den Ordner \enquote{compiler} navigiert werden. Hier befindet sich die POM.XML für Maven und der Quellcode für den Compiler. Der Compiler lässt sich nun mit dem Konsolenkommando, welcher in \cref{lst:howto-compileCompiler} zu sehen ist, letztendlich kompilieren. Das Kompilat wird im Ordner \enquote{target} gespeichert. 
+Anschließend kann in den Ordner \enquote{compiler} navigiert werden. Hier befindet sich die POM.XML für Maven und der Quellcode für den Compiler. Der Compiler lässt sich nun mit dem Konsolenkommando, welcher in \cref{lst:howto-compileCompiler} zu sehen ist, letztendlich kompilieren. Das Kompilat wird im Ordner \enquote{target} gespeichert.
 
 \begin{lstlisting}[language=java, caption=Mit Maven den Compiler compilieren, label={lst:howto-compileCompiler}]
 	mvn clean compile assembly:single
 \end{lstlisting}
 
-Der Compiler hat eine größe von etwa 14MB. Es wurde leider kein Weg gefunden diese Dateigröße automatisiert zu verringern. Um die größe der erzeugten Jar-Datei auf etwa 2MB zu verringern, kann die Jar-Datei auf die selbe Weise geöffnet werden, wie eine ZIP-Datei. Darin befindet sich anschließend an erster Stelle ein Ordner mit dem Namen \enquote{com/IBM}, welcher entfernt werden kann, ohne die Funktionalität des Compilers zu beeinflussen.
+Der Compiler hat eine Größe von etwa 14MB. Es wurde leider kein Weg gefunden, diese Dateigröße automatisiert zu verringern. Um die Größe der erzeugten Jar-Datei auf etwa 2MB zu verringern, kann die Jar-Datei auf dieselbe Weise geöffnet werden wie eine ZIP-Datei. Darin befindet sich anschließend an erster Stelle ein Ordner mit dem Namen \enquote{com/IBM}, welcher entfernt werden kann, ohne die Funktionalität des Compilers zu beeinflussen.
 
 Die Jar-Datei kann anschließend genutzt werden, wie es in \cref{sec:kompiler-verwenden} bereits erläutert wurde.
 
 \section{Den Compiler erweitern} 
 
-Im folgenden werden die grundsätzlichen Schritte erläutert, welche nötig sind um den Compiler um eigene Sprachkonstrukte zu erweitern. Wie der Quellcode für den Compiler heruntergeladen werden kann, wird in \cref{sec:compileCompiler} gezeigt.
+Im Folgenden werden die grundsätzlichen Schritte erläutert, welche nötig sind, um den Compiler um eigene Sprachkonstrukte zu erweitern. Wie der Quellcode für den Compiler heruntergeladen werden kann, wird in \cref{sec:compileCompiler} gezeigt.
 
 \subsection{Grammatik anpassen}
 Der erste Schritt ist es, die Grammatik-Datei mit dem Namen \enquote{Grammatik/While.g4} zu modifizieren und so die neuen Grammatikregeln zu definieren. Wie Grammatikregeln zu definieren sind und was genau sie bewirken wurde bereits in \cref{sec:while-grammar} erläutert.  
@@ -79,13 +79,13 @@ Anschließend muss der Lexer und Parser neu generiert werden, für den Compiler 
 
 
 \subsection{Semantische Überprüfung implementieren}
-Nachdem die Grammatik angepasst wurde und ein neuer Lexer und Parser generiert wurde, muss als nächstes eine semantische Überprüfung für das neue Sprachelement hinzugefügt werden und gegebenenfalls die semantische Analyse für modifizierte Regeln angepasst werden. Wie die semantische Analyse grundlegend implementiert wird, wurde in \cref{chap:semantic} erklärt.  
+Nachdem die Grammatik angepasst wurde und ein neuer Lexer und Parser generiert wurde, muss als Nächstes eine semantische Überprüfung für das neue Sprachelement hinzugefügt werden und gegebenenfalls die semantische Analyse für modifizierte Regeln angepasst werden. Wie die semantische Analyse grundlegend implementiert wird, wurde in \cref{chap:semantic} erklärt.
 
 Wenn beispielsweise eine neue Regel \enquote{ifStmt} hinzugefügt wurde, muss zunächst eine Klasse erstellt werden, welche alle Informationen zum IF beinhaltet und von der Klasse \enquote{Statement} erbt, da es sich um ein Statement handelt. Anschließend muss eine \enquote{ifStmtVisitor}-Klasse erzeugt werden, welche von \enquote{WhileBaseVisitor} erbt und die Methode \enquote{visitIfStmt} implementiert. Darin findet die eigentliche semantische Überprüfung statt. Zuletzt muss im Fall von \enquote{ifStmt} noch die Klasse \enquote{StatementVisitor} entsprechend angepasst werden.
 
 Als letztes muss für das neue Sprachelement eine entsprechende Codegenerierung geschrieben werden.
 
 \subsection{Codegenerierung}
-Nachdem die semantische Überprüfung für das neue Sprachkonstrukt implementiert wurde, kann nun die Codegenerierung implementiert werden. Dazu muss sich zunächst überlegt werden, wie das neue Sprachelement in der Programmiersprache umzusetzen wäre. Es bietet sich an, ein Java-Programm zu schreiben welches dieses eine neue Sprachkonstrukt umsetzt.
+Nachdem die semantische Überprüfung für das neue Sprachkonstrukt implementiert wurde, kann nun die Codegenerierung implementiert werden. Dazu muss sich zunächst überlegt werden, wie das neue Sprachelement in der Programmiersprache umzusetzen wäre. Es bietet sich an, ein Java-Programm zu schreiben, welches dieses eine neue Sprachkonstrukt umsetzt.
 
-Dieses Java-Programm kann anschließend auch genutzt werden um sich mit \enquote{ASMifer} anzusehen, wie der resultierende ASM-Code aussieht, welcher für den Codegenerator eingesetzt werden kann. \enquote{ASMifer} wird in \cref{subsec:asmifer} vorgestellt.
+Dieses Java-Programm kann anschließend auch genutzt werden, um sich mit \enquote{ASMifer} anzusehen, wie der resultierende ASM-Code aussieht, welcher für den Codegenerator eingesetzt werden kann. \enquote{ASMifer} wird in \cref{subsec:asmifer} vorgestellt.
