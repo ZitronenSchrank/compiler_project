@@ -1,4 +1,16 @@
 \section{Generator}
+
+\subsection{Abbildung von WHILE auf Java}
+
+Bevor Bytecode erzeugt werden kann, muss überlegt werden, wie die Konzepte aus der Sprache WHILE in Java umzusetzen wären und wie der korrekte Bytecode dafür aussehen würde. Beispielsweise existiert in der Programmiersprache WHILE kein Konzept, welches Klassen entspricht. Aus diesem Grund entspricht ein WHILE-Programm immer einer einzigen Javaklasse.
+
+WHILE erlaubt es Statements innerhalb aber auch außerhalb von Funktionen zu schreiben, während in Java jede Anweisung innerhalb einer Methode stehen muss. Die Anweisungen in der Main-Methode werden beim Programmstart von oben nach unten ausgeführt. Um nun ein WHILE Programm auf Java abzubilden, wurde entschieden jedes Statement, welches sich außerhalb einer Funktion befindet, in der Java Main-Methode umzusetzen. 
+
+Funktionen in WHILE und Java sind sich sehr ähnlich, weshalb While-Funktionen direkt auf Java-Methoden abgebildet werden können. Es wurde entschieden jede Methode als \enquote{STATIC} zu deklarieren, da dies Funktionsaufrufe in der Main-Methode simplifiziert.
+
+\subsection{PRED, SUCC, READ, WRITE}
+Die WHILE Sprachkonzepte \enquote{PRED}, \enquote{SUCC}, \enquote{READ} und \enquote{WRITE} verhalten sich wie in die Sprache eingebaute Funktionen. Sie sind fest definiert, können vom Nutzer genutzt aber nie modifiziert werden. Es bietet sich daher an, diese Operationen tatsächlich als Methoden umzusetzen. Dazu wurde zunächst jede der genannten Funktionen als Java Programm geschrieben und anschließend mithilfe von ASMifer (\cref{subsec:asmifer}) der erzeugte ASM Code generiert, welcher zuletzt in den Codegenerator eingesetzt wurde. Diese Methoden werden bei jedem Kompeliervorgang dem Programm hinzugefügt.
+
 //TODO: Bisher nur Notizen zur Struktur \\
 //Daten aus eigener Datenstruktur werden zum generieren genutzt \\
 //Gesamtes WHILE Programm als eine Javaklasse \\

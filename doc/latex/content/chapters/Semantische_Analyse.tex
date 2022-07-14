@@ -7,7 +7,7 @@ Die semantische Analyse ist notwendig, da ein syntaktisch korrektes Programm log
 	var r1 := 2;
 \end{lstlisting}
 
-\section{Abbilden auf eine Datenstruktur}
+\section{Abbilden auf eine Datenstruktur} \label{sec:semantic-datenstruktur}
 Um logische Fehler zu erkennen, bietet es sich an, eine eigene Datenstruktur zu entwerfen, welche das Programm abbildet und beim Durchlaufen des \ac{ast} diese Datenstruktur zu füllen. So kann beispielsweise bei einem Funktionsaufruf in der Datenstruktur nachgesehen werden, ob die entsprechende Funktion bereits deklariert wurde oder noch nicht. Ein weiterer Vorteil davon, eine solche Datenstruktur zu definieren, ist es, dass nach dem erfolgreichen Befüllen die Datenstruktur ausschließlich ein syntaktisch und semantisch korrektes Programm abbildet. Es wäre denkbar, die erzeugte Datenstruktur in einem nächsten Schritt anhand der gesammelten Daten zu optimieren und beispielsweise unbenutzte Funktionen zu entfernen, dies geschieht im aktuellen Stand der Arbeit nicht.
 
 In \cref{pic:Semantic-Struct} ist zu sehen, wie ein While-Programm auf eine Java-Klasse abgebildet wird. Knoten aus dem \ac{ast}, welche nicht relevant für die semantische Überprüfung oder die Codegenerierung sind, wie beispielsweise Semikolon oder Klammern werden nicht in die Datenstruktur mit aufgenommen, sondern ausschließlich Daten wie Variablennamen, Werte einer Zuweisung, Name, Funktionsnamen und Funktionsparametern.

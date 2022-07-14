@@ -1,7 +1,87 @@
 \section{Java ASM}
-Bei ASM handelt es sich um ein aktuelles Framework zur Manipulation und Analyse von Java Bytecode. Es ermöglicht die Modifikation bestehender und das Erstellen neuer Klassen direkt in Bytecode. Dieses Framework wird unter anderem im Groovy und Kotlin Compiler eingesetzt, weshalb sich entschieden wurde ASM für diese Arbeit zu nutzen.
+Bei ASM handelt es sich um ein aktuelle Java Bibliothek zur Manipulation und Analyse von Java Bytecode. Es ermöglicht die Modifikation bestehender und das Erstellen neuer Klassen direkt in Bytecode. Dieses Framework wird unter anderem im Groovy und Kotlin Compiler eingesetzt \cite{Bruneton2022}, weshalb sich entschieden wurde ASM für diese Arbeit für die Codegenerierung zu nutzen.
 
-\\
-//Reverseengineering von selbstgeschriebenen Java Code
-\\
-//Generierung von Java Maschinencode
+\subsection{Klasse erzeugen}
+Um mit ASM eine Javaklasse zu generieren, muss zunächst ein Objekt der Klasse \enquote{ClassWriter} erzeugt werden und die Methode \enquote{visit} des Objekts aufgerufen werden. In der \enquote{visit}-Methode wird beispielsweise der Name der Klasse festgelegt, oder von welcher Klasse die neue Klasse erben soll. In \cref{lst:asm-classwriter} ist ein exemplarischer Aufruf der \enquote{visit}-Methode zu sehen. 
+
+\begin{lstlisting}[language=Java, caption=Erzeugung und Nutzung eines ClassWriters, label={lst:asm-classwriter}]
+var classWriter = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
+classWriter.visit(
+	Opcodes.V1_8, // Java 1.8
+	Opcodes.ACC_PUBLIC + Opcodes.ACC_SUPER, // public
+	"HelloWorld", // Class Name
+	null, // Generics <T>
+	"java/lang/Object", // Interface extends Object (Super Class),
+	null // interface names
+);
+
+// Inhalt der Klasse
+
+classWriter.visitEnd();
+var bytecode = classWriter.toByteArray()
+
+\end{lstlisting}
+
+Da in Java alles immer Teil einer Klasse ist, kann vom ClassWriter der erzeugte Bytecode für die Klasse und allen Inhalten abgefragt werden, welcher in Form eines Bytearrays zurück gegeben wird. Dieses Bytearray kann anschließend in eine Datei geschrieben werden, welche anschließend von der \ac{jvm} ausgeführt werden kann.
+
+\subsection{Methoden erzeuen}
+Nachdem eine Klasse mit dem ClassWriter erzeugt wurde, kann das Objekt genutzt werden um Methoden in der Klasse zu definieren. Das erfolgt mit der Methode \enquote{visitMethod}, und ist in \cref{lst:asm-mainMethod} zu sehen.
+
+\begin{lstlisting}[language=Java, caption=Definieren einer Methode, label={lst:asm-mainMethod}]
+MethodVisitor mainMethodVisitor = classWriter.visitMethod(
+	Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, // public static
+	"main", // Name
+	"([Ljava/lang/String;)V", //Descriptor
+	null, // Signatur
+	null // Exceptions
+);
+
+// Was die Methode tun soll
+
+mainMethodVisitor.visitInsn(Opcodes.RETURN);
+mainMethodVisitor.visitEnd();
+mainMethodVisitor.visitMaxs(-1, -1);
+
+\end{lstlisting}
+
+Auch hier wird mit der \enquote{visit}-Methode die Eigenschaften der zu erzeugenden Klasse definiert. Besonders sticht dabei der sogenannte \enquote{Descriptor} ins Auge. Dabei handelt es sich um eine Darstellung der Parameter der Funktion, welche in runden Klammern geschrieben werden, und des Rückgabetyps. In \cref{tab:asm-descriptor} wird erklärt, wie ein Descriptor zu lesen ist.
+
+\begin{table}[h!]
+	\centering
+		\begin{tabular}{@{}ll@{}}
+			\toprule
+			Java type          & Type descriptor          \\ \midrule
+			boolean            & Z                        \\
+			char               & C                        \\
+			byte               & B                        \\
+			short              & S                        \\
+			int                & I                        \\
+			float              & F                        \\
+			long               & J                        \\
+			double             & D                        \\
+			Object             & Ljava/lang/Object;       \\
+			int{[}{]}          & {[}I                     \\
+			Object{[}{]}{[}{]} & {[}{[}Ljava/lang/Object; \\ \bottomrule
+		\end{tabular}%
+	\captionsource{Die Zeichen in einem Descriptor}{\cite[S.11]{Bruneton2011}}
+	\label{tab:asm-descriptor}
+\end{table}
+
+\subsection{Funktionalität hinzufügen}
+
+Der MethodeVisitor, welcher erzeugte wurde als die Methode \enquote{visitMethod} aufgerufen wurde, wird genutzt genutzt um die erzeugte Methode mit Inhalt zu füllen. Das geschieht mithilfe von \enquote{visit}-Methoden, wie beispielsweise \enquote{visitTypeInsn}, welche genutzt wird um neue Objekte zu erzeugen, siehe \cref{lst:asm-BigIntDef}.
+
+\begin{lstlisting}[language=Java, caption=Erzeugen eines BigIntegers mit ASM, label={lst:asm-BigIntDef}]
+mainMethodVisitor.visitTypeInsn(Opcodes.NEW, "java/math/BigInteger");
+mainMethodVisitor.visitInsn(Opcodes.DUP);
+mainMethodVisitor.visitLdcInsn("43289");
+mainMethodVisitor.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/math/BigInteger", "<init>", "(Ljava/lang/String;)V", false);
+mainMethodVisitor.visitVarInsn(Opcodes.ASTORE, 0);
+// Das Entspricht etwa:
+// BigInteger a = new BigInteger("43289");
+\end{lstlisting}
+
+Wie aus dem Beispiel zu entnehmen ist existieren in ASM keine Variablennamen. Die Methode \enquote{visitVarInsn(Opcodes.ASTORE, X)} ist daher von großer Bedeutung, da damit ein neu erzeugtes Objekt im Speicher an der Position X gespeichert wird. Mit einem Aufruf von \enquote{visitVarInsn(Opcodes.ALOAD, X)} lässt sich die Variable, welche an Position X gespeichert wurde wieder auslesen.
+
+\subsection{ASMifier} \label{subsec:asmifer}
+Es ist unschwer zu erkennen, dass der Umgang mit ASM ziemlich komplex ist, da eine Zeile Javacode oft mehreren ASM Anweisungen entspricht und viele Dinge, wie zum Beispiel der korrekte Descriptor, zu beachten sind. Mithilfe von \enquote{ASMifier} lassen sich Class-Dateien einlesen und als ASM-Code wieder ausgeben. Das kann dazu genutzt werden um ein besseres Verständnis für ASM zu gewinnen. Von dieser Möglichkeit des \enquote{reverse engineering} wurde beim Erstellen des Compilers sehr großer Gebrauch gemacht.
