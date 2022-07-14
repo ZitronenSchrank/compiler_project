@@ -86,4 +86,6 @@ Wenn beispielsweise eine neue Regel \enquote{ifStmt} hinzugefügt wurde, muss zu
 Als letztes muss für das neue Sprachelement eine entsprechende Codegenerierung geschrieben werden.
 
 \subsection{Codegenerierung}
-Nachdem 
+Nachdem die semantische Überprüfung für das neue Sprachkonstrukt implementiert wurde, kann nun die Codegenerierung implementiert werden. Dazu muss sich zunächst überlegt werden, wie das neue Sprachelement in der Programmiersprache umzusetzen wäre. Es bietet sich an, ein Java-Programm zu schreiben welches dieses eine neue Sprachkonstrukt umsetzt.
+
+Dieses Java-Programm kann anschließend auch genutzt werden um sich mit \enquote{ASMifer} anzusehen, wie der resultierende ASM-Code aussieht, welcher für den Codegenerator eingesetzt werden kann. \enquote{ASMifer} wird in \cref{subsec:asmifer} vorgestellt.
