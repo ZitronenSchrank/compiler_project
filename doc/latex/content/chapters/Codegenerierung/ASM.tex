@@ -1,7 +1,7 @@
 \section{Java ASM}
 Bei ASM handelt es sich um ein aktuelle Java Bibliothek zur Manipulation und Analyse von Java Bytecode. Es ermöglicht die Modifikation bestehender und das Erstellen neuer Klassen direkt in Bytecode. Dieses Framework wird unter anderem im Groovy und Kotlin Compiler eingesetzt \cite{Bruneton2022}, weshalb sich entschieden wurde ASM für diese Arbeit für die Codegenerierung zu nutzen.
 
-\subsection{Klasse erzeugen}
+\subsection{Klasse erzeugen} \label{subsec:asm-classwriter}
 Um mit ASM eine Javaklasse zu generieren, muss zunächst ein Objekt der Klasse \enquote{ClassWriter} erzeugt werden und die Methode \enquote{visit} des Objekts aufgerufen werden. In der \enquote{visit}-Methode wird beispielsweise der Name der Klasse festgelegt, oder von welcher Klasse die neue Klasse erben soll. In \cref{lst:asm-classwriter} ist ein exemplarischer Aufruf der \enquote{visit}-Methode zu sehen. 
 
 \begin{lstlisting}[language=Java, caption=Erzeugung und Nutzung eines ClassWriters, label={lst:asm-classwriter}]
@@ -67,7 +67,7 @@ Auch hier wird mit der \enquote{visit}-Methode die Eigenschaften der zu erzeugen
 	\label{tab:asm-descriptor}
 \end{table}
 
-\subsection{Funktionalität hinzufügen}
+\subsection{Funktionalität hinzufügen} \label{subsec:asm-insn}
 
 Der MethodeVisitor, welcher erzeugte wurde als die Methode \enquote{visitMethod} aufgerufen wurde, wird genutzt genutzt um die erzeugte Methode mit Inhalt zu füllen. Das geschieht mithilfe von \enquote{visit}-Methoden, wie beispielsweise \enquote{visitTypeInsn}, welche genutzt wird um neue Objekte zu erzeugen, siehe \cref{lst:asm-BigIntDef}.
 
