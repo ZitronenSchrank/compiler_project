@@ -1,26 +1,26 @@
 \chapter{Anleitungen}
-Im folgenden Kapitel soll erklärt werden wie die Ergebnisse dieser Arbeit, der Compiler und die \ac{vsc} Erweiterung, verwendet werden.
+Im folgenden Kapitel soll erklärt werden, wie die Ergebnisse dieser Arbeit, der Compiler und die \ac{vsc} Erweiterung verwendet werden.
 
 \section{Die \acs{vsc} Erweiterung installieren}
-Es gibt zwei unterschiedliche Möglichkeiten die \ac{vsc} Erweiterung runter zu laden und zu installieren.
+Es gibt zwei unterschiedliche Möglichkeiten die \ac{vsc} Erweiterung runterzuladen und zu installieren.
 
 \subsection{In der \acs{ide}} 
-Der einfachste Weg ist die Installation, direkt aus der \ac{ide} heraus. Dazu muss zunächst das Erweiterungsfenester geöffnet werden, dies geschiet mit einem Klick auf die vier Quadrate an der Sidebar. Alternativ lässt sich das Fenster auch über \enquote{Anzeige} -> \enquote{Erweiterungen} öffnen.
+Der einfachste Weg ist die Installation direkt aus der \ac{ide} heraus. Dazu muss zunächst das Erweiterungsfenester geöffnet werden, dies geschieht mit einem Klick auf die vier Quadrate an der Sidebar. Alternativ lässt sich das Fenster auch über \enquote{Anzeige} -> \enquote{Erweiterungen} öffnen.
 
-Ist dies geschehen, wird dem Nutzer angeboten eine Erweiterung zu suchen. Es ist ausreichend \enquote{while} in die Suchleiste zu tippen um die Erweiterung zu finden. Die richtige Erweiterung kann an dem dunkelblauen Logo mit einem großen gelben \enquote{W} erkannt werden. Alternativ lässt sich auch nach \enquote{@id:ZitronenSchrank.while-language-extension} suchen, wobei die richtige Erweiterung die einzige sein wird, welche als Ergebnis aufgelistet wird. 
+Ist dies geschehen, wird dem Nutzer angeboten, eine Erweiterung zu suchen. Es ist ausreichend, \enquote{while} in die Suchleiste zu tippen, um die Erweiterung zu finden. Die richtige Erweiterung kann an dem dunkelblauen Logo mit einem großen Gelben \enquote{W} erkannt werden. Alternativ lässt sich auch nach \enquote{@id:ZitronenSchrank.while-language-extension} suchen, wobei die richtige Erweiterung die Einzige sein wird, welche als Ergebnis aufgelistet wird.
 
-Nach der Auswahl des korrekten Suchergebnisses ist es dem Benutzer möglich die Erweiterung zu installieren. Eventuell muss die \ac{ide} anschließend neugestartet werden, darauf wird der Nutzer jedoch gegebenenfalls hingewiesen.
+Nach der Auswahl des korrekten Suchergebnisses ist es dem Benutzer möglich, die Erweiterung zu installieren. Eventuell muss die \ac{ide} anschließend neu gestartet werden, darauf wird der Nutzer jedoch gegebenenfalls hingewiesen.
 
 Falls der Nutzer nach der Installation der Erweiterung eine Datei mit der Endung \enquote{while} oder \enquote{loop} in \ac{vsc} öffnet, wird die Erweiterung automatisch aktiviert und der Programmcode entsprechend eingefärbt und der Nutzer beim Schreiben unterstützt.
 
 \subsection{Mithilfe einer VSIX-Datei}
-Eine andere und umständliche Möglichkeit die Erweiterung zu installieren ist mithilfe einer \enquote{VSIX}-Datei. Diese muss manuell heruntergeladen und installiert werden. Ein Ort, an welchem die \enquote{VSIX}-Datei heruntergeladen werden kann, ist das \href{https://github.com/ZitronenSchrank/While-Extension-VsCode}{Github-Reposity} der Erweiterung. Eine andere Möglichkeit ist der Download über den \href{https://marketplace.visualstudio.com/items?itemName=ZitronenSchrank.while-language-extension}{Visual Studio Marketplace}
+Eine andere und umständliche Möglichkeit, die Erweiterung zu installieren, ist mithilfe einer \enquote{VSIX}-Datei. Diese muss manuell heruntergeladen und installiert werden. Ein Ort, an welchem die \enquote{VSIX}-Datei heruntergeladen werden kann, ist das \href{https://github.com/ZitronenSchrank/While-Extension-VsCode}{Github-Reposity} der Erweiterung. Eine andere Möglichkeit ist der Download über den \href{https://marketplace.visualstudio.com/items?itemName=ZitronenSchrank.while-language-extension}{Visual Studio Marketplace}
 
-Nachdem die Datei runter geladen wurde, lässt sie sich in \ac{vsc} installieren. Dazu muss zunächst das Erweiterungsfenster geöffnet werden und anschließend mit einem Klick auf das $\cdots$-Symbol die Option \enquote{Install From VSIX} ausgewählt und anschließend die heruntergeladene Datei ausgesucht werden. 
+Nachdem die Datei runtergeladen wurde, lässt sie sich in \ac{vsc} installieren. Dazu muss zunächst das Erweiterungsfenster geöffnet werden und anschließend mit einem Klick auf das $\cdots$-Symbol die Option \enquote{Install From VSIX} ausgewählt und anschließend die heruntergeladene Datei ausgesucht werden.
 
 
 \section{Den Compiler verwenden} \label{sec:kompiler-verwenden}
-Beim Compiler handelt es sich um eine Java-Jar-Datei, welche über die Kommandozeile ausgeführt werden muss, da keine \ac{gui} existiert. Dazu muss eine Eingabebauforderung im selben Ordner gestartet werden, in welchem sich auch der Compiler befindet. In \cref{lst:howto-basiccall} ist zu sehen wie der Compiler grundsätzlich aufgerufen wird.
+Beim Compiler handelt es sich um eine Java-Jar-Datei, welche über die Kommandozeile ausgeführt werden muss, da keine \ac{gui} existiert. Dazu muss eine Eingabebauforderung im selben Ordner gestartet werden, in welchem sich auch der Compiler befindet. In \cref{lst:howto-basiccall} ist zu sehen, wie der Compiler grundsätzlich aufgerufen wird.
 
 \begin{lstlisting}[language=java, caption=Grundlegenes Aufrufen des Compilers, label={lst:howto-basiccall}]
 	java -jar while-1.0.jar
