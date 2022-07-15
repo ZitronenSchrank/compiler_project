@@ -75,8 +75,12 @@ Der erste Schritt ist es, die Grammatik-Datei mit dem Namen \enquote{Grammatik/W
 ifStmt : 'if' '(' ID ')' BEGIN statement* END;
 \end{lstlisting}
 
-Anschließend muss der Lexer und Parser neu generiert werden, für den Compiler selber und auch für die \ac{vsc}-Erweiterung. Im nächsten Schritt muss für das neue Sprachelement eine semantische Analyse implementiert werden. Die syntaktischen Überprüfungen werden weiterhin vom Lexer und Parser übernommen.
+Anschließend muss der Lexer und Parser neu generiert werden, für den Compiler selber und auch für die \ac{vsc}-Erweiterung. In \cref{lst:howto-callAntlr} ist der ANTLR4-Befehl dazu zu sehen. Im nächsten Schritt muss für das neue Sprachelement eine semantische Analyse implementiert werden. Die syntaktischen Überprüfungen werden weiterhin vom Lexer und Parser übernommen.
 
+\begin{lstlisting}[language=java, caption=ANTLR4 aufrufen, label={lst:howto-callAntlr}]
+antlr4 -visitor -package de.hfu.grammar -o [AUSGABE_PFAD] -Dlanguage=Java  While.g4
+antlr4 -visitor -o [AUSGABE_PFAD] -Dlanguage=Typescript  While.g4
+\end{lstlisting}
 
 \subsection{Semantische Überprüfung implementieren}
 Nachdem die Grammatik angepasst wurde und ein neuer Lexer und Parser generiert wurde, muss als Nächstes eine semantische Überprüfung für das neue Sprachelement hinzugefügt werden und gegebenenfalls die semantische Analyse für modifizierte Regeln angepasst werden. Wie die semantische Analyse grundlegend implementiert wird, wurde in \cref{chap:semantic} erklärt.
